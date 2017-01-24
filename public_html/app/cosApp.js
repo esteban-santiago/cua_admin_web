@@ -1,8 +1,8 @@
 'use strict';
 
-var cua_admin = angular.module('cua_admin',['ngRoute']);
+var cosApp = angular.module('cosApp',['ngRoute']);
 
-cua_admin.config(['$routeProvider', function($routeProvider) {
+cosApp.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/home', {
             templateUrl: 'views/home.html'
         }).when('/directory', {
@@ -13,7 +13,7 @@ cua_admin.config(['$routeProvider', function($routeProvider) {
 }]);
 
 
-cua_admin.controller('HttpPutController', function ($scope, $http) {
+cosApp.controller('HttpPutController', function ($scope, $http) {
     //$scope.hello = {name: "Boaz"};
     //$scope.newName = "";
     $scope.sendPost = function() {
