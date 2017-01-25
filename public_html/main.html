@@ -37,14 +37,14 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="hold-transition skin-blue sidebar-mini" ng-app>
+<body   ng-app="cosApp" class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
   <header class="main-header">
     <!-- Logo -->
     <a href="index2.html" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
+      <span class="logo-mini"><b>C</b>OS</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg">COS<b>Admin</b></span>
     </a>
@@ -352,7 +352,8 @@
           </ul>
         </li>
         <li>
-          <a href="pages/widgets.html">
+          <!--a href="pages/widgets.html"-->
+          <a href="#accounting">
             <i class="fa fa-th"></i> <span>Contabilidad</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green">new</small>
@@ -360,7 +361,7 @@
           </a>
         </li>
         <li class="treeview">
-          <a href="#">
+          <a href="">
             <i class="fa fa-pie-chart"></i>
             <span>Finanzas</span>
             <span class="pull-right-container">
@@ -368,7 +369,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+              <li><a href="#finance"><i class="fa fa-circle-o"></i> ChartJS</a></li>
             <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
             <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
             <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
@@ -519,7 +520,8 @@
     <!--section class="content"-->
         
       <!-- Small boxes (Stat box) -->
-      <div ng-include="'views/launch_pad/administration.html'"></div> 
+      <!--div ng-include="'views/launch_pad/administration.html'"></div-->
+      <div ng-view></div>
       <!-- /.row -->
       <!-- Main row -->
       
@@ -732,10 +734,11 @@
   <div class="control-sidebar-bg"></div>
 </div>
     <!-- ./wrapper -->
-    <script src="lib/angular.min.js"></script>
-    <script src="lib/angular-route.min.js"></script>
     <!-- COS_Admin -->
+    <script src="./lib/angular.min.1.2.1.js"></script>
+    <script src="./lib/angular-route.min.1.2.1.js"></script>
     <script src="./app/cosApp.js"></script>
+    
     <!-- jQuery 2.2.3 -->
     <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
