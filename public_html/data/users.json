@@ -1,0 +1,20 @@
+[
+  {
+    "name": "esantiago",
+    "password": "passwd",
+    "id": 100,
+    "status": "ACTIVE",
+    "profile": "USER",
+    "locked": false
+  },
+  {
+    "name": "psantiago",
+    "password": "passwd",
+    "id": 101,
+    "status": "ACTIVE",
+    "profile": "ADMINISTRATOR",
+    "locked": false
+  }
+]
+
+
