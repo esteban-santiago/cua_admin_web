@@ -1,17 +1,8 @@
 
 angular.module('app').controller('memberController', ['$scope','$http', function($scope, $http) {
     //$scope.myId = memberRepository.a();
-    $http({
-        method : "GET",
-        url : "http://localhost:8080/sapi/user/100"
-    }).then(function(response) {
-        //First function handles success
-        $scope.content = response.data;
-    }, function(response) {
-        //Second function handles error
-       alert(angular.toJson(response));
-        $scope.content = "Something went wrong";
-    });
+    $http.get('data/users.json').success(function(data) {alert('success: '+angular.toJson(data));}
+            ).error(function(error) {alert('error: '+ error);});
 }]);
 
 angular.module('app').controller('userController',function($scope) {
