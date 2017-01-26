@@ -1,8 +1,12 @@
 
 angular.module('app').controller('memberController', ['$scope','$http', function($scope, $http) {
     //$scope.myId = memberRepository.a();
-    $http.get('data/users.json').success(function(data) {alert('success: '+angular.toJson(data));}
+    $scope.get = function(id) {$http.get('https://jsonplaceholder.typicode.com:443/posts/'+id)
+            .success(function(data) {
+                $scope.obj = data;
+            }
             ).error(function(error) {alert('error: '+ error);});
+    };
 }]);
 
 angular.module('app').controller('userController',function($scope) {

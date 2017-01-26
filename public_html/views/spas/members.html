@@ -5,11 +5,12 @@
        <small>Panel de Control</small>
        <br>
    </h1>
-    
+    <input type="text" ng-model="anId" name="anId">
+    <button ng-click="get(anId)">Click</button><br>
     {{'result: ' + result}}<br>
-    {{'content: ' + content}}
+    {{'content: ' + obj.title}}
    <ol class="breadcrumb">
-     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
      <li class="active">Administraci&oacute;n</li>
    </ol>
     
