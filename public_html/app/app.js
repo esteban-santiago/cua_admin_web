@@ -1,5 +1,4 @@
 'use strict';
 
-
-angular.module('app',['ngRoute']);
-
+//Declaración de la aplicación e inyección de dependencias
+angular.module('app',['ngRoute', 'ngAnimate']);
