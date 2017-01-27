@@ -1,5 +1,7 @@
 'use strict';
 
+//https://github.com/dwmkerr/angular-modal-service
+
 let module = angular.module('angularModalService', []);
 
 module.factory('ModalService', ['$animate', '$document', '$compile', '$controller', '$http', '$rootScope', '$q', '$templateRequest', '$timeout',
