@@ -1,12 +1,109 @@
 <!-- Content Header (Page header) -->
-<section class="content-header" ng-controller="SampleController">
-   <h1>
-       Usuarios
-       <small>Panel de Control</small>
-       <br>
-   </h1>
-   <ol class="breadcrumb">
-     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-     <li class="active">Administraci&oacute;n</li>
-   </ol>
- </section>
+<section class="content-header">
+    <h1>
+        Usuarios
+        <small>Panel de Control</small>
+        <br>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Administraci&oacute;n</li>
+    </ol>
+
+    <section class="content-header">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <!--h3 class="box-title">Hover Data Table</h3-->
+                        <div class="input-group margin">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Menú
+                                    <span class="fa fa-caret-down"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="" data-toggle="modal" data-target="#myModal">Alta</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#myModal">Modificación</a></li>
+                                    <li><a href="" data-toggle="modal" data-target="#myModal">Visualización</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="#">Separated link</a></li>
+                                </ul>
+                            </div>
+                            <!-- /btn-group -->
+                            <input type="text" class="form-control" ng-model="searchFilter" placeholder="Buscar">
+                        </div>
+                    </div>
+
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="table-responsive">
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Perfíl</th>
+                                    <th>Bloqueado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="user in anotherValue | filter:searchFilter" ng-click="setSelected(user.id)">
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.status}}</td>
+                                    <td>{{user.profile}}</td>
+                                    <td> {{user.locked}}</td>
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Creación de Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    ................
+
+                    <div>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                            <li role="presentation"><a href="" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                            <li role="presentation"><a href="" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                            <li role="presentation"><a href="" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                        </ul>
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">...</div>
+                            <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                            <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                            <div role="tabpanel" class="tab-pane" id="settings">...</div>
+                        </div>
+                    </div>    
+
+
+                    ...{{aValue}}...
+                    ...{{anotherValue}}...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

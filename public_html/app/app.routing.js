@@ -10,7 +10,7 @@ angular.module('app').config(['$routeProvider',function($routeProvider) {
                 })
                 .when('/users', { 
                     templateUrl: 'views/spas/users.html',
-                    controller: 'ComplexController'
+                    controller: 'userController'
                 })
                 .otherwise({redirectTo: '/administration'});
 //                .otherwise({redirectTo: $routeProvider});
