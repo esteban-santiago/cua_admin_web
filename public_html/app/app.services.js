@@ -1,5 +1,5 @@
 angular.module('app').service('userService', function () {
-
+    var users = 'http://192.168.0.13:8080/sapi/user';  
     this.getAll = [
         {
             "name": "esantiago",
