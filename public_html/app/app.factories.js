@@ -1,5 +1,5 @@
 angular.module('app')
-    .factory('userService', function($resource) {
+    .factory('userServices', function($resource) {
         //var factory = {};
         return [
             {
@@ -39,16 +39,24 @@ angular.module('app')
     });
 
 angular.module('app')
-    .factory('userServices', function($resource) {
+    .factory('userService', function($resource) {
+        var url = 'http://localhost:8080/sapi/user';
         //var factory = {};
-        return $resource('http://localhost:8080/sapi/user/:id', {id: '@id'},  
+        return $resource(url + '/:id', {id: '@id'},  
             {
                 'get':    {method:'GET'},
                 'update': {method:'PUT'},
                 'save':   {method:'POST'},
                 'query':  {method:'GET', isArray:true},
                 'remove': {method:'DELETE'},
-                'delete': {method:'DELETE'} 
+                'delete': {method:'DELETE'}, 
+                'getPage':{method: 'GET', isArray:false, 
+                            url: url + '/?page=:page&size=:size',
+                                params:{ 
+                                    page:'@page', 
+                                    size: '@size'
+                                }
+                }                
             });
         }    
     );

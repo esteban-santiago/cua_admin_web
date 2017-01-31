@@ -48,7 +48,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="user in anotherValue | filter:searchFilter" ng-click="setSelected(user.id)">
+                                <tr ng-repeat="user in users.content | filter:searchFilter" ng-click="setSelected(user.id)">
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{user.id}}</a></td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.status}}</td>
@@ -57,9 +57,20 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>         
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                      <!--ul class="pagination pagination-sm no-margin pull-right"-->
+                      <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
+                        {{users.totalPages}}
+                        <!--li ng-repeat="page in users.totalPages"><a href="#">{{page}}</a></li-->
+                        <!--li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li-->
+                        <!--li><a href="#">&raquo;</a></li>
+                      </ul-->
                     </div>
+                  <!-- /.box -->                    
                 </div>
-
             </div>
         </div>
     </section>
