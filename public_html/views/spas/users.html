@@ -15,28 +15,27 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
-                    <div class="box-header">
-                        <!--h3 class="box-title">Hover Data Table</h3-->
-                        <div class="input-group margin">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Menú
-                                    <span class="fa fa-caret-down"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="" data-toggle="modal" data-target="#myModal">Alta</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#myModal">Modificación</a></li>
-                                    <li><a href="" data-toggle="modal" data-target="#myModal">Visualización</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-                            <!-- /btn-group -->
-                            <input type="text" class="form-control" ng-model="searchFilter" placeholder="Buscar">
+                <div class="box-header">
+                    <!--h3 class="box-title">Responsive Hover Table</h3-->
+                    <div class="input-group input-group-sm" style="width: 220px;">
+                        <div class="input-group-btn">
+                            <span class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </span>
                         </div>
+                        <input type="text" ng-model="tableSearch" id="tableSearch" class="form-control pull-right" placeholder="Buscar">
                     </div>
+                    <div class="box-tools">
+                        <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Crear</button-->
+                            <span class="btn btn-primary">
+                                <i class="fa fa-sticky-note-o" data-toggle="modal" data-target="#myModal"></i>
+                            </span>
+
+                    </div>
+                </div>
 
                     <!-- /.box-header -->
-                    <div class="box-body">
+                    <div class="box-body table-responsive">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr class="table-responsive">
@@ -47,8 +46,8 @@
                                     <th>Bloqueado</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="user in users.content | filter:searchFilter" ng-click="setSelected(user.id)">
+                            <tbody> <!-- users.content - para la página -->
+                                <tr ng-repeat="user in users | filter:tableSearch" class="table" ng-click="setSelected(user.id)">
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{user.id}}</a></td>
                                     <td>{{user.name}}</td>
                                     <td>{{user.status}}</td>
@@ -60,8 +59,8 @@
                     </div>         
                     <!-- /.box-body -->
                     <div class="box-footer clearfix">
-                      <!--ul class="pagination pagination-sm no-margin pull-right"-->
-                      <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
+                        <!--ul class="pagination pagination-sm no-margin pull-right"-->
+                        <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
                         {{users.totalPages}}
                         <!--li ng-repeat="page in users.totalPages"><a href="#">{{page}}</a></li-->
                         <!--li><a href="#">2</a></li>
@@ -69,7 +68,7 @@
                         <!--li><a href="#">&raquo;</a></li>
                       </ul-->
                     </div>
-                  <!-- /.box -->                    
+                    <!-- /.box -->                    
                 </div>
             </div>
         </div>
@@ -85,7 +84,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ action }} de Usuario</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{ action}} de Usuario</h4>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -103,26 +102,26 @@
                                 <div class="box-body">
                                     <!-- text input -->
                                     <div class="form-group">
-                                      <label>Nombre</label>
-                                      <input type="text" class="form-control" placeholder="Enter ...">
+                                        <label>Nombre</label>
+                                        <input type="text" class="form-control" placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
-                                      <label>Estado</label>
-                                      <input type="text" class="form-control" placeholder="Enter ...">
+                                        <label>Estado</label>
+                                        <input type="text" class="form-control" placeholder="Enter ...">
                                     </div>
                                     <div class="form-group">
-                                      <label>Perfíl</label>
-                                      <input type="text" class="form-control" placeholder="Enter ...">
+                                        <label>Perfíl</label>
+                                        <input type="text" class="form-control" placeholder="Enter ...">
                                     </div>
                                 </div>                            
                             </div>
                             <div role="tabpanel" class="tab-pane" id="profile">
                             </div>
                             <div role="tabpanel" class="tab-pane" id="messages">
-                                
+
                             </div>
                             <div role="tabpanel" class="tab-pane" id="settings">
-                                
+
                             </div>
                         </div>
                     </div>    
