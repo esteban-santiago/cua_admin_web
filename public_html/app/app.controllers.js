@@ -3,6 +3,11 @@ angular.module('app').controller('memberController', ['$scope','memberService', 
     //$scope.myId = memberRepository.a();
 }]);
 
+angular.module('app').controller('flightRecordController', ['$scope','flightRecordServices', function($scope, flightRecordService) {
+    $scope.flight_records = flightRecordService;
+    console.log($scope.flight_records);
+}]);
+
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document' ,function($scope, userServices, $document) {
     //$scope.myId = memberRepository.a();
     $scope.aValue = 143;
