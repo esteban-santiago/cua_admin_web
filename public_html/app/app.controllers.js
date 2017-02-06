@@ -4,8 +4,14 @@ angular.module('app').controller('memberController', ['$scope','memberService', 
 }]);
 
 angular.module('app').controller('flightRecordController', ['$scope','flightRecordServices', function($scope, flightRecordService) {
-    $scope.flight_records = flightRecordService;
-    console.log($scope.flight_records);
+    
+    $scope.asDate = function(date) {
+       return new Date(date[0], date[1],date[2]); 
+       //return new String(date[2] + '/' + date[1] + '/' + date[0]);
+    };
+    $scope.flightRecords = flightRecordService;
+    console.log($scope.flightRecords);
+    
 }]);
 
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document' ,function($scope, userServices, $document) {

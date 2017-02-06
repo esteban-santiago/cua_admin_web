@@ -41,18 +41,20 @@
                             <thead>
                                 <tr class="table-responsive">
                                     <th>Id</th>
-                                    <th>Nombre</th>
-                                    <th>Estado</th>
-                                    <th>Perfíl</th>
-                                    <th>Bloqueado</th>
+                                    <th>Piloto</th>
+                                    <th>Instructor</th>
+                                    <th>Fecha</th>
+                                    <th>Aeronave</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody> <!-- users.content - para la página -->
-                                <tr ng-repeat="user in users | filter:tableSearch" class="table" ng-click="setSelected(user.id)">
-                                    <td><a href="" data-toggle="modal" data-target="#myModal">{{user.id}}</a></td>
-                                    <td>{{user.name}}</td>
-                                    <td>{{user.status}}</td>
-                                    <td>{{user.profile}}</td>
+                                <tr ng-repeat="flightRecord in flightRecords | filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)">
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
+                                    <td>{{flightRecord.crew[0].person.name}}</td>
+                                    <td>{{flightRecord.crew[1].person.name}}</td>
+                                    <td>{{asDate(flightRecord.startFlight)| date : 'dd-mm-yyyy'}}</td>
+                                    <td> {{flightRecord.aircraft.registration}}</td>
                                     <td> {{user.locked}}</td>
                                 </tr>
                             </tbody>
