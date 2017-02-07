@@ -50,6 +50,23 @@ angular.module('app')
     });
 
 angular.module('app')
+    .factory('flightRecordService', function($resource) {
+        var url = 'http://localhost:8080/sapi/flight_record';
+        return $resource(url + '/:id', {id: '@id'}, {
+            'get':    {method:'GET'},
+            'update': {method:'PUT'},
+            'save':   {method:'POST'},
+            'query':  {method:'GET', isArray:true},
+            'remove': {method:'DELETE'},
+            'delete': {method:'DELETE'}, 
+            'getPage':{method: 'GET', isArray:false, 
+                    url: url + '/?page=:page&size=:size',
+                        params:{ page:'@page', size: '@size'}
+            }                
+        });
+    });
+
+angular.module('app')
     .factory('userServices', function($resource) {
         return [
             {
@@ -98,16 +115,8 @@ angular.module('app')
                   "person": {
                     "id": 100,
                     "name": "SANTIAGO, Esteban",
-                    "dateOfCreation": [
-                      2017,
-                      2,
-                      3
-                    ],
-                    "dateOfBirth": [
-                      1974,
-                      8,
-                      2
-                    ],
+                    "dateOfCreation": "2017-02-03",
+                    "dateOfBirth": "1974-08-02",
                     "nationality": {
                       "description": "Argentina",
                       "id": 1
@@ -155,16 +164,8 @@ angular.module('app')
                     "type": "Terceros Completo",
                     "policy": "ABC-4444224422",
                     "company": "Sancor",
-                    "validityFrom": [
-                      2016,
-                      7,
-                      3
-                    ],
-                    "validityTo": [
-                      2017,
-                      9,
-                      3
-                    ],
+                    "validityFrom": "2016-07-03",
+                    "validityTo": "2017-09-03",
                     "inForce": true
                   }
                 ],
@@ -179,24 +180,8 @@ angular.module('app')
                   }
                 ]
               },
-              "startFlight": [
-                2017,
-                1,
-                6,
-                19,
-                44,
-                5,
-                296000000
-              ],
-              "endFlight": [
-                2017,
-                1,
-                6,
-                20,
-                54,
-                5,
-                296000000
-              ],
+              "startFlight": "2017-01-06T19:44:05.296",
+              "endFlight": "2017-01-06T20:54:05.296",
               "landings": 0,
               "purpose": "VP",
               "nature": "LDI",
@@ -217,16 +202,8 @@ angular.module('app')
                   "person": {
                     "id": 100,
                     "name": "SANTIAGO, Esteban",
-                    "dateOfCreation": [
-                      2017,
-                      2,
-                      3
-                    ],
-                    "dateOfBirth": [
-                      1974,
-                      8,
-                      2
-                    ],
+                    "dateOfCreation": "2017-02-03",
+                    "dateOfBirth": "1974-08-02",
                     "nationality": {
                       "description": "Argentina",
                       "id": 1
@@ -266,16 +243,8 @@ angular.module('app')
                   "person": {
                     "id": 101,
                     "name": "SANTIAGO, Pablo",
-                    "dateOfCreation": [
-                      2017,
-                      2,
-                      3
-                    ],
-                    "dateOfBirth": [
-                      1987,
-                      1,
-                      27
-                    ],
+                    "dateOfCreation": "2017-02-03",
+                    "dateOfBirth": "1987-01-27",
                     "nationality": {
                       "description": "Brasilera",
                       "id": 2
@@ -317,28 +286,12 @@ angular.module('app')
                     "type": "Terceros Completo",
                     "policy": "ABC-4444224423",
                     "company": "Sancor",
-                    "validityFrom": [
-                      2016,
-                      7,
-                      3
-                    ],
-                    "validityTo": [
-                      2017,
-                      9,
-                      3
-                    ],
+                    "validityFrom": "2016-07-03",
+                    "validityTo": "2017-09-03",
                     "inForce": true
                   }
                 ],
                 "components": [
-                  {
-                    "id": 100,
-                    "brand": null,
-                    "description": "Motor 100HP",
-                    "serial": "1MOTOR100HP",
-                    "relocable": true,
-                    "type": "ENGINE"
-                  },
                   {
                     "id": 101,
                     "brand": null,
@@ -346,27 +299,19 @@ angular.module('app')
                     "serial": "1HELICEMAD",
                     "relocable": true,
                     "type": "PROPELLER"
+                  },
+                  {
+                    "id": 100,
+                    "brand": null,
+                    "description": "Motor 100HP",
+                    "serial": "1MOTOR100HP",
+                    "relocable": true,
+                    "type": "ENGINE"
                   }
                 ]
               },
-              "startFlight": [
-                2017,
-                1,
-                6,
-                19,
-                44,
-                5,
-                296000000
-              ],
-              "endFlight": [
-                2017,
-                1,
-                6,
-                20,
-                54,
-                5,
-                296000000
-              ],
+              "startFlight": "2017-01-06T19:44:05.296",
+              "endFlight": "2017-01-06T20:54:05.296",
               "landings": 0,
               "purpose": "VP",
               "nature": "LDI",

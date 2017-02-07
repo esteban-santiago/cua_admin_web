@@ -53,9 +53,9 @@
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
                                     <td>{{flightRecord.crew[0].person.name}}</td>
                                     <td>{{flightRecord.crew[1].person.name}}</td>
-                                    <td>{{asDate(flightRecord.startFlight)| date : 'dd-mm-yyyy'}}</td>
-                                    <td> {{flightRecord.aircraft.registration}}</td>
-                                    <td> {{user.locked}}</td>
+                                    <td>{{flightRecord.startFlight | cmdate : 'dd/MM/yyyy'}}</td>
+                                    <td>{{flightRecord.aircraft.registration}}</td>
+                                    <td>{{user.locked}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -128,9 +128,6 @@
                             </div>
                         </div>
                     </div>    
-
-
-                    <!--...{{aValue}}  -- pié..-->
                 </div>
                 <div class="modal-footer">
                     <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
