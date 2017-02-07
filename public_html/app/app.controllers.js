@@ -3,8 +3,23 @@ angular.module('app').controller('memberController', ['$scope','memberService', 
     //$scope.myId = memberRepository.a();
 }]);
 
-angular.module('app').controller('flightRecordController', ['$scope','flightRecordService', function($scope, flightRecordService) {
-    $scope.flightRecords = flightRecordService.query();
+angular.module('app').controller('flightRecordController', ['$scope','flightRecordServices', function($scope, flightRecordService) {
+    $scope.flightRecords = flightRecordService;
+    //$scope.flightRecords = flightRecordService.query();
+    $scope.view = function(id) {
+      console.log(id);
+      console.log($scope.flightRecords[id]);  
+    };
+    $scope.update = function(id) {
+      console.log(id);
+      console.log($scope.flightRecords[id]);  
+    };
+    $scope.remove = function(id) {
+      console.log(id);
+      $scope.flightRecords.splice(id,1); 
+    };
+        
+    
     console.log($scope.flightRecords);
 }]);
 
