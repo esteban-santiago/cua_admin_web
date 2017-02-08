@@ -151,7 +151,7 @@
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Piloto</label>
                                             <div class="col-sm-10">
-                                                <input type="text" placeholder="Address Line 1" class="form-control"><br>
+                                                <input type="text" placeholder="" class="form-control"><br>
                                             </div>
                                         </div>
 
@@ -159,7 +159,7 @@
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Instructor</label>
                                             <div class="col-sm-10">
-                                                <input type="text" placeholder="Address Line 2" class="form-control"><br>
+                                                <input type="text" placeholder="" class="form-control"><br>
                                             </div>
                                         </div>
 
@@ -168,17 +168,13 @@
                                             <label class="col-sm-2 control-label">Aeronave</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control">
-                                                  <option>LV-AMS</option>
-                                                  <option>LV-OEE</option>
-                                                  <option>LV-AXH</option>
+                                                  <option value="{{aircraft.id}}" ng-repeat="aircraft in aircrafts">{{aircraft.registration}}</option>
                                                 </select><br>
                                             </div>
                                             <label class="col-sm-2 control-label">Propósito</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control">
-                                                  <option>VP</option>
-                                                  <option>INST</option>
-                                                  <option>LV-</option>
+                                                  <option value="{{pilotRating[0]}}" ng-repeat="pilotRating in pilotRatings">{{pilotRating[1]}}</option>
                                                 </select><br>
                                             </div>
                                         </div>
@@ -188,17 +184,13 @@
                                             <label class="col-sm-2 control-label">Carácter</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control">
-                                                  <option>Mustard</option>
-                                                  <option>Ketchup</option>
-                                                  <option>Relish</option>
+                                                  <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
                                                 </select><br>
                                             </div>
                                             <label class="col-sm-2 control-label">Tipo</label>
                                             <div class="col-sm-4">
                                                 <select class="form-control">
-                                                  <option>Mustard</option>
-                                                  <option>Ketchup</option>
-                                                  <option>Relish</option>
+                                                  <option value="{{flightType[0]}}" ng-repeat="flightType in flightTypes">{{flightType[1]}}</option>
                                                 </select><br>
                                             </div>
                                         </div>
