@@ -4,8 +4,8 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordService', 'pilotRatingService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 
-                function ($scope, flightRecordService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
+        ['$scope', 'flightRecordService', 'pilotRatingService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
+            function ($scope, flightRecordService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
                 //$scope.flightRecords = flightRecordService;
                 $scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
@@ -25,9 +25,12 @@ angular.module('app').controller('flightRecordController',
                     $scope.flightRecords.splice(id, 1);
                 };
 
-
-                console.log($scope.flightRecords);
+                $scope.setSelected = function (id) {
+                    console.log(id);
+                };
+                //console.log($scope.flightRecords);
             }]);
+
 
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document', function ($scope, userServices, $document) {
         //$scope.myId = memberRepository.a();
