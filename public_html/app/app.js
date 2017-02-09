@@ -13,7 +13,7 @@ angular.module('app', ['ngRoute', 'ngResource', 'ngAnimate']).directive("datepic
             };
             var options = {
                 //dateFormat: "dd/MM/yyyy",
-                //singleDatePicker: true,
+                singleDatePicker: true,
                 timePicker: true,
                 timePickerIncrement: 5,
                 locale: {

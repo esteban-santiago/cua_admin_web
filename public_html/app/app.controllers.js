@@ -58,3 +58,90 @@ angular.module('app').controller('userController', ['$scope', 'userServices', '$
 
     }]);
 
+var obj = {
+  "id": 100,
+  "crew": [
+    {
+      "id": 100,
+      "person": {
+        "id": 100,
+        "name": "SANTIAGO, Esteban",
+        "dateOfCreation": "2017-02-03",
+        "dateOfBirth": "1974-08-02",
+        "nationality": {
+          "description": "Argentina",
+          "id": 1
+        },
+        "identityCard": {
+          "identityCardNumber": "24036873",
+          "identityCardType": "DNI"
+        },
+        "addresses": [],
+        "contactWays": [],
+        "status": "ACTIVE",
+        "memberProfile": {
+          "id": 100,
+          "category": {
+            "description": "Socio",
+            "id": 1
+          },
+          "status": "ACTIVE",
+          "active": true,
+          "dismiss": false
+        },
+        "pilotProfile": {
+          "id": 100,
+          "licence": "24036873",
+          "ratings": [],
+          "medicalCertifications": [],
+          "pilotCertifications": []
+        },
+        "customerProfile": null,
+        "employeeProfile": null,
+        "active": true
+      },
+      "crewMemberRole": "PIC"
+    }
+  ],
+  "aircraft": {
+    "id": 100,
+    "registration": "LV-OEE",
+    "model": "152",
+    "status": "ACTIVE",
+    "brand": "Cessna",
+    "insurances": [
+      {
+        "id": 100,
+        "type": "Terceros Completo",
+        "policy": "ABC-4444224422",
+        "company": "Sancor",
+        "validityFrom": "2016-07-03",
+        "validityTo": "2017-09-03",
+        "inForce": true
+      }
+    ],
+    "components": [
+      {
+        "id": 102,
+        "brand": null,
+        "description": "Capsula C152",
+        "serial": "CAPSULAC152",
+        "relocable": false,
+        "type": "CAPSULE"
+      }
+    ]
+  },
+  "startFlight": "2017-01-06T19:44:05.296",
+  "endFlight": "2017-01-06T20:54:05.296",
+  "landings": 0,
+  "purpose": "VP",
+  "nature": "LDI",
+  "type": "ENT",
+  "origin": null,
+  "destiny": null,
+  "status": "OPENED",
+  "closed": false,
+  "opened": true,
+  "amountOfHours": 1,
+  "canceled": false
+}
