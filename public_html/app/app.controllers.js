@@ -4,10 +4,10 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordService', 'pilotRatingService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
+        ['$scope', 'flightRecordServices', 'pilotRatingService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, flightRecordService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
-                //$scope.flightRecords = flightRecordService;
-                $scope.flightRecords = flightRecordService.query();
+                $scope.flightRecords = flightRecordService;
+                //$scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
                 $scope.pilotRatings = pilotRatingService.get();
                 $scope.flightPurposes = flightPurposeService.get();
@@ -16,10 +16,17 @@ angular.module('app').controller('flightRecordController',
                     console.log(id);
                     console.log($scope.flightRecords[id]);
                 };
+                $scope.create = function() {
+                    
+                    $scope.flightRecords.push(fillFlightRecord($scope));
+                    //console.log($scope.flightRecords[id]);
+                };
+
                 $scope.update = function (id) {
                     console.log(id);
                     console.log($scope.flightRecords[id]);
                 };
+
                 $scope.remove = function (id) {
                     console.log(id);
                     $scope.flightRecords.splice(id, 1);
@@ -28,7 +35,89 @@ angular.module('app').controller('flightRecordController',
                 $scope.setSelected = function (id) {
                     console.log(id);
                 };
-                //console.log($scope.flightRecords);
+                fillFlightRecord = function(scope) {
+                    var flightRecord = {
+                        "id" : 0,
+                        "crew" : [{
+                                "person": {
+                                    "id": 100,
+                                    "name": scope.pilot,
+                                    "dateOfCreation": "2017-02-03",
+                                    "dateOfBirth": "1974-08-02",
+                                    "nationality": {
+                                        "description": "Argentina",
+                                        "id": 1
+                                    },
+                                    "identityCard": {
+                                        "identityCardNumber": "24036873",
+                                        "identityCardType": "DNI"
+                                    },
+                                    "addresses": [],
+                                    "contactWays": [],
+                                    "status": "ACTIVE",
+                                    "memberProfile": {
+                                        "id": 100,
+                                        "category": {
+                                            "description": "Socio",
+                                            "id": 1
+                                        },
+                                        "status": "ACTIVE",
+                                        "active": true,
+                                        "dismiss": false
+                                    },
+                                    "pilotProfile": {
+                                        "id": 100,
+                                        "licence": "24036873",
+                                        "ratings": [],
+                                        "medicalCertifications": [],
+                                        "pilotCertifications": []
+                                    },
+                                    "customerProfile": null,
+                                    "employeeProfile": null,
+                                    "active": true
+                                },
+                                "crewMemberRole" : "PIC"
+                        }],
+                        "aircraft" : {
+                            "id": 100,
+                            "registration": "LV-OEE",
+                            "model": "152",
+                            "status": "ACTIVE",
+                            "brand": "Cessna",
+                            "insurances": [
+                                {
+                                    "id": 100,
+                                    "type": 'Terceros Completo',
+                                    "policy": 'ABC-4444224422',
+                                    "company": 'Sancor',
+                                    "validityFrom": '2016-07-03',
+                                    "validityTo": '2017-09-03'
+                                }
+                            ],
+                            "components": [
+                                {
+                                    "id": 102,
+                                    "brand": null,
+                                    "description": "Capsula C152",
+                                    "serial": "CAPSULAC152",
+                                    "relocable": false,
+                                    "type": "CAPSULE"
+                                }
+                            ]
+                        },
+                        "startFlight" : "2017-01-06T19:44:05.296",
+                        "endFlight" : "2017-01-06T20:54:05.296",
+                        "landings" : 0,
+                        "purpose" : "VP",
+                        "nature" : "LDI",
+                        "type" : "ENT",
+                        "origin" : null,
+                        "destiny" : null,
+                        "status" : "OPENED",
+                        "amountOfHours" : 1
+                    };
+                    return flightRecord;
+                };
             }]);
 
 
