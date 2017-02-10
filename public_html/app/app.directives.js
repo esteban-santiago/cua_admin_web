@@ -23,8 +23,8 @@ angular.module('app').directive("datepicker", function () {
             $(elem).daterangepicker(options);
         }
     };
-});
-angular.module('app').directive("myValidDate", function () {
+})
+.directive("myValidDate", function () {
   return {
     require: "ngModel",
     restrict: "A", // Attributes only
