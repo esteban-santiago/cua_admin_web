@@ -23,8 +23,23 @@ angular.module('app').directive("datepicker", function () {
             $(elem).daterangepicker(options);
         }
     };
-})
+});
+angular.module('app').directive("myValidDate", function () {
+  return {
+    require: "ngModel",
+    restrict: "A", // Attributes only
+    link: function (scope, elem, attr, ctrl) {
+        ctrl.$validators.bzValidDate = function(value) {
+            if (value === undefined || value === null || value === "") {
+                return true;
+            }
 
+            return moment(value, ["DD/MM/YYYY"], true).isValid();;
+        };
+    }
+};
+});
+/*
 .directive(
         'dateInput',
         function(dateFilter) {
@@ -43,3 +58,4 @@ angular.module('app').directive("datepicker", function () {
                 }
             };
     });
+*/
