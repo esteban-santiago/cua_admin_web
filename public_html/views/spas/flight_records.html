@@ -201,31 +201,31 @@
                                     <div class="row"><br>
                                         <div class="col-md-10 col-md-offset-1">
                                             <!-- Text input-->
-                                            <div class="form-group-sm">
+                                            <div class="form-group-sm"> <!--ng-class="{'form-group-sm has-error': crear_ficha.$invalid}"-->
                                                 <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Inicio</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" placeholder="DD/MM/AAAA" ng-model="fecha_inicio" class="form-control" valid-date><br>
+                                                <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fecha_inicio" class="form-control has-error" valid-date><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label">Hora Inicio</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="HH:MM" ng-model="hora_inicio" class="form-control" valid-time><br>
+                                                    <input type="text" placeholder="hh:mm" ng-model="hora_inicio" class="form-control" valid-time><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="DD/MM/AAAA" ng-model="fecha_fin" class="form-control"><br>
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fecha_fin" class="form-control" valid-date><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label">Hora Fin</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="HH:MM" ng-model="hora_fin" class="form-control"><br>
+                                                    <input type="text" placeholder="hh:mm" ng-model="hora_fin" class="form-control" valid-time><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->

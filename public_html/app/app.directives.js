@@ -1,4 +1,4 @@
-angular.module('app').directive("date-picker", function () {
+angular.module('app').directive("datePicker", function () {
     return {
         restrict: "A",
         require: "ngModel",
@@ -23,7 +23,7 @@ angular.module('app').directive("date-picker", function () {
             $(elem).daterangepicker(options);
         }
     };
-}).directive("valid-date", function () {
+}).directive("validDate", function () {
     return {
         require: "ngModel",
         restrict: "A", // Attributes only
@@ -37,24 +37,18 @@ angular.module('app').directive("date-picker", function () {
             };
         }
     };
+}).directive("validTime", function () {
+    return {
+        require: "ngModel",
+        restrict: "A", // Attributes only
+        link: function (scope, elem, attr, ctrl) {
+            ctrl.$validators.bzValidDate = function (value) {
+                if (value === undefined || value === null || value === "") {
+                    return true;
+                }
+                return moment(value, ["HH:mm"], true).isValid();
+                ;
+            };
+        }
+    };
 });
-/*
- .directive(
- 'dateInput',
- function(dateFilter) {
- return {
- require: 'ngModel',
- template: '<input type="date"></input>',
- replace: true,
- link: function(scope, elm, attrs, ngModelCtrl) {
- ngModelCtrl.$formatters.unshift(function (modelValue) {
- return dateFilter(modelValue, 'dd-MM-yyyy');
- });
- 
- ngModelCtrl.$parsers.unshift(function(viewValue) {
- return new Date(viewValue);
- });
- }
- };
- });
- */
