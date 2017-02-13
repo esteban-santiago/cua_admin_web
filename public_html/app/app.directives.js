@@ -1,4 +1,4 @@
-angular.module('app').directive("datepicker", function () {
+angular.module('app').directive("date-picker", function () {
     return {
         restrict: "A",
         require: "ngModel",
@@ -23,39 +23,38 @@ angular.module('app').directive("datepicker", function () {
             $(elem).daterangepicker(options);
         }
     };
-})
-.directive("myValidDate", function () {
-  return {
-    require: "ngModel",
-    restrict: "A", // Attributes only
-    link: function (scope, elem, attr, ctrl) {
-        ctrl.$validators.bzValidDate = function(value) {
-            if (value === undefined || value === null || value === "") {
-                return true;
-            }
-
-            return moment(value, ["DD/MM/YYYY"], true).isValid();;
-        };
-    }
-};
+}).directive("valid-date", function () {
+    return {
+        require: "ngModel",
+        restrict: "A", // Attributes only
+        link: function (scope, elem, attr, ctrl) {
+            ctrl.$validators.bzValidDate = function (value) {
+                if (value === undefined || value === null || value === "") {
+                    return true;
+                }
+                return moment(value, ["DD/MM/YYYY"], true).isValid();
+                ;
+            };
+        }
+    };
 });
 /*
-.directive(
-        'dateInput',
-        function(dateFilter) {
-            return {
-                require: 'ngModel',
-                template: '<input type="date"></input>',
-                replace: true,
-                link: function(scope, elm, attrs, ngModelCtrl) {
-                    ngModelCtrl.$formatters.unshift(function (modelValue) {
-                        return dateFilter(modelValue, 'dd-MM-yyyy');
-                    });
-
-                    ngModelCtrl.$parsers.unshift(function(viewValue) {
-                        return new Date(viewValue);
-                    });
-                }
-            };
-    });
-*/
+ .directive(
+ 'dateInput',
+ function(dateFilter) {
+ return {
+ require: 'ngModel',
+ template: '<input type="date"></input>',
+ replace: true,
+ link: function(scope, elm, attrs, ngModelCtrl) {
+ ngModelCtrl.$formatters.unshift(function (modelValue) {
+ return dateFilter(modelValue, 'dd-MM-yyyy');
+ });
+ 
+ ngModelCtrl.$parsers.unshift(function(viewValue) {
+ return new Date(viewValue);
+ });
+ }
+ };
+ });
+ */
