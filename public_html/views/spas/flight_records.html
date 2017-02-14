@@ -69,7 +69,7 @@
                             </thead>
                             <tbody> <!-- users.content - para la página -->
                                 <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
-                                <tr ng-repeat="flightRecord in flightRecords track by $index" class="table" ng-click="setSelected($index)">
+                                <tr ng-repeat="flightRecord in flightRecords track by $index" class="table">
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
                                     <td>{{flightRecord.crew[0].person.name}}</td>
                                     <td>{{flightRecord.crew[1].person.name}}</td>
@@ -141,14 +141,10 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Piloto</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" list="pilots" placeholder="" ng-model="pilot" class="form-control" required pattern=".{2,}">
-                                                    <datalist id="pilots">
-                                                        <option value="India">India</option>
-                                                        <option value="United States">United States</option>
-                                                        <option value="United Kingdom">United Kingdom</option>
-                                                        <option value="Germany">Germany</option>
-                                                        <option value="France">France</option>
-                                                    </datalist>
+                                                    <input type="text" placeholder="" ng-model="pilot" class="form-control" 
+                                                           typeahead-on-select="setSelected($item)"
+                                                           uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
+                                                           required pattern=".{2,}">
                                                     <br>
                                                 </div>
                                             </div>
@@ -156,7 +152,9 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Instructor</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" placeholder="" ng-model="instructor" class="form-control">
+                                                    <input type="text" placeholder="" ng-model="instructor" class="form-control"
+                                                           uib-typeahead="instructor for instructor in instructors | filter:$viewValue | limitTo:8"
+                                                            pattern=".{2,}">
                                                     <div class="error-message"
                                                          ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
                                                         We need a name with 2 chars or more.
@@ -202,7 +200,7 @@
                                         <div class="col-md-10 col-md-offset-1">
                                             <!-- Text input-->
                                             <div class="form-group-sm"> <!--ng-class="{'form-group-sm has-error': crear_ficha.$invalid}"-->
-                                                <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Inicio</label>
+                                                <label class="col-sm-3 control-label">Fecha Inicio</label>
                                                 <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
                                                     <input type="text" placeholder="dd/mm/aaaa" ng-model="fecha_inicio" class="form-control has-error" valid-date><br>
                                                 </div>
