@@ -6,14 +6,14 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordService', 'pilotService', 'pilotRatingService',
+        ['$scope', 'flightRecordServices', 'pilotService', 'pilotRatingService',
             'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, flightRecordService, pilotService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
                 var fr = new Object();
                 $scope.fr = fr;
-
-                //$scope.flightRecords = flightRecordServices;
-                $scope.flightRecords = flightRecordService.query();
+                $scope.flightRecords = flightRecordService;
+                console.log($scope.flightRecords);
+                //$scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
                 $scope.pilotRatings = pilotRatingService.get();
                 $scope.flightPurposes = flightPurposeService.get();
@@ -34,7 +34,9 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.view = function (id) {
                     console.log(id);
-                    console.log($scope.flightRecords[id]);
+
+                    $scope.fr = $scope.flightRecords[id];
+                    console.log($scope.fr);
                 };
 
                 $scope.create = function () {/*
@@ -72,7 +74,7 @@ angular.module('app').controller('flightRecordController',
                         "crew": [{
                                 "person": {
                                     "id": 100,
-                                    "name": "SANTIAGO, Esteban",
+                                    "name": $scope.fr.pilot,
                                     "dateOfCreation": "2017-02-03",
                                     "dateOfBirth": "1974-08-02",
                                     "nationality": {

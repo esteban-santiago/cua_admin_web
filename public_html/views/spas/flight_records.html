@@ -77,7 +77,7 @@
                                     <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
                                     <td>{{flightRecord.aircraft.registration}}</td>
                                     <td>
-                                        <button class="btn btn-xs" type="button" ng-click="view($index)">
+                                        <button class="btn btn-xs" type="button" ng-click="view($index)" data-toggle="modal" data-target="#myViewModal">
                                             <span class="fa fa-search"></span>
                                         </button>
                                         <button class="btn btn-xs" type="button" ng-click="update($index)">
@@ -140,6 +140,157 @@
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Piloto</label>
+<div class="col-sm-10">
+    <input type="text" placeholder="" ng-model="fr.pilot" class="form-control" 
+           typeahead-on-select="setSelected($item)"
+           uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
+           required pattern=".{2,}">
+    <br>
+</div>
+</div>
+<!-- Text input-->
+<div class="form-group-sm">
+    <label class="col-sm-2 control-label">Instructor</label>
+    <div class="col-sm-10">
+        <input type="text" placeholder="" ng-model="fr.instructor" class="form-control"
+               uib-typeahead="instructor for instructor in instructors | filter:$viewValue | limitTo:8"
+               pattern=".{2,}">
+        <div class="error-message"
+             ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
+            We need a name with 2 chars or more.
+        </div><br>
+    </div>
+</div>
+<!-- Text input-->
+<div class="form-group-sm">
+    <label class="col-sm-2 control-label">Aeronave</label>
+    <div class="col-sm-4">
+        <select ng-model="fr.aircraft" class="form-control">
+            <option value="{{aircraft.id}}" ng-repeat="aircraft in aircrafts">{{aircraft.registration}}</option>
+        </select><br>
+    </div>
+    <label class="col-sm-2 control-label">Propósito</label>
+    <div class="col-sm-4">
+        <select ng-model="fr.flightPurpose" class="form-control">
+            <option value="{{pilotRating[0]}}" ng-repeat="pilotRating in pilotRatings">{{pilotRating[1]}}</option>
+        </select><br>
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group-sm">
+    <label class="col-sm-2 control-label">Carácter</label>
+    <div class="col-sm-4">
+        <select ng-model="fr.flightNature" class="form-control">
+                                                        <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
+                                                    </select><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Tipo</label>
+                                                <div class="col-sm-4">
+                                                    <select ng-model="fr.flightType" class="form-control">
+                                                        <option value="{{flightType[0]}}" ng-repeat="flightType in flightTypes">{{flightType[1]}}</option>
+                                                    </select><br>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-lg-12 -->
+                                    </div><!-- /.row -->                           
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="ficha">    
+                                    <div class="row"><br>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <!-- Text input-->
+                                            <div class="form-group-sm"> <!--ng-class="{'form-group-sm has-error': crear_ficha.$invalid}"-->
+                                                <label class="col-sm-3 control-label">Fecha Inicio</label>
+                                                <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.startDate" class="form-control has-error" valid-date><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label">Hora Inicio</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.startTime" class="form-control" valid-time><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
+                                                <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endDate"  class="form-control" valid-date><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label">Hora Fin</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.endTime" class="form-control" valid-time><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Desde</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" ng-model="fr.from" placeholder="" class="form-control"><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Hasta</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" ng-model="fr.to" placeholder="" class="form-control"><br>
+                                                </div>
+                                            </div>
+
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Aterrizajes</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Tiempo</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-lg-12 -->
+                                    </div><!-- /.row -->                           
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="create()" >Crear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="myViewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalViewLabel">Ficha de Vuelo View</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" class="active"><a href="" data-target="#vuelo" aria-controls="vuelo" role="tab" data-toggle="tab">Vuelo</a></li>
+                                <li role="presentation"><a href="" data-target="#ficha" aria-controls="ficha" role="tab" data-toggle="tab">Ficha</a></li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="flightRecordView">
+                                    <div class="row"><br>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Piloto</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" placeholder="" ng-model="fr.pilot" class="form-control" 
                                                            typeahead-on-select="setSelected($item)"
@@ -195,7 +346,7 @@
                                         </div><!-- /.col-lg-12 -->
                                     </div><!-- /.row -->                           
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="ficha">    
+                                <div role="tabpanel" class="tab-pane" id="flightRecordView">    
                                     <div class="row"><br>
                                         <div class="col-md-10 col-md-offset-1">
                                             <!-- Text input-->
@@ -215,8 +366,8 @@
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endDate" class="form-control" valid-date><br>
+                                                <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endDate"  class="form-control" valid-date><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
@@ -262,5 +413,6 @@
                 </div>
             </div>
         </div>
-    </form>
+
+    
 </section>
