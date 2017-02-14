@@ -1,4 +1,6 @@
 
+/* global moment */
+
 angular.module('app').controller('memberController', ['$scope', 'memberService', function ($scope, memberService) {
         //$scope.myId = memberRepository.a();
     }]);
@@ -7,6 +9,9 @@ angular.module('app').controller('flightRecordController',
         ['$scope', 'flightRecordService', 'pilotService', 'pilotRatingService',
             'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, flightRecordService, pilotService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
+                var fr = new Object();
+                $scope.fr = fr;
+
                 //$scope.flightRecords = flightRecordServices;
                 $scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
@@ -14,24 +19,37 @@ angular.module('app').controller('flightRecordController',
                 $scope.flightPurposes = flightPurposeService.get();
                 $scope.flightTypes = flightTypeService.get();
                 $scope.pilots = pilotService.query();
-
+                init();
                 $scope.instructors = [
                     'Pepe',
                     'Adrenalina'
                 ];
+
+                function init() {
+                    $scope.fr.startDate = new moment().format('DD/MM/YYYY');
+                    $scope.fr.startTime = new moment().format('HH:mm');
+                    $scope.fr.endDate = new moment().format('DD/MM/YYYY');
+                    $scope.fr.endTime = new moment($scope.fr.startTime, 'HH:mm').add(1, 'hours').format('HH:mm');
+                };
 
                 $scope.view = function (id) {
                     console.log(id);
                     console.log($scope.flightRecords[id]);
                 };
 
-                $scope.create = function () {
-                    var newFR = fillFlightRecord($scope);
-                    flightRecordService.save(newFR, function(response) {
-                        newFR.id = response.id;
-                        $scope.flightRecords.push(newFR);    
-                    });
-                    
+                $scope.create = function () {/*
+                 var newFR = fillFlightRecord($scope);
+                 flightRecordService.save(newFR, function(response) {
+                 newFR.id = response.id;
+                 $scope.flightRecords.push(newFR);    
+                 });
+                 */
+                    console.log("Moment: " + new moment());
+                    console.log(moment(moment($scope.fr.startDate, 'DD/MM/YYYY', true).format('YYYYMMDD') + ' ' +
+                            moment($scope.fr.startTime, 'H:mm', true).format('HHmm')).format()
+
+                            );
+                    //console.log(new Date($scope.fr.startDate+'T'+$scope.fr.startTime+':00'));
                     //$scope.flightRecords.push(fillFlightRecord($scope));
                 };
 
@@ -48,7 +66,7 @@ angular.module('app').controller('flightRecordController',
                 $scope.setSelected = function (id) {
                     console.log(id);
                 };
-                
+
                 fillFlightRecord = function (scope) {
                     var flightRecord = {
                         "crew": [{

@@ -49,7 +49,7 @@
                         </div>
                         <div class="box-tools">
                             <span class="btn btn-primary">
-                                <i class="fa fa-sticky-note-o" data-toggle="modal" data-target="#myModal"></i>
+                                <i class="fa fa-sticky-note-o" ng-model="fr" data-toggle="modal" data-target="#myModal"></i>
                             </span>
                         </div>
                     </div>
@@ -141,7 +141,7 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Piloto</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" placeholder="" ng-model="pilot" class="form-control" 
+                                                    <input type="text" placeholder="" ng-model="fr.pilot" class="form-control" 
                                                            typeahead-on-select="setSelected($item)"
                                                            uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
                                                            required pattern=".{2,}">
@@ -152,7 +152,7 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Instructor</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" placeholder="" ng-model="instructor" class="form-control"
+                                                    <input type="text" placeholder="" ng-model="fr.instructor" class="form-control"
                                                            uib-typeahead="instructor for instructor in instructors | filter:$viewValue | limitTo:8"
                                                             pattern=".{2,}">
                                                     <div class="error-message"
@@ -165,13 +165,13 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Aeronave</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control">
+                                                    <select ng-model="fr.aircraft" class="form-control">
                                                         <option value="{{aircraft.id}}" ng-repeat="aircraft in aircrafts">{{aircraft.registration}}</option>
                                                     </select><br>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Propósito</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control">
+                                                    <select ng-model="fr.flightPurpose" class="form-control">
                                                         <option value="{{pilotRating[0]}}" ng-repeat="pilotRating in pilotRatings">{{pilotRating[1]}}</option>
                                                     </select><br>
                                                 </div>
@@ -181,13 +181,13 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Carácter</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control">
+                                                    <select ng-model="fr.flightNature" class="form-control">
                                                         <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
                                                     </select><br>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Tipo</label>
                                                 <div class="col-sm-4">
-                                                    <select class="form-control">
+                                                    <select ng-model="fr.flightType" class="form-control">
                                                         <option value="{{flightType[0]}}" ng-repeat="flightType in flightTypes">{{flightType[1]}}</option>
                                                     </select><br>
                                                 </div>
@@ -202,39 +202,39 @@
                                             <div class="form-group-sm"> <!--ng-class="{'form-group-sm has-error': crear_ficha.$invalid}"-->
                                                 <label class="col-sm-3 control-label">Fecha Inicio</label>
                                                 <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
-                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fecha_inicio" class="form-control has-error" valid-date><br>
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.startDate" class="form-control has-error" valid-date><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label">Hora Inicio</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="hh:mm" ng-model="hora_inicio" class="form-control" valid-time><br>
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.startTime" class="form-control" valid-time><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fecha_fin" class="form-control" valid-date><br>
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endDate" class="form-control" valid-date><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-3 control-label">Hora Fin</label>
                                                 <div class="col-sm-3">
-                                                    <input type="text" placeholder="hh:mm" ng-model="hora_fin" class="form-control" valid-time><br>
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.endTime" class="form-control" valid-time><br>
                                                 </div>
                                             </div>
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Desde</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                    <input type="text" ng-model="fr.from" placeholder="" class="form-control"><br>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Hasta</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                    <input type="text" ng-model="fr.to" placeholder="" class="form-control"><br>
                                                 </div>
                                             </div>
 
