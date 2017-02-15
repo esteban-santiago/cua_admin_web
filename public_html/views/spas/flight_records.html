@@ -182,7 +182,7 @@
                                                 <label class="col-sm-2 control-label">Carácter</label>
                                                 <div class="col-sm-4">
                                                     <select ng-model="fr.flightNature" class="form-control">
-                                                        <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
+                                                        <option value="{{flightNature[0]}}" ng-repeat="flightNature in flightNatures">{{flightNature[1]}}</option>
                                                     </select><br>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Tipo</label>
@@ -242,7 +242,7 @@
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Aterrizajes</label>
                                                 <div class="col-sm-4">
-                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                    <input type="text" ng-model="fr.landings" placeholder="" class="form-control"><br>
                                                 </div>
                                                 <label class="col-sm-2 control-label">Tiempo</label>
                                                 <div class="col-sm-4">

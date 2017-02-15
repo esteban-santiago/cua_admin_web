@@ -114,11 +114,8 @@ angular.module('app').controller('flightRecordController',
                                 "crewMemberRole": "PIC"
                             }],
                         "aircraft": {
-                            "id": 100,
-                            "registration": "LV-OEE",
-                            "model": "152",
-                            "status": "ACTIVE",
-                            "brand": "Cessna"
+                            "id": 102,
+                            "registration":"lv-pwpw"
                         },
                         "startFlight": formatDateToOutput(scope.fr.startDate, scope.fr.startTime),
                         "endFlight": formatDateToOutput(scope.fr.endDate, scope.fr.endTime),
