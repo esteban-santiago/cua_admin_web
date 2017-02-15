@@ -6,12 +6,12 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordService', 'pilotService', 'flightNatureService',
+        ['$scope', 'flightRecordServices', 'pilotService', 'flightNatureService',
             'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, flightRecordService, pilotService, flightNatureService,flightPurposeService, flightTypeService, aircraftService) {
-                //$scope.flightRecords = flightRecordService;
+                $scope.flightRecords = flightRecordService;
                 //console.log($scope.flightRecords);
-                $scope.flightRecords = flightRecordService.query();
+                //$scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
                 $scope.flightNatures = flightNatureService.get();
                 $scope.flightPurposes = flightPurposeService.get();
@@ -26,6 +26,8 @@ angular.module('app').controller('flightRecordController',
                 $scope.fullFill = function() {
                     var fr = new Object();
                     $scope.fr = fr;
+                    
+                    activeDefaultTabPane(); //Activa el primer panel
                     $scope.fr.startDate = new moment().format('DD/MM/YYYY');
                     $scope.fr.startTime = new moment().format('HH:mm');
                     $scope.fr.endDate = new moment().format('DD/MM/YYYY');
@@ -66,6 +68,13 @@ angular.module('app').controller('flightRecordController',
                 $scope.setSelected = function (id) {
                     console.log($scope.fr.purpose);
         
+                };
+
+                activeDefaultTabPane = function() {
+                    angular.element(document.querySelector('#tab_1')).attr("class", "active");
+                    angular.element(document.querySelector('#tab_2')).attr("class", "");
+                    angular.element(document.querySelector('#vuelo')).attr("class", "tab-pane active");
+                    angular.element(document.querySelector('#ficha')).attr("class", "tab-pane");
                 };
 
                 formatDateToOutput = function (date, time) {

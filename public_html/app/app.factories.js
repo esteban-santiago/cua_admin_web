@@ -232,7 +232,7 @@ angular.module('app')
                     },
                     "startFlight": "2017-01-06T19:44:05.296",
                     "endFlight": "2017-01-06T20:54:05.296",
-                    "landings": 0,
+                    "landings": 1,
                     "purpose": "VP",
                     "nature": "LDI",
                     "type": "ENT",
@@ -241,7 +241,7 @@ angular.module('app')
                     "status": "OPENED",
                     "closed": false,
                     "opened": true,
-                    "amountOfHours": 1,
+                    "amountOfHours": 1.1,
                     "canceled": false
                 },
                 {
@@ -362,7 +362,7 @@ angular.module('app')
                     },
                     "startFlight": "2017-01-06T19:44:05.296",
                     "endFlight": "2017-01-06T20:54:05.296",
-                    "landings": 0,
+                    "landings": 2,
                     "purpose": "VP",
                     "nature": "LDI",
                     "type": "ENT",
@@ -371,7 +371,7 @@ angular.module('app')
                     "status": "OPENED",
                     "closed": false,
                     "opened": true,
-                    "amountOfHours": 1,
+                    "amountOfHours": 1.1,
                     "canceled": false
                 }
             ];

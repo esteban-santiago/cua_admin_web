@@ -57,25 +57,37 @@
                     <div class="box-body table-responsive">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
-                                <tr class="table-responsive">
-                                    <th>Id</th>
-                                    <th>Piloto</th>
-                                    <th>Instructor</th>
-                                    <th>Inicio</th>
-                                    <th>Fin</th>
-                                    <th>Aeronave</th>
-                                    <th>Acciones</th>
+                                <tr>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Piloto</th>
+                                    <th class="text-center">Instructor</th>
+                                    <th class="text-center">Inicio</th>
+                                    <th class="text-center">Fin</th>
+                                    <th class="text-center">Aeronave</th>
+                                    <th class="text-center">Aterrizajes</th>
+                                    <th class="text-center">Tiempo (hrs)</th>
+                                    <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody> <!-- users.content - para la página -->
                                 <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
                                 <tr ng-repeat="flightRecord in flightRecords track by $index" class="table">
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
-                                    <td>{{flightRecord.crew[0].person.name}}</td>
-                                    <td>{{flightRecord.crew[1].person.name}}</td>
+                                    <td>
+                                        <div ng-repeat="crewMember in flightRecord.crew| filter:{crewMemberRole:'PIC'}">
+                                            {{crewMember.person.name}}
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div ng-repeat="crewMember in flightRecord.crew| filter:{crewMemberRole:'INST'}">
+                                            {{crewMember.person.name}}
+                                        </div>
+                                    </td>
                                     <td>{{flightRecord.startFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
                                     <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
-                                    <td>{{flightRecord.aircraft.registration}}</td>
+                                    <td class="text-center">{{flightRecord.aircraft.registration}}</td>
+                                    <td class="text-center">{{flightRecord.landings}}</td>
+                                    <td class="text-center">{{flightRecord.amountOfHours}}</td>
                                     <td>
                                         <button class="btn btn-xs" type="button" ng-click="view($index)" data-toggle="modal" data-target="#myViewModal">
                                             <span class="fa fa-search"></span>
@@ -128,8 +140,8 @@
                         <div>
                             <!-- Nav tabs -->
                             <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation" class="active"><a href="" data-target="#vuelo" aria-controls="vuelo" role="tab" data-toggle="tab">Vuelo</a></li>
-                                <li role="presentation"><a href="" data-target="#ficha" aria-controls="ficha" role="tab" data-toggle="tab">Ficha</a></li>
+                                <li role="presentation" id="tab_1" class="active"><a href="" data-target="#vuelo" aria-controls="vuelo" role="tab" data-toggle="tab">Vuelo</a></li>
+                                <li role="presentation" id="tab_2"><a href="" data-target="#ficha" aria-controls="ficha" role="tab" data-toggle="tab">Ficha</a></li>
                             </ul>
 
                             <!-- Tab panes -->
@@ -176,7 +188,6 @@
                                                     </select><br>
                                                 </div>
                                             </div>
-
                                             <!-- Text input-->
                                             <div class="form-group-sm">
                                                 <label class="col-sm-2 control-label">Carácter</label>
@@ -292,25 +303,29 @@
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Piloto</label>
                                             <div class="col-sm-10">
-                                                <pre class="form-control">{{fr.crew[0].person.name}}</pre>
+                                                <div ng-repeat="crewMember in fr.crew| filter:{crewMemberRole:'PIC'}">
+                                                    <pre class="form-control">{{crewMember.person.name}}</pre>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- Text input-->
-                                        <div class="form-group-sm">
-                                            <label class="col-sm-2 control-label">Instructor</label>
-                                            <div class="col-sm-10">
-                                                <pre class="form-control">{{fr.crew[1].person.name}}</pre>
+                                        <div ng-repeat="crewMember in fr.crew| filter:{crewMemberRole:'INST'}">
+                                            <div class="form-group-sm">
+                                                    <label class="col-sm-2 control-label">Instructor</label>
+                                                <div class="col-sm-10">
+                                                    <pre class="form-control">{{crewMember.person.name}}</pre>
+                                                </div>
                                             </div>
                                         </div>
                                         <!-- Text input-->
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Aeronave</label>
                                             <div class="col-sm-4">
-                                               <pre class="form-control">{{fr.aircraft.registration}}</pre>
+                                                <pre class="form-control">{{fr.aircraft.registration}}</pre>
                                             </div>
                                             <label class="col-sm-2 control-label">Propósito</label>
                                             <div class="col-sm-4">
-                                               <pre class="form-control">{{fr.purpose}}</pre>
+                                                <pre class="form-control">{{fr.purpose}}</pre>
                                             </div>
                                         </div>
 
@@ -318,11 +333,11 @@
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Carácter</label>
                                             <div class="col-sm-4">
-                                               <pre class="form-control">{{fr.nature}}</pre>
+                                                <pre class="form-control">{{fr.nature}}</pre>
                                             </div>
                                             <label class="col-sm-2 control-label">Tipo</label>
                                             <div class="col-sm-4">
-                                               <pre class="form-control">{{fr.type}}</pre>
+                                                <pre class="form-control">{{fr.type}}</pre>
                                             </div>
                                         </div>
                                     </div><!-- /.col-lg-12 -->
@@ -335,28 +350,28 @@
                                         <div class="form-group-sm"> 
                                             <label class="col-sm-3 control-label">Fecha Inicio</label>
                                             <div class="col-sm-3"> 
-                                                <pre class="form-control">{{fr.startFlight | date : 'dd/MM/yyyy'}}</pre>
+                                                <pre class="form-control">{{fr.startFlight| date : 'dd/MM/yyyy'}}</pre>
                                             </div>
                                         </div>
                                         <!-- Text input-->
                                         <div class="form-group-sm">
                                             <label class="col-sm-3 control-label">Hora Inicio</label>
                                             <div class="col-sm-3">
-                                                <pre class="form-control">{{fr.startFlight | date : 'HH:mm'}}</pre>
+                                                <pre class="form-control">{{fr.startFlight| date : 'HH:mm'}}</pre>
                                             </div>
                                         </div>
                                         <!-- Text input-->
                                         <div class="form-group-sm">
                                             <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
                                             <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
-                                                <pre class="form-control">{{fr.endFlight | date : 'dd/MM/yyyy'}}</pre>
+                                                <pre class="form-control">{{fr.endFlight| date : 'dd/MM/yyyy'}}</pre>
                                             </div>
                                         </div>
                                         <!-- Text input-->
                                         <div class="form-group-sm">
                                             <label class="col-sm-3 control-label">Hora Fin</label>
                                             <div class="col-sm-3">
-                                                <pre class="form-control">{{fr.endFlight | date : 'HH:mm'}}</pre>
+                                                <pre class="form-control">{{fr.endFlight| date : 'HH:mm'}}</pre>
                                             </div>
                                         </div>
                                         <!-- Text input-->
@@ -370,7 +385,6 @@
                                                 <pre class="form-control">{{fr.destiny}}</pre>
                                             </div>
                                         </div>
-
                                         <!-- Text input-->
                                         <div class="form-group-sm">
                                             <label class="col-sm-2 control-label">Aterrizajes</label>
@@ -394,6 +408,4 @@
             </div>
         </div>
     </div>
-
-
 </section>
