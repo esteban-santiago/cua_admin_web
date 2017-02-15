@@ -6,30 +6,35 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordServices', 'pilotService', 'pilotRatingService',
+        ['$scope', 'flightRecordService', 'pilotService', 'flightNatureService',
             'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, flightRecordService, pilotService, pilotRatingService, flightPurposeService, flightTypeService, aircraftService) {
-                var fr = new Object();
-                $scope.fr = fr;
-                $scope.flightRecords = flightRecordService;
-                console.log($scope.flightRecords);
-                //$scope.flightRecords = flightRecordService.query();
+            function ($scope, flightRecordService, pilotService, flightNatureService,flightPurposeService, flightTypeService, aircraftService) {
+                //$scope.flightRecords = flightRecordService;
+                //console.log($scope.flightRecords);
+                $scope.flightRecords = flightRecordService.query();
                 $scope.aircrafts = aircraftService.query();
-                $scope.pilotRatings = pilotRatingService.get();
+                $scope.flightNatures = flightNatureService.get();
                 $scope.flightPurposes = flightPurposeService.get();
                 $scope.flightTypes = flightTypeService.get();
                 $scope.pilots = pilotService.query();
-                init();
+                
                 $scope.instructors = [
                     'Pepe',
                     'Adrenalina'
                 ];
 
-                function init() {
+                $scope.fullFill = function() {
+                    var fr = new Object();
+                    $scope.fr = fr;
                     $scope.fr.startDate = new moment().format('DD/MM/YYYY');
                     $scope.fr.startTime = new moment().format('HH:mm');
                     $scope.fr.endDate = new moment().format('DD/MM/YYYY');
                     $scope.fr.endTime = new moment($scope.fr.startTime, 'HH:mm').add(1, 'hours').format('HH:mm');
+                };
+
+                $scope.show = function() {
+                    console.log($scope.fr.aircraft);
+                    console.log($scope.fr.flightPurpose);
                 };
 
                 $scope.view = function (id) {
@@ -39,25 +44,18 @@ angular.module('app').controller('flightRecordController',
                     console.log($scope.fr);
                 };
 
-                $scope.create = function () {/*
-                 var newFR = fillFlightRecord($scope);
-                 flightRecordService.save(newFR, function(response) {
-                 newFR.id = response.id;
-                 $scope.flightRecords.push(newFR);    
-                 });
-                 */
-                    console.log("Moment: " + new moment());
-                    console.log(moment(moment($scope.fr.startDate, 'DD/MM/YYYY', true).format('YYYYMMDD') + ' ' +
-                            moment($scope.fr.startTime, 'H:mm', true).format('HHmm')).format()
-
-                            );
-                    //console.log(new Date($scope.fr.startDate+'T'+$scope.fr.startTime+':00'));
+                $scope.create = function () {
+                    var newFR = fillFlightRecord($scope);
+                    flightRecordService.save(newFR, function (response) {
+                        newFR.id = response.id;
+                        $scope.flightRecords.push(newFR);
+                    });
                     //$scope.flightRecords.push(fillFlightRecord($scope));
                 };
 
                 $scope.update = function (id) {
                     console.log(id);
-                    console.log($scope.flightRecords[id]);
+
                 };
 
                 $scope.remove = function (id) {
@@ -66,7 +64,13 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.setSelected = function (id) {
-                    console.log(id);
+                    console.log($scope.fr.purpose);
+        
+                };
+
+                formatDateToOutput = function (date, time) {
+                    return moment(moment(date, 'DD/MM/YYYY', true).format('YYYYMMDD') + 'T' +
+                            moment(time, 'H:mm', true).format('HHmm')).format('YYYY-MM-DDTHH:mm');
                 };
 
                 fillFlightRecord = function (scope) {
@@ -114,34 +118,14 @@ angular.module('app').controller('flightRecordController',
                             "registration": "LV-OEE",
                             "model": "152",
                             "status": "ACTIVE",
-                            "brand": "Cessna",
-                            "insurances": [
-                                {
-                                    "id": 100,
-                                    "type": 'Terceros Completo',
-                                    "policy": 'ABC-4444224422',
-                                    "company": 'Sancor',
-                                    "validityFrom": '2016-07-03',
-                                    "validityTo": '2017-09-03'
-                                }
-                            ],
-                            "components": [
-                                {
-                                    "id": 102,
-                                    "brand": null,
-                                    "description": "Capsula C152",
-                                    "serial": "CAPSULAC152",
-                                    "relocable": false,
-                                    "type": "CAPSULE"
-                                }
-                            ]
+                            "brand": "Cessna"
                         },
-                        "startFlight": "2017-01-06T19:44:05",
-                        "endFlight": "2017-01-06T20:54:05",
-                        "landings": 0,
-                        "purpose": "VP",
-                        "nature": "LDI",
-                        "type": "ENT",
+                        "startFlight": formatDateToOutput(scope.fr.startDate, scope.fr.startTime),
+                        "endFlight": formatDateToOutput(scope.fr.endDate, scope.fr.endTime),
+                        "landings": scope.fr.landings,
+                        "purpose": scope.fr.flightPurpose,
+                        "nature": scope.fr.flightNature,
+                        "type": scope.fr.flightType,
                         "origin": null,
                         "destiny": null,
                         "status": "OPENED",
