@@ -12,8 +12,8 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                     templateUrl: 'views/spas/users.html',
                     controller: 'userController'
                 })
-                .when('/flight_records', {
-                    templateUrl: 'views/spas/flight_records.html',
+                .when('/flight_record', {
+                    templateUrl: 'views/spas/flight_record/flight_record.html',
                     controller: 'flightRecordController'
                 })
                 .otherwise({redirectTo: '/administration'});

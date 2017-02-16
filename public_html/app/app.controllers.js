@@ -6,9 +6,9 @@ angular.module('app').controller('memberController', ['$scope', 'memberService',
     }]);
 
 angular.module('app').controller('flightRecordController',
-        ['$scope', 'flightRecordServices', 'pilotService', 'flightNatureService',
-            'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, flightRecordService, pilotService, flightNatureService,flightPurposeService, flightTypeService, aircraftService) {
+        ['flightRecordServices', 'pilotService', 'flightNatureService',
+            'flightPurposeService', 'flightTypeService', 'aircraftService', '$scope', '$uibModal',
+            function (flightRecordService, pilotService, flightNatureService, flightPurposeService, flightTypeService, aircraftService, $scope, $modal) {
                 $scope.flightRecords = flightRecordService;
                 //console.log($scope.flightRecords);
                 //$scope.flightRecords = flightRecordService.query();
@@ -17,16 +17,16 @@ angular.module('app').controller('flightRecordController',
                 $scope.flightPurposes = flightPurposeService.get();
                 $scope.flightTypes = flightTypeService.get();
                 $scope.pilots = pilotService.query();
-                
+
                 $scope.instructors = [
                     'Pepe',
                     'Adrenalina'
                 ];
 
-                $scope.fullFill = function() {
+                $scope.fullFill = function () {
                     var fr = new Object();
                     $scope.fr = fr;
-                    
+
                     activeDefaultTabPane(); //Activa el primer panel
                     $scope.fr.startDate = new moment().format('DD/MM/YYYY');
                     $scope.fr.startTime = new moment().format('HH:mm');
@@ -34,9 +34,14 @@ angular.module('app').controller('flightRecordController',
                     $scope.fr.endTime = new moment($scope.fr.startTime, 'HH:mm').add(1, 'hours').format('HH:mm');
                 };
 
-                $scope.show = function() {
-                    console.log($scope.fr.aircraft);
-                    console.log($scope.fr.flightPurpose);
+                $scope.show = function () {
+                    $modal.open({
+                        templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        windowClass: 'vertical-center',
+                        backdrop: true,
+                        sticky: true
+                    });
+                    //console.log($scope.fr.aircraft);
                 };
 
                 $scope.view = function (id) {
@@ -67,10 +72,10 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.setSelected = function (id) {
                     console.log($scope.fr.purpose);
-        
+
                 };
 
-                activeDefaultTabPane = function() {
+                activeDefaultTabPane = function () {
                     angular.element(document.querySelector('#tab_1')).attr("class", "active");
                     angular.element(document.querySelector('#tab_2')).attr("class", "");
                     angular.element(document.querySelector('#vuelo')).attr("class", "tab-pane active");
@@ -124,7 +129,7 @@ angular.module('app').controller('flightRecordController',
                             }],
                         "aircraft": {
                             "id": 102,
-                            "registration":"lv-pwpw"
+                            "registration": "lv-pwpw"
                         },
                         "startFlight": formatDateToOutput(scope.fr.startDate, scope.fr.startTime),
                         "endFlight": formatDateToOutput(scope.fr.endDate, scope.fr.endTime),
