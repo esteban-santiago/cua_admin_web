@@ -38,7 +38,8 @@ angular.module('app').controller('flightRecordController',
                         windowClass: 'vertical-center',
                         backdrop: true,
                         sticky: true
-                    });                };
+                    });
+                };
 
                 $scope.show = function () {
                     $modal.open({
@@ -52,14 +53,17 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.view = function (id) {
-                    $scope.fr = $scope.flightRecords[id];
-                    $modal.open({
+                    var fr = $scope.flightRecords[id];
+                    var modalInstance = $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_show.html',
-                        scope: $scope,
-                        //controller: 'flightRecordController',
+                        //scope: $scope,
+                        controller: 'flightRecordModalShowController',
                         windowClass: 'vertical-center',
                         backdrop: true,
-                        sticky: true
+                        sticky: true,
+                        resolve: {
+                            flightRecord: fr //scope
+                        }
                     });
                 };
 
@@ -158,6 +162,12 @@ angular.module('app').controller('flightRecordController',
                 };
             }]);
 
+angular.module('app').controller('flightRecordModalShowController', ['$uibModalInstance','flightRecord',
+        function ($modalInstance, fr) {
+            this.fr = fr;
+            console.log(fr);
+            //$scope.fr = flightRecord;
+        }]);
 
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document', function ($scope, userServices, $document) {
         //$scope.myId = memberRepository.a();
@@ -168,19 +178,9 @@ angular.module('app').controller('userController', ['$scope', 'userServices', '$
         //console.log(userService.getPage({page: 1, size: 10 }));
         //Permite que el botón save desactive la pantalla modal
         angular.element(document.querySelector('#save')).attr("data-dismiss", "modal");
-        /*
-         userServices.save({
-         "name": "bzurrú",
-         "password": "passwd",
-         "status": "ACTIVE",
-         "profile": "USER",
-         "locked": true
-         });
-         */
         $scope.setSelected = function (id) {
             $scope.selectd = id;
             $scope.action = "Modificación ";
             console.log("selectd: " + id);
         };
-
     }]);

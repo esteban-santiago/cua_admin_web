@@ -28,7 +28,7 @@ $(function () {
   });
 
   //bootstrap WYSIHTML5 - text editor
-  $(".textarea").wysihtml5();
+  //$(".textarea").wysihtml5();
 
   $('.daterange').daterangepicker({
     ranges: {
@@ -46,7 +46,7 @@ $(function () {
   });
 
   /* jQueryKnob */
-  $(".knob").knob();
+  //$(".knob").knob();
 
   //jvectormap data
   var visitorsData = {
@@ -63,7 +63,8 @@ $(function () {
     "RU": 3000 //Russia
   };
   //World map by jvectormap
-  $('#world-map').vectorMap({
+ /*
+    $('#world-map').vectorMap({
     map: 'world_mill_en',
     backgroundColor: "transparent",
     regionStyle: {
@@ -113,7 +114,7 @@ $(function () {
     height: '50',
     width: '80'
   });
-
+*/
   //The Calender
   $("#calendar").datepicker();
 
@@ -122,7 +123,7 @@ $(function () {
     height: '250px'
   });
 
-  /* Morris.js Charts */
+  /* Morris.js Charts 
   // Sales chart
   var area = new Morris.Area({
     element: 'revenue-chart',
@@ -194,7 +195,7 @@ $(function () {
     donut.redraw();
     line.redraw();
   });
-
+*/
   /* The todo list plugin */
   $(".todo-list").todolist({
     onCheck: function (ele) {
