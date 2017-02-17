@@ -1,3 +1,4 @@
+/* global moment */
 angular.module('app').directive("datePicker", function () {
     return {
         restrict: "A",
