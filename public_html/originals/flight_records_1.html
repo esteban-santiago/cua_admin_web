@@ -1,139 +1,149 @@
-<!-- Content Header (Page header) -->
-<section class="content-header">
-    <h1>
-        Fichas de Vuelo
-        <small>Panel de Control</small>
-        <br>
-    </h1>
-    
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Administraci&oacute;n</li>
-    </ol>
-
-    <section class="content-header">
-        <h6>&nbsp;</h6>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="box">
-                <div class="box-header">
-                    <!--h3 class="box-title">Responsive Hover Table</h3-->
-                    <div class="input-group input-group-sm" style="width: 220px;">
-                        <div class="input-group-btn">
-                            <span class="btn btn-primary">
-                                <i class="fa fa-search"></i>
-                            </span>
-                        </div>
-                        <input type="text" ng-model="tableSearch" id="tableSearch" class="form-control pull-right" placeholder="Buscar">
+  <!-- Modal -->
+    <form name="crear_ficha">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Ficha de Vuelo</h4>
                     </div>
-                    <div class="box-tools">
-                        <!--button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Crear</button-->
-                            <span class="btn btn-primary">
-                                <i class="fa fa-sticky-note-o" data-toggle="modal" data-target="#myModal"></i>
-                            </span>
+                    <div class="modal-body">
+                        <div>
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li role="presentation" id="tab_1" class="active"><a href="" data-target="#vuelo" aria-controls="vuelo" role="tab" data-toggle="tab">Vuelo</a></li>
+                                <li role="presentation" id="tab_2"><a href="" data-target="#ficha" aria-controls="ficha" role="tab" data-toggle="tab">Ficha</a></li>
+                            </ul>
 
-                    </div>
-                </div>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="vuelo">
+                                    <div class="row"><br>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Piloto</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" placeholder="" ng-model="fr.pilot" class="form-control" 
+                                                           typeahead-on-select="setSelected($item)"
+                                                           uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
+                                                           required pattern=".{2,}">
+                                                    <br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Instructor</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" placeholder="" ng-model="fr.instructor" class="form-control"
+                                                           uib-typeahead="instructor for instructor in instructors | filter:$viewValue | limitTo:8"
+                                                           pattern=".{2,}">
+                                                    <div class="error-message"
+                                                         ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
+                                                        We need a name with 2 chars or more.
+                                                    </div><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Aeronave</label>
+                                                <div class="col-sm-4">
+                                                    <select ng-model="fr.aircraft" class="form-control" ng-change="show()" required>       
+                                                        <option value="{{aircraft.id}}" ng-repeat="aircraft in aircrafts">{{aircraft.registration}}</option>
+                                                    </select><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Propósito</label>
+                                                <div class="col-sm-4">
+                                                    <select ng-model="fr.flightPurpose" class="form-control">
+                                                        <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
+                                                    </select><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Carácter</label>
+                                                <div class="col-sm-4">
+                                                    <select ng-model="fr.flightNature" class="form-control">
+                                                        <option value="{{flightNature[0]}}" ng-repeat="flightNature in flightNatures">{{flightNature[1]}}</option>
+                                                    </select><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Tipo</label>
+                                                <div class="col-sm-4">
+                                                    <select ng-model="fr.flightType" class="form-control">
+                                                        <option value="{{flightType[0]}}" ng-repeat="flightType in flightTypes">{{flightType[1]}}</option>
+                                                    </select><br>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-lg-12 -->
+                                    </div><!-- /.row -->                           
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="ficha">    
+                                    <div class="row"><br>
+                                        <div class="col-md-10 col-md-offset-1">
+                                            <!-- Text input-->
+                                            <div class="form-group-sm"> <!--ng-class="{'form-group-sm has-error': crear_ficha.$invalid}"-->
+                                                <label class="col-sm-3 control-label">Fecha Inicio</label>
+                                                <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.startDate" class="form-control has-error" valid-date><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label">Hora Inicio</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.startTime" class="form-control" valid-time><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label" ng-click="setSelected(2)">Fecha Fin</label>
+                                                <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
+                                                    <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endDate"  class="form-control" valid-date><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-3 control-label">Hora Fin</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" placeholder="hh:mm" ng-model="fr.endTime" class="form-control" valid-time><br>
+                                                </div>
+                                            </div>
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Desde</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" ng-model="fr.from" placeholder="" class="form-control"><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Hasta</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" ng-model="fr.to" placeholder="" class="form-control"><br>
+                                                </div>
+                                            </div>
 
-                    <!-- /.box-header -->
-                    <div class="box-body table-responsive">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr class="table-responsive">
-                                    <th>Id</th>
-                                    <th>Piloto</th>
-                                    <th>Instructor</th>
-                                    <th>Fecha</th>
-                                    <th>Aeronave</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody> <!-- users.content - para la página -->
-                                <tr ng-repeat="flightRecord in flightRecords | filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)">
-                                    <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
-                                    <td>{{flightRecord.crew[0].person.name}}</td>
-                                    <td>{{flightRecord.crew[1].person.name}}</td>
-                                    <td>{{flightRecord.startFlight | cmdate : 'dd/MM/yyyy'}}</td>
-                                    <td>{{flightRecord.aircraft.registration}}</td>
-                                    <td>{{user.locked}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>         
-                    <!-- /.box-body -->
-                    <div class="box-footer clearfix">
-                        <!--ul class="pagination pagination-sm no-margin pull-right"-->
-                        <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
-                        {{users.totalPages}}
-                        <!--li ng-repeat="page in users.totalPages"><a href="#">{{page}}</a></li-->
-                        <!--li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li-->
-                        <!--li><a href="#">&raquo;</a></li>
-                      </ul-->
+                                            <!-- Text input-->
+                                            <div class="form-group-sm">
+                                                <label class="col-sm-2 control-label">Aterrizajes</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" ng-model="fr.landings" placeholder="" class="form-control"><br>
+                                                </div>
+                                                <label class="col-sm-2 control-label">Tiempo</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" placeholder="" class="form-control"><br>
+                                                </div>
+                                            </div>
+                                        </div><!-- /.col-lg-12 -->
+                                    </div><!-- /.row -->                           
+                                </div>
+                            </div>
+                        </div>    
                     </div>
-                    <!-- /.box -->                    
+                    <div class="modal-footer">
+                        <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="create()" >Crear</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Button trigger modal -->
-
-    <!-- Modal -->
-
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">{{ action}} de Usuario</h4>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="" data-target="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                            <li role="presentation"><a href="" data-target="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-                            <li role="presentation"><a href="" data-target="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-                            <li role="presentation"><a href="" data-target="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
-                        </ul>
-
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="box-body">
-                                    <!-- text input -->
-                                    <div class="form-group">
-                                        <label>Nombre</label>
-                                        <input type="text" class="form-control" placeholder="Enter ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Estado</label>
-                                        <input type="text" class="form-control" placeholder="Enter ...">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Perfíl</label>
-                                        <input type="text" class="form-control" placeholder="Enter ...">
-                                    </div>
-                                </div>                            
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="profile">
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="messages">
-
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="settings">
-
-                            </div>
-                        </div>
-                    </div>    
-                </div>
-                <div class="modal-footer">
-                    <button id="cancel" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="save" type="button" class="btn btn-primary" >Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+    </form>

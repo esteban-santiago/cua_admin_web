@@ -32,11 +32,18 @@ angular.module('app').controller('flightRecordController',
                     $scope.fr.startTime = new moment().format('HH:mm');
                     $scope.fr.endDate = new moment().format('DD/MM/YYYY');
                     $scope.fr.endTime = new moment($scope.fr.startTime, 'HH:mm').add(1, 'hours').format('HH:mm');
-                };
+                    $modal.open({
+                        templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        controller: 'flightRecordController',
+                        windowClass: 'vertical-center',
+                        backdrop: true,
+                        sticky: true
+                    });                };
 
                 $scope.show = function () {
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        controller: 'flightRecordController',
                         windowClass: 'vertical-center',
                         backdrop: true,
                         sticky: true
@@ -45,10 +52,15 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.view = function (id) {
-                    console.log(id);
-
                     $scope.fr = $scope.flightRecords[id];
-                    console.log($scope.fr);
+                    $modal.open({
+                        templateUrl: 'views/spas/flight_record/flight_record_show.html',
+                        scope: $scope,
+                        //controller: 'flightRecordController',
+                        windowClass: 'vertical-center',
+                        backdrop: true,
+                        sticky: true
+                    });
                 };
 
                 $scope.create = function () {
