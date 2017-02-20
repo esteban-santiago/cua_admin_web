@@ -24,10 +24,11 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Piloto</label>
                                         <div class="col-sm-10">
+                                            <input type="hidden" ng-model="fr.crew[0].person.id">
                                             <input type="text" placeholder="" ng-model="fr.crew[0].person.name" class="form-control" 
-                                                   typeahead-on-select="setSelected($item)"
+                                                   typeahead-on-select="setSelectedPilot($item)"
                                                    uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
-                                                   required pattern=".{2,}">
+                                                   required pattern=".{2,}" typeahead-editable="false">
                                             <br>
                                         </div>
                                     </div>
@@ -35,9 +36,11 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Instructor</label>
                                         <div class="col-sm-10">
-                                            <input type="text" placeholder="" ng-model="fr.crew[1].person.name" class="form-control"
-                                                   uib-typeahead="instructor for instructor in instructors | filter:$viewValue | limitTo:8"
-                                                   pattern=".{2,}">
+                                            <input type="hidden" ng-model="fr.crew[1].person.id">
+                                            <input type="text" placeholder="" ng-model="fr.crew[1].person.name" class="form-control" 
+                                                   typeahead-on-select="setSelectedInstructor($item)"
+                                                   uib-typeahead="instructor.name for instructor in instructors | filter:$viewValue | limitTo:8" 
+                                                   pattern=".{2,}" typeahead-editable="false">
                                             <div class="error-message"
                                                  ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
                                                 We need a name with 2 chars or more.
@@ -48,13 +51,15 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Aeronave</label>
                                         <div class="col-sm-4">
-                                            <select ng-model="fr.aircraft" class="form-control" ng-change="show()" required>       
-                                                <option value="{{aircraft.id}}" ng-repeat="aircraft in aircrafts">{{aircraft.registration}}</option>
+                                            <select class="form-control" ng-change="setSelected(fr.aircraft)" ng-model="fr.aircraft" 
+                                                    ng-options="aircraft.registration for aircraft in aircrafts  | filter:{status : 'ACTIVE'} track by aircraft.id">
+                                                <option value="">Aeronave</option>
                                             </select><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Propósito</label>
                                         <div class="col-sm-4">
                                             <select ng-model="fr.purpose" class="form-control">
+                                                <option value="">Propósito</option>
                                                 <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
                                             </select><br>
                                         </div>
@@ -143,7 +148,7 @@
                                         </div>
                                         <label class="col-sm-2 control-label">Valor</label>
                                         <div class="col-sm-4">
-                                            <pre class="form-control">{{fr.amountOfHours * 1545 | currency:"$":2}}</pre>
+                                            <pre class="form-control">{{fr.amountOfHours * 1545| currency:"$":2}}</pre>
                                         </div>
                                     </div>
                                 </div><!-- /.col-lg-12 -->
@@ -155,7 +160,7 @@
         </div>
         <div class="modal-footer">
             <button id="cancel" type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Cancelar</button>
-            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="create()" >Crear</button>
+            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save()" >Guardar</button>
         </div>
     </div>
 </div>

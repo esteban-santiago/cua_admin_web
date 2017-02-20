@@ -1,12 +1,14 @@
-
 /* global moment */
 
+/*
+ * Controlador de la ficha de vuelo
+ */
 angular.module('app').controller('flightRecordController',
-        ['$scope', '$uibModal', 'flightRecordServices',
+        ['$scope', '$uibModal', 'flightRecordService',
             function ($scope, $modal, flightRecordService) {
-                $scope.flightRecords = flightRecordService;
+                //$scope.flightRecords = flightRecordService;
                 //console.log($scope.flightRecords);
-                //$scope.flightRecords = flightRecordService.query();
+                $scope.flightRecords = flightRecordService.query();
 
                 $scope.view = function (id) {
                     $modal.open({
@@ -24,7 +26,7 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.create = function () {
                     $modal.open({
-                        templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        templateUrl: 'views/spas/flight_record/flight_record_save.html',
                         controller: 'flightRecordCreateController',
                         scope: $scope,
                         backdrop: false,
@@ -34,7 +36,7 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.update = function (id) {
                     $modal.open({
-                        templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        templateUrl: 'views/spas/flight_record/flight_record_save.html',
                         controller: 'flightRecordUpdateController',
                         scope: $scope,
                         backdrop: false,
@@ -51,11 +53,16 @@ angular.module('app').controller('flightRecordController',
                     $scope.flightRecords.splice(id, 1);
                 };
 
+
                 $scope.setSelected = function (id) {
-                    console.log($scope.fr.purpose);
+                    console.log(id);
                 };
+
             }]);
 
+/*
+ * Controlador de la visualización de la ficha de vuelo
+ */
 angular.module('app').controller('flightRecordViewController',
         ['$scope', '$uibModalInstance', 'flightRecord',
             function ($scope, $modalInstance, fr) {
@@ -65,6 +72,9 @@ angular.module('app').controller('flightRecordViewController',
                 };
             }]);
 
+/*
+ * Controlador de la modificación de la ficha de vuelo
+ */
 angular.module('app').controller('flightRecordUpdateController',
         ['$filter', '$scope', '$uibModalInstance', 'flightRecord',
             function ($filter, $scope, $modalInstance, fr) {
@@ -77,102 +87,87 @@ angular.module('app').controller('flightRecordUpdateController',
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
+                $scope.save = function () {
+
+                };
             }]);
 
+/*
+ * Controlador de la creación de la ficha de vuelo
+ */
 angular.module('app').controller('flightRecordCreateController',
-        ['$scope', '$uibModalInstance', 'flightRecordService', 'pilotService',
+        ['$scope', '$uibModalInstance', 'flightRecordService', 'pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, $modalInstance, flightRecordService, pilotService, flightNatureService,
+            function ($scope, $modalInstance, flightRecordService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
 
+                var fr = new Object();
+                $scope.fr = fr;
+                $scope.fr.theCrew = new Array();
+                
                 fulFill();
 
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
 
-                $scope.create = function () {
+                $scope.setSelectedPilot = function (pilot) {
+                    var crew = {};
+                    crew.person = {};
+                    crew.person.id = pilot.id;
+                    crew.person.name = pilot.name;
+                    crew.crewMemberRole = 'PIC';
+                    $scope.fr.theCrew.push(crew);
+                };
+
+                $scope.setSelectedInstructor = function (instructor) {
+                    var crew = {};
+                    crew.person = {};
+                    crew.person.id = instructor.id;
+                    crew.person.name = instructor.name;
+                    crew.crewMemberRole = 'INST';
+                    $scope.fr.theCrew.push(crew);
+                };
+
+                $scope.save = function () {
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.save(newFR, function (response) {
                         newFR.id = response.id;
                         $scope.flightRecords.push(newFR);
                     });
-                    //$scope.flightRecords.push(fillFlightRecord($scope));
                 };
 
-                $scope.calculateAmount = function() {
-
+                $scope.calculateAmount = function () {
+                    console.log($scope.aircrafts[$scope.fr.aircraft]);
                 };
+
+                
+
 
                 function fulFill() {
-                    var fr = new Object();
-                    $scope.fr = fr;
-                    $scope.fr.startDate = new moment().format('DD/MM/YYYY');
-                    $scope.fr.startTime = new moment().format('HH:mm');
-                    $scope.fr.endDate = new moment().format('DD/MM/YYYY');
-                    $scope.fr.endTime = new moment($scope.fr.startTime, 'HH:mm').add(1, 'hours').format('HH:mm');
+                    $scope.fr.startFlightDate = new moment().format('DD/MM/YYYY');
+                    $scope.fr.startFlightTime = new moment().format('HH:mm');
+                    $scope.fr.endFlightDate = new moment().format('DD/MM/YYYY');
+                    $scope.fr.endFlightTime = new moment($scope.fr.startFlightTime, 'HH:mm').add(1, 'hours').format('HH:mm');
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
                     $scope.flightPurposes = flightPurposeService.get();
                     $scope.flightTypes = flightTypeService.get();
                     $scope.pilots = pilotService.query();
-                    $scope.instructors = [
-                        'Pepe',
-                        'Adrenalina'
-                    ];
+                    $scope.instructors = instructorService.query();
                 }
                 ;
 
                 fillFlightRecord = function (scope) {
                     var flightRecord = {
-                        "crew": [{
-                                "person": {
-                                    "id": 100,
-                                    "name": $scope.fr.pilot,
-                                    "dateOfCreation": "2017-02-03",
-                                    "dateOfBirth": "1974-08-02",
-                                    "nationality": {
-                                        "description": "Argentina",
-                                        "id": 1
-                                    },
-                                    "identityCard": {
-                                        "identityCardNumber": "24036873",
-                                        "identityCardType": "DNI"
-                                    },
-                                    "addresses": [],
-                                    "contactWays": [],
-                                    "status": "ACTIVE",
-                                    "memberProfile": {
-                                        "category": {
-                                            "description": "Socio",
-                                            "id": 1
-                                        },
-                                        "status": "ACTIVE",
-                                        "active": true,
-                                        "dismiss": false
-                                    },
-                                    "pilotProfile": {
-                                        "licence": "24036873",
-                                        "ratings": [],
-                                        "medicalCertifications": [],
-                                        "pilotCertifications": []
-                                    },
-                                    "customerProfile": null,
-                                    "employeeProfile": null,
-                                    "active": true
-                                },
-                                "crewMemberRole": "PIC"
-                            }],
-                        "aircraft": {
-                            "id": 102,
-                            "registration": "LV-AMS"
-                        },
-                        "startFlight": formatDateToOutput(scope.fr.startDate, scope.fr.startTime),
-                        "endFlight": formatDateToOutput(scope.fr.endDate, scope.fr.endTime),
+                        "crew": scope.fr.theCrew,
+                        "aircraft": scope.fr.aircraft,
+                        "startFlight": formatDateToOutput(scope.fr.startFlightDate, scope.fr.startFlightTime),
+                        "endFlight": formatDateToOutput(scope.fr.endFlightDate, scope.fr.endFlightTime),
                         "landings": scope.fr.landings,
-                        "purpose": scope.fr.flightPurpose,
-                        "nature": scope.fr.flightNature,
-                        "type": scope.fr.flightType,
+                        "purpose": scope.fr.purpose,
+                        "nature": scope.fr.nature,
+                        "type": scope.fr.type,
                         "origin": null,
                         "destiny": null,
                         "status": "OPENED",
@@ -181,4 +176,7 @@ angular.module('app').controller('flightRecordCreateController',
                     return flightRecord;
                 };
 
+                formatDateToOutput = function (date, time) {
+                    return new moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' + new moment(time, 'HH:mm').format('HH:mm');
+                };
             }]);
