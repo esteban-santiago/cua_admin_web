@@ -168,10 +168,10 @@ angular.module('app').controller('flightRecordCreateController',
                         "purpose": scope.fr.purpose,
                         "nature": scope.fr.nature,
                         "type": scope.fr.type,
-                        "origin": null,
-                        "destiny": null,
-                        "status": "OPENED",
-                        "amountOfHours": 1
+                        "origin": scope.fr.origin,
+                        "destiny": scope.fr.destiny,
+                        "status": scope.fr.isClosed ? 'CLOSED' : 'OPENED',
+                        "amountOfHours": scope.fr.amountOfHours
                     };
                     return flightRecord;
                 };
