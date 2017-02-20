@@ -52,4 +52,28 @@ angular.module('app').directive("datePicker", function () {
             };
         }
     };
+}).directive('dateFormat', function (dateFilter) {
+    return {
+        require:'ngModel',
+        link:function (scope, elm, attrs, ctrl) {
+
+            var dateFormat = attrs['dateFormat'] || 'dd/MM/YYYY';
+           
+            ctrl.$formatters.unshift(function (modelValue) {
+                return dateFilter(modelValue, dateFormat);
+            });
+        }
+    };
+}).directive('timeFormat', function (timeFilter) {
+    return {
+        require:'ngModel',
+        link:function (scope, elm, attrs, ctrl) {
+
+            var timeFormat = attrs['timeFormat'] || 'HH:mm';
+           
+            ctrl.$formatters.unshift(function (modelValue) {
+                return timeFilter(modelValue, timeFormat);
+            });
+        }
+    };
 });

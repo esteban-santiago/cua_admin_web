@@ -33,7 +33,17 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.update = function (id) {
-                    console.log(id);
+                    $modal.open({
+                        templateUrl: 'views/spas/flight_record/flight_record_add.html',
+                        controller: 'flightRecordUpdateController',
+                        scope: $scope,
+                        backdrop: false,
+                        sticky: true,
+                        resolve: {
+                            //Paso las instancias que necesito
+                            flightRecord: $scope.flightRecords[id]
+                        }
+                    });
                 };
 
                 $scope.remove = function (id) {
@@ -50,6 +60,20 @@ angular.module('app').controller('flightRecordViewController',
         ['$scope', '$uibModalInstance', 'flightRecord',
             function ($scope, $modalInstance, fr) {
                 $scope.fr = fr;
+                $scope.close = function () {
+                    $modalInstance.dismiss();
+                };
+            }]);
+
+angular.module('app').controller('flightRecordUpdateController',
+        ['$filter', '$scope', '$uibModalInstance', 'flightRecord',
+            function ($filter, $scope, $modalInstance, fr) {
+                $scope.fr = fr;
+                $scope.fr.startFlightDate = $filter('date')($scope.fr.startFlight, "dd/MM/yyyy");
+                $scope.fr.startFlightTime = $filter('date')($scope.fr.startFlight, "HH:mm");
+                $scope.fr.endFlightDate = $filter('date')($scope.fr.endFlight, "dd/MM/yyyy");
+                $scope.fr.endFlightTime = $filter('date')($scope.fr.endFlight, "HH:mm");
+                //console.log($scope.endFlightTime);
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
