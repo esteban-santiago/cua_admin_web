@@ -96,15 +96,15 @@ angular.module('app').controller('flightRecordUpdateController',
  * Controlador de la creación de la ficha de vuelo
  */
 angular.module('app').controller('flightRecordCreateController',
-        ['$scope', '$uibModalInstance', 'flightRecordService', 'pilotService', 'instructorService',
+        ['$scope', '$uibModalInstance', 'flightRecordService', 'airfieldService','pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, $modalInstance, flightRecordService, pilotService, instructorService, flightNatureService,
+            function ($scope, $modalInstance, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
 
                 var fr = new Object();
                 $scope.fr = fr;
                 $scope.fr.theCrew = new Array();
-                
+
                 fulFill();
 
                 $scope.close = function () {
@@ -137,11 +137,19 @@ angular.module('app').controller('flightRecordCreateController',
                     });
                 };
 
-                $scope.calculateAmount = function () {
-                    console.log($scope.aircrafts[$scope.fr.aircraft]);
+                $scope.updateAmount = function () {
+                    /*
+                    var now = moment(new Date()); //todays date
+                    var end = moment("2015-12-1"); // another date
+                    var duration = moment.duration(now.diff(end));
+                    var days = duration.asDays();
+                    console.log(days)*/
+                    
+                    console.log($scope.fr.origin);
+                    $scope.fr.amountOfHours = 1.1;
                 };
 
-                
+
 
 
                 function fulFill() {
@@ -155,8 +163,8 @@ angular.module('app').controller('flightRecordCreateController',
                     $scope.flightTypes = flightTypeService.get();
                     $scope.pilots = pilotService.query();
                     $scope.instructors = instructorService.query();
-                }
-                ;
+                    $scope.airfields = airfieldService.query();
+                };
 
                 fillFlightRecord = function (scope) {
                     var flightRecord = {

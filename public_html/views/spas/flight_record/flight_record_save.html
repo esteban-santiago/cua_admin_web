@@ -104,7 +104,7 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-3 control-label">Fecha Fin</label>
                                         <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
-                                            <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endFlightDate"  class="form-control" valid-date><br>
+                                            <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endFlightDate" class="form-control" valid-date><br>
                                         </div>
                                     </div>
                                     <!-- Text input-->
@@ -118,7 +118,13 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Desde</label>
                                         <div class="col-sm-4">
-                                            <input type="text" ng-model="fr.origin" placeholder="" class="form-control"><br>
+                                            <input type="text" ng-model="fr.origin">
+                                            <input type="text" placeholder="" ng-model="fr.origino" class="form-control" 
+                                                   
+                                                   uib-typeahead="airfield.id for airfield in airfields | filter:$viewValue | limitTo:8" 
+                                                   required pattern=".{2,}" typeahead-editable="false">
+                                            
+                                            <!--input type="text" ng-model="fr.origin" placeholder="" class="form-control"--><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Hasta</label>
                                         <div class="col-sm-4">
@@ -128,8 +134,8 @@
 
                                     <!-- Text input-->
                                     <div class="form-group-sm">
-                                        <label class="col-sm-2 control-label">Aterrizajes</label>
-                                        <div class="col-sm-4">
+                                        <label class="col-sm-3 control-label">Aterrizajes</label>
+                                        <div class="col-sm-3">
                                             <input type="text" ng-model="fr.landings" placeholder="" class="form-control"><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Tiempo</label>
@@ -139,16 +145,14 @@
                                     </div>
                                     <!-- Text input-->
                                     <div class="form-group-sm">
-                                        <label class="col-sm-2 control-label">
-                                            Concluída
-                                        </label>
+                                        <label class="col-sm-2 control-label">Concluída</label>
                                         <div class="col-sm-4">
-                                            <input type="checkbox" ng-model="fr.isClosed" ng-click="calculateAmount()">
+                                            <input type="checkbox" ng-model="fr.isClosed" ng-click="updateAmount()"><br>
                                             <br>
                                         </div>
-                                        <label class="col-sm-2 control-label">Valor</label>
-                                        <div class="col-sm-4">
-                                            <pre class="form-control">{{fr.amountOfHours * 1545| currency:"$":2}}</pre>
+                                        <label class="col-sm-3 control-label">Valor</label>
+                                        <div class="col-sm-3">
+                                            <pre class="form-control">{{fr.amountOfHours * fr.aircraft.productProfile.product.price | currency:"$":2}}</pre>
                                         </div>
                                     </div>
                                 </div><!-- /.col-lg-12 -->
