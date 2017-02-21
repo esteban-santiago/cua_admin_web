@@ -7,10 +7,10 @@ angular.module('app').controller('flightRecordController',
         ['$scope', '$uibModal', 'flightRecordService',
             function ($scope, $modal, flightRecordService) {
                 //$scope.flightRecords = flightRecordService;
-                //console.log($scope.flightRecords);
                 $scope.flightRecords = flightRecordService.query();
 
                 $scope.view = function (id) {
+                    console.log($scope.flightRecords[id]);
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_view.html',
                         controller: 'flightRecordViewController',
@@ -49,7 +49,7 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.remove = function (id) {
-                    console.log(id);
+                    console.log(flightRecordService.delete({'id': $scope.flightRecords[id].id}));
                     $scope.flightRecords.splice(id, 1);
                 };
 
@@ -83,7 +83,6 @@ angular.module('app').controller('flightRecordUpdateController',
                 $scope.fr.startFlightTime = $filter('date')($scope.fr.startFlight, "HH:mm");
                 $scope.fr.endFlightDate = $filter('date')($scope.fr.endFlight, "dd/MM/yyyy");
                 $scope.fr.endFlightTime = $filter('date')($scope.fr.endFlight, "HH:mm");
-                //console.log($scope.endFlightTime);
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
@@ -128,11 +127,11 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.setSelectedOrigin = function(origin) {
-                    $scope.fr.origin = origin;
+                    $scope.fr.aOrigin = origin;
                 };
 
                 $scope.setSelectedDestiny = function(destiny) {
-                    $scope.fr.destiny = destiny;
+                    $scope.fr.aDestiny = destiny;
                 };
 
                 $scope.save = function () {
@@ -152,11 +151,8 @@ angular.module('app').controller('flightRecordCreateController',
                     console.log(days)*/
                     
                     console.log($scope.fr.origin);
-                    $scope.fr.amountOfHours = 1.1;
+                    $scope.fr.amountOfHours = 1;
                 };
-
-
-
 
                 function fulFill() {
                     $scope.fr.startFlightDate = new moment().format('DD/MM/YYYY');
@@ -182,8 +178,8 @@ angular.module('app').controller('flightRecordCreateController',
                         "purpose": scope.fr.purpose,
                         "nature": scope.fr.nature,
                         "type": scope.fr.type,
-                        "origin": scope.fr.origin,
-                        "destiny": scope.fr.destiny,
+                        "origin": scope.fr.aOrigin,
+                        "destiny": scope.fr.aDestiny,
                         "status": scope.fr.isClosed ? 'CLOSED' : 'OPENED',
                         "amountOfHours": scope.fr.amountOfHours
                     };
@@ -191,6 +187,7 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 formatDateToOutput = function (date, time) {
-                    return new moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' + new moment(time, 'HH:mm').format('HH:mm');
+                    return new moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' + 
+                            new moment(time, 'HH:mm').format('HH:mm');
                 };
             }]);

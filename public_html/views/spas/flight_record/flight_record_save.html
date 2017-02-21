@@ -4,7 +4,7 @@
             <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel">Ficha de Vuelo Soy Add</h4>
+            <h4 class="modal-title" id="myModalLabel">Ficha de Vuelo</h4>
         </div>
         <div class="modal-body">
             <form name="crear_ficha">
@@ -28,7 +28,7 @@
                                             <input type="text" placeholder="" ng-model="fr.crew[0].person.name" class="form-control" 
                                                    typeahead-on-select="setSelectedPilot($item)"
                                                    uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
-                                                   required pattern=".{2,}" typeahead-editable="false">
+                                                   ng-required='true' pattern=".{2,}" typeahead-editable="false">
                                             <br>
                                         </div>
                                     </div>
@@ -41,18 +41,15 @@
                                                    typeahead-on-select="setSelectedInstructor($item)"
                                                    uib-typeahead="instructor.name for instructor in instructors | filter:$viewValue | limitTo:8" 
                                                    pattern=".{2,}" typeahead-editable="false">
-                                            <div class="error-message"
-                                                 ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
-                                                We need a name with 2 chars or more.
-                                            </div><br>
+                                            <br>
                                         </div>
                                     </div>
                                     <!-- Text input-->
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Aeronave</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" ng-change="setSelected(fr.aircraft)" ng-model="fr.aircraft" required
-                                                    ng-options="aircraft.registration for aircraft in aircrafts  | filter:{status : 'ACTIVE'} track by aircraft.id">
+                                            <select class="form-control" ng-change="setSelected(fr.aircraft)" ng-model="fr.aircraft" ng-required='true'
+                                                    ng-options="aircraft.registration for aircraft in aircrafts| filter:{status : 'ACTIVE'} track by aircraft.id">
                                                 <option value="">Aeronave</option>
                                             </select><br>
                                         </div>
@@ -121,14 +118,14 @@
                                             <input type="text" placeholder="" ng-model="fr.origin.name" class="form-control" 
                                                    typeahead-on-select="setSelectedOrigin($item)"
                                                    uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
-                                                   pattern=".{2,}" typeahead-editable="false"><br>
+                                                   ng-required='fr.isClosed' pattern=".{2,}" typeahead-editable="false"><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Hasta</label>
                                         <div class="col-sm-4">
                                             <input type="text" placeholder="" ng-model="fr.destiny.name" class="form-control" 
                                                    typeahead-on-select="setSelectedDestiny($item)"
                                                    uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
-                                                   pattern=".{2,}" typeahead-editable="false"><br>
+                                                   ng-required='fr.isClosed' pattern=".{2,}" typeahead-editable="false"><br>
                                         </div>
                                     </div>
 
@@ -152,7 +149,7 @@
                                         </div>
                                         <label class="col-sm-3 control-label">Valor</label>
                                         <div class="col-sm-3">
-                                            <pre class="form-control">{{fr.amountOfHours * fr.aircraft.productProfile.product.price | currency:"$":2}}</pre>
+                                            <pre class="form-control">{{fr.amountOfHours * fr.aircraft.productProfile.product.price| currency:"$":2}}</pre>
                                         </div>
                                     </div>
                                 </div><!-- /.col-lg-12 -->
@@ -162,7 +159,12 @@
                 </div>    
             </form>
         </div>
+
         <div class="modal-footer">
+        <div class="error-message"
+             ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
+            Completar los campos obligatorios.
+        </div><br>
             <button id="cancel" type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Cancelar</button>
             <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save()" >Guardar</button>
         </div>

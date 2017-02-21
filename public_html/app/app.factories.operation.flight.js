@@ -7,8 +7,6 @@ angular.module('app')
                 'update': {method: 'PUT'},
                 'save': {method: 'POST'},
                 'query': {method: 'GET', isArray: true},
-                'remove': {method: 'DELETE'},
-                'delete': {method: 'DELETE'},
                 'getPage': {method: 'GET', isArray: false,
                     url: url + '/?page=:page&size=:size',
                     params: {page: '@page', size: '@size'}
@@ -24,8 +22,6 @@ angular.module('app')
                 'update': {method: 'PUT'},
                 'save': {method: 'POST'},
                 'query': {method: 'GET', isArray: true},
-                'remove': {method: 'DELETE'},
-                'delete': {method: 'DELETE'},
                 'getPage': {method: 'GET', isArray: false,
                     url: url + '/?page=:page&size=:size',
                     params: {page: '@page', size: '@size'}
@@ -42,8 +38,14 @@ angular.module('app')
                 'update': {method: 'PUT'},
                 'save': {method: 'POST'},
                 'query': {method: 'GET', isArray: true},
-                'remove': {method: 'DELETE'},
-                'delete': {method: 'DELETE'},
+                'delete': {method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        //'Access-Control-Allow-Origin': '*',
+			//'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT, DELETE,PATCH',
+                        'Accept': 'application/json'
+                    }
+                },
                 'getPage': {method: 'GET', isArray: false,
                     url: url + '/?page=:page&size=:size',
                     params: {page: '@page', size: '@size'}
