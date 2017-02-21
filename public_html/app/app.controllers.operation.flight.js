@@ -95,14 +95,13 @@ angular.module('app').controller('flightRecordUpdateController',
  * Controlador de la creación de la ficha de vuelo
  */
 angular.module('app').controller('flightRecordCreateController',
-        ['$scope', '$uibModalInstance', 'flightRecordService', 'airfieldService','pilotService', 'instructorService',
+        ['$scope', 'moment', '$uibModalInstance', 'flightRecordService', 'airfieldService','pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, $modalInstance, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
+            function ($scope, moment, $modalInstance, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
 
-                var fr = new Object();
-                $scope.fr = fr;
-                $scope.fr.theCrew = new Array();
+                $scope.fr = {};
+                $scope.fr.theCrew = [];
 
                 fulFill();
 
@@ -111,19 +110,11 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.setSelectedPilot = function (pilot) {
-                    var crew = {};
-                    crew.person = {};
-                    crew.person = pilot;
-                    crew.crewMemberRole = 'PIC';
-                    $scope.fr.theCrew.push(crew);
+                    $scope.fr.theCrew.push({person: pilot, crewMemberRole: 'PIC'});
                 };
 
                 $scope.setSelectedInstructor = function (instructor) {
-                    var crew = {};
-                    crew.person = {};
-                    crew.person = instructor;
-                    crew.crewMemberRole = 'INST';
-                    $scope.fr.theCrew.push(crew);
+                    $scope.fr.theCrew.push({person: instructor, crewMemberRole: 'INST'});
                 };
 
                 $scope.setSelectedOrigin = function(origin) {
@@ -149,16 +140,16 @@ angular.module('app').controller('flightRecordCreateController',
                     var duration = moment.duration(now.diff(end));
                     var days = duration.asDays();
                     console.log(days)*/
-                    
+
                     console.log($scope.fr.origin);
                     $scope.fr.amountOfHours = 1;
                 };
 
                 function fulFill() {
-                    $scope.fr.startFlightDate = new moment().format('DD/MM/YYYY');
-                    $scope.fr.startFlightTime = new moment().format('HH:mm');
-                    $scope.fr.endFlightDate = new moment().format('DD/MM/YYYY');
-                    $scope.fr.endFlightTime = new moment($scope.fr.startFlightTime, 'HH:mm').add(1, 'hours').format('HH:mm');
+                    $scope.fr.startFlightDate = moment().format('DD/MM/YYYY');
+                    $scope.fr.startFlightTime = moment().format('HH:mm');
+                    $scope.fr.endFlightDate = moment().format('DD/MM/YYYY');
+                    $scope.fr.endFlightTime = moment($scope.fr.startFlightTime, 'HH:mm').add(1, 'hours').format('HH:mm');
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
                     $scope.flightPurposes = flightPurposeService.get();
@@ -166,28 +157,27 @@ angular.module('app').controller('flightRecordCreateController',
                     $scope.pilots = pilotService.query();
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
-                };
+                }
 
                 fillFlightRecord = function (scope) {
-                    var flightRecord = {
-                        "crew": scope.fr.theCrew,
-                        "aircraft": scope.fr.aircraft,
-                        "startFlight": formatDateToOutput(scope.fr.startFlightDate, scope.fr.startFlightTime),
-                        "endFlight": formatDateToOutput(scope.fr.endFlightDate, scope.fr.endFlightTime),
-                        "landings": scope.fr.landings,
-                        "purpose": scope.fr.purpose,
-                        "nature": scope.fr.nature,
-                        "type": scope.fr.type,
-                        "origin": scope.fr.aOrigin,
-                        "destiny": scope.fr.aDestiny,
-                        "status": scope.fr.isClosed ? 'CLOSED' : 'OPENED',
-                        "amountOfHours": scope.fr.amountOfHours
+                    return {
+                        crew: scope.fr.theCrew,
+                        aircraft: scope.fr.aircraft,
+                        startFlight: formatDateToOutput(scope.fr.startFlightDate, scope.fr.startFlightTime),
+                        endFlight: formatDateToOutput(scope.fr.endFlightDate, scope.fr.endFlightTime),
+                        landings: scope.fr.landings,
+                        purpose: scope.fr.purpose,
+                        nature: scope.fr.nature,
+                        type: scope.fr.type,
+                        origin: scope.fr.aOrigin,
+                        destiny: scope.fr.aDestiny,
+                        status: scope.fr.isClosed ? 'CLOSED' : 'OPENED',
+                        amountOfHours: scope.fr.amountOfHours
                     };
-                    return flightRecord;
                 };
 
                 formatDateToOutput = function (date, time) {
-                    return new moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' + 
-                            new moment(time, 'HH:mm').format('HH:mm');
+                    return moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' +
+                            moment(time, 'HH:mm').format('HH:mm');
                 };
             }]);
