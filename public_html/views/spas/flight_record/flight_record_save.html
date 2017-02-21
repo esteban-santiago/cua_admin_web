@@ -51,7 +51,7 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Aeronave</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control" ng-change="setSelected(fr.aircraft)" ng-model="fr.aircraft" 
+                                            <select class="form-control" ng-change="setSelected(fr.aircraft)" ng-model="fr.aircraft" required
                                                     ng-options="aircraft.registration for aircraft in aircrafts  | filter:{status : 'ACTIVE'} track by aircraft.id">
                                                 <option value="">Aeronave</option>
                                             </select><br>
@@ -118,17 +118,17 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Desde</label>
                                         <div class="col-sm-4">
-                                            <input type="text" ng-model="fr.origin">
-                                            <input type="text" placeholder="" ng-model="fr.origino" class="form-control" 
-                                                   
-                                                   uib-typeahead="airfield.id for airfield in airfields | filter:$viewValue | limitTo:8" 
-                                                   required pattern=".{2,}" typeahead-editable="false">
-                                            
-                                            <!--input type="text" ng-model="fr.origin" placeholder="" class="form-control"--><br>
+                                            <input type="text" placeholder="" ng-model="fr.origin.name" class="form-control" 
+                                                   typeahead-on-select="setSelectedOrigin($item)"
+                                                   uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
+                                                   pattern=".{2,}" typeahead-editable="false"><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Hasta</label>
                                         <div class="col-sm-4">
-                                            <input type="text" ng-model="fr.destiny" placeholder="" class="form-control"><br>
+                                            <input type="text" placeholder="" ng-model="fr.destiny.name" class="form-control" 
+                                                   typeahead-on-select="setSelectedDestiny($item)"
+                                                   uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
+                                                   pattern=".{2,}" typeahead-editable="false"><br>
                                         </div>
                                     </div>
 

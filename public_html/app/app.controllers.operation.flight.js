@@ -114,8 +114,7 @@ angular.module('app').controller('flightRecordCreateController',
                 $scope.setSelectedPilot = function (pilot) {
                     var crew = {};
                     crew.person = {};
-                    crew.person.id = pilot.id;
-                    crew.person.name = pilot.name;
+                    crew.person = pilot;
                     crew.crewMemberRole = 'PIC';
                     $scope.fr.theCrew.push(crew);
                 };
@@ -123,10 +122,17 @@ angular.module('app').controller('flightRecordCreateController',
                 $scope.setSelectedInstructor = function (instructor) {
                     var crew = {};
                     crew.person = {};
-                    crew.person.id = instructor.id;
-                    crew.person.name = instructor.name;
+                    crew.person = instructor;
                     crew.crewMemberRole = 'INST';
                     $scope.fr.theCrew.push(crew);
+                };
+
+                $scope.setSelectedOrigin = function(origin) {
+                    $scope.fr.origin = origin;
+                };
+
+                $scope.setSelectedDestiny = function(destiny) {
+                    $scope.fr.destiny = destiny;
                 };
 
                 $scope.save = function () {
