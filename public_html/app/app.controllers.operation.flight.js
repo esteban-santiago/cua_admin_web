@@ -146,9 +146,9 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 function fulFill() {
-                    $scope.fr.startFlightDate = moment.format('DD/MM/YYYY');
-                    $scope.fr.startFlightTime = moment.format('HH:mm');
-                    $scope.fr.endFlightDate = moment.format('DD/MM/YYYY');
+                    $scope.fr.startFlightDate = moment().format('DD/MM/YYYY');
+                    $scope.fr.startFlightTime = moment().format('HH:mm');
+                    $scope.fr.endFlightDate = moment().format('DD/MM/YYYY');
                     $scope.fr.endFlightTime = moment($scope.fr.startFlightTime, 'HH:mm').add(1, 'hours').format('HH:mm');
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
