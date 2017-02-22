@@ -135,13 +135,6 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.updateAmount = function () {
-                    /*
-                    var now = moment(new Date()); //todays date
-                    var end = moment("2015-12-1"); // another date
-                    var duration = moment.duration(now.diff(end));
-                    var days = duration.asDays();
-                    console.log(days)*/
-
                     console.log($scope.fr.origin);
                     $scope.fr.amountOfHours = 1;
                 };
