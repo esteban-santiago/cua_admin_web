@@ -9,8 +9,7 @@ angular.module('app').controller('flightRecordController',
                 //$scope.flightRecords = flightRecordService;
                 $scope.flightRecords = flightRecordService.query();
 
-                $scope.view = function (id) {
-                    console.log($scope.flightRecords[id]);
+                $scope.view = function (flightRecord) {
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_view.html',
                         controller: 'flightRecordViewController',
@@ -19,7 +18,7 @@ angular.module('app').controller('flightRecordController',
                         sticky: true,
                         resolve: {
                             //Paso las instancias que necesito
-                            flightRecord: $scope.flightRecords[id]
+                            flightRecord: flightRecord
                         }
                     });
                 };
@@ -34,7 +33,7 @@ angular.module('app').controller('flightRecordController',
                     });
                 };
 
-                $scope.update = function (id) {
+                $scope.update = function (flightRecord) {
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_save.html',
                         controller: 'flightRecordUpdateController',
@@ -43,16 +42,22 @@ angular.module('app').controller('flightRecordController',
                         sticky: true,
                         resolve: {
                             //Paso las instancias que necesito
-                            flightRecord: $scope.flightRecords[id]
+                            flightRecord: flightRecord
                         }
                     });
                 };
 
-                $scope.remove = function (id) {
-                    console.log(flightRecordService.delete({'id': $scope.flightRecords[id].id}));
-                    $scope.flightRecords.splice(id, 1);
+                $scope.remove = function (flightRecord) {
+                    flightRecordService.delete({'id': flightRecord.id});
+                    _fr = $scope.flightRecords.filter(function (fr) {
+                        return  flightRecord.id !== fr.id;
+                    });
+                    $scope.flightRecords = _fr;
                 };
 
+                $scope.compensate = function (flightRecord) {
+
+                };
 
                 $scope.setSelected = function (id) {
                     console.log(id);
@@ -86,9 +91,21 @@ angular.module('app').controller('flightRecordUpdateController',
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
+
                 $scope.save = function () {
 
                 };
+                
+                function fulFill() {
+                    $scope.aircrafts = aircraftService.query();
+                    $scope.flightNatures = flightNatureService.get();
+                    $scope.flightPurposes = flightPurposeService.get();
+                    $scope.flightTypes = flightTypeService.get();
+                    $scope.pilots = pilotService.query();
+                    $scope.instructors = instructorService.query();
+                    $scope.airfields = airfieldService.query();
+                }
+
             }]);
 
 /*
@@ -126,16 +143,15 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.save = function () {
-                    console.log(fillFlightRecord($scope));
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.save(newFR, function (response) {
                         newFR.id = response.id;
                         $scope.flightRecords.push(newFR);
                     });
+                    $modalInstance.dismiss();
                 };
 
                 $scope.updateAmount = function () {
-                    console.log($scope.fr.origin);
                     $scope.fr.amountOfHours = 1;
                 };
 

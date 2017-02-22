@@ -71,7 +71,7 @@
                             </thead>
                             <tbody> <!-- users.content - para la página -->
                                 <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
-                                <tr ng-repeat="flightRecord in flightRecords track by $index" class="table">
+                                <tr ng-repeat="flightRecord in flightRecords | orderBy:'-id'" class="table">
                                     <td><a href="" data-toggle="modal" data-target="#myModal">{{flightRecord.id}}</a></td>
                                     <td>
                                         <div ng-repeat="crewMember in flightRecord.crew| filter:{crewMemberRole:'PIC'}">
@@ -89,16 +89,16 @@
                                     <td class="text-center">{{flightRecord.landings}}</td>
                                     <td class="text-center">{{flightRecord.amountOfHours}}</td>
                                     <td>
-                                        <button class="btn btn-xs" type="button" ng-click="view($index)">
+                                        <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
                                             <span class="fa fa-search"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update($index)">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update(flightRecord)">
                                             <span class="fa fa-pencil"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove($index)">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove(flightRecord)">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="create()">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="compensate(flightRecord)">
                                             <span class="fa fa-money"></span>
                                         </button>
 
