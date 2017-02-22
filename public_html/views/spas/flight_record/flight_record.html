@@ -92,13 +92,13 @@
                                         <button class="btn btn-xs" type="button" ng-click="view($index)">
                                             <span class="fa fa-search"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="!flightRecord.isClose" ng-click="update($index)">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update($index)">
                                             <span class="fa fa-pencil"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-click="remove($index)">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove($index)">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-click="create()">
+                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="create()">
                                             <span class="fa fa-money"></span>
                                         </button>
 
