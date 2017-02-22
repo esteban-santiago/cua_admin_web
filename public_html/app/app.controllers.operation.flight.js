@@ -95,7 +95,7 @@ angular.module('app').controller('flightRecordUpdateController',
  * Controlador de la creación de la ficha de vuelo
  */
 angular.module('app').controller('flightRecordCreateController',
-        ['$scope', 'moment', '$uibModalInstance', 'flightRecordService', 'airfieldService','pilotService', 'instructorService',
+        ['$scope', 'moment', '$uibModalInstance', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, moment, $modalInstance, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
@@ -117,11 +117,11 @@ angular.module('app').controller('flightRecordCreateController',
                     $scope.fr.theCrew.push({person: instructor, crewMemberRole: 'INST'});
                 };
 
-                $scope.setSelectedOrigin = function(origin) {
+                $scope.setSelectedOrigin = function (origin) {
                     $scope.fr.aOrigin = origin;
                 };
 
-                $scope.setSelectedDestiny = function(destiny) {
+                $scope.setSelectedDestiny = function (destiny) {
                     $scope.fr.aDestiny = destiny;
                 };
 
