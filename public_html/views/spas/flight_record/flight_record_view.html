@@ -78,7 +78,7 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-3 control-label">Hora Inicio</label>
                                         <div class="col-sm-3">
-                                            <pre class="form-control">{{fr.startFlight| date : 'HH:mm'}}</pre>
+                                            <pre class="form-control">{{fr.startFlight| amDateFormat : 'HH:mm'}}</pre>
                                         </div>
                                     </div>
                                     <!-- Text input-->
@@ -92,7 +92,7 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-3 control-label">Hora Fin</label>
                                         <div class="col-sm-3">
-                                            <pre class="form-control">{{fr.endFlight| date : 'HH:mm'}}</pre>
+                                            <pre class="form-control">{{fr.endFlight| amDateFormat : 'HH:mm'}}</pre>
                                         </div>
                                     </div>
                                     <!-- Text input-->
