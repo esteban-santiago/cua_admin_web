@@ -122,7 +122,7 @@ angular.module('app').controller('flightRecordUpdateController',
                             return fr_.id !== response.id;
                         });
                         $scope.flightRecords = _fr;
-                        $scope.flightRecords.push(newFR);
+                        $scope.flightRecords.push(response);
                     });
                     console.log($scope.fr);
                     $modalInstance.dismiss();
@@ -199,6 +199,10 @@ angular.module('app').controller('flightRecordCreateController',
 
                 $scope.setSelectedInstructor = function (instructor) {
                     $scope.fr.theCrew.push({person: instructor, crewMemberRole: 'INST'});
+                };
+
+                $scope.clearSelectedInstructor = function () {
+                    console.log($scope.instructor.person.name);
                 };
 
                 $scope.setSelectedOrigin = function (origin) {

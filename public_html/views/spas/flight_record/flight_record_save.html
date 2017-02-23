@@ -37,7 +37,7 @@
                                         <label class="col-sm-2 control-label">Instructor</label>
                                         <div class="col-sm-10">
                                             <input type="hidden" ng-model="instructor.person.id">
-                                            <input type="text" placeholder="" ng-model="instructor.person.name" class="form-control" 
+                                            <input type="text" ng-change="clearSelectedInstructor()" placeholder="" ng-model="instructor.person.name" class="form-control" 
                                                    typeahead-on-select="setSelectedInstructor($item)"
                                                    
                                                    uib-typeahead="instructor.name for instructor in instructors | filter:$viewValue | limitTo:8" 
