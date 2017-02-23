@@ -118,9 +118,13 @@ angular.module('app').controller('flightRecordUpdateController',
                     console.log(fillFlightRecord($scope));
                    var newFR = fillFlightRecord($scope);
                     flightRecordService.update(newFR, function (response) {
-                        console.log(newFR);
-                        //console.log(response);
+                        var _fr = $scope.flightRecords.filter(function (fr_) {
+                            return fr_.id !== response.id;
+                        });
+                        $scope.flightRecords = _fr;
+                        $scope.flightRecords.push(newFR);
                     });
+                    console.log($scope.fr);
                     $modalInstance.dismiss();
                 };
                 
