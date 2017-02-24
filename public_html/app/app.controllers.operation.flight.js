@@ -8,11 +8,9 @@ angular.module('app').controller('flightRecordController',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
-                //$scope.flightRecords = flightRecordService;
+                        
                 fulFill();
                 
-                $scope.flightRecords = flightRecordService.query();
-
                 $scope.view = function (flightRecord) {
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_view.html',
@@ -53,11 +51,7 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.remove = function (flightRecord) {
                     flightRecordService.delete({'id': flightRecord.id});
-                    _fr = $scope.flightRecords.filter(function (fr) {
-                        return  flightRecord.id !== fr.id;
-                    });
-                    $scope.flightRecords = _fr;
-                };
+                    $scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord),1);                };
 
                 $scope.compensate = function (flightRecord) {
 
@@ -71,6 +65,7 @@ angular.module('app').controller('flightRecordController',
                     $scope.pilots = pilotService.query();
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
+                    $scope.flightRecords = flightRecordService.query();
                 };
 
             }]);
@@ -92,10 +87,14 @@ angular.module('app').controller('flightRecordViewController',
  */
 angular.module('app').controller('flightRecordUpdateController',
         ['$filter', '$scope', '$uibModalInstance', 'flightRecordService', 'flightRecord',
-            function ($filter, $scope, $modalInstance, flightRecordService, fr) {
+            function ($filter, $scope, $modalInstance, flightRecordService, flightRecord) {
+
+                $scope.fr = JSON.parse(JSON.stringify(flightRecord));                
                 
-                $scope.fr = fr;
-                $scope.fr.theCrew = $scope.fr.crew;
+                theCrew = [];
+                theCrew = $scope.fr.crew;
+                aOrigin = $scope.fr.origin;
+                aDestiny = $scope.fr.destiny;
 
                 $scope.pilot = $scope.fr.crew.filter(function (tc) {
                         return tc.crewMemberRole === 'PIC';
@@ -109,53 +108,54 @@ angular.module('app').controller('flightRecordUpdateController',
                 $scope.fr.startFlightTime = $filter('date')($scope.fr.startFlight, "HH:mm");
                 $scope.fr.endFlightDate = $filter('date')($scope.fr.endFlight, "dd/MM/yyyy");
                 $scope.fr.endFlightTime = $filter('date')($scope.fr.endFlight, "HH:mm");
+ 
+                //console.log($scope.fr);
                 
                 $scope.close = function () {
                     $modalInstance.dismiss();
                 };
 
                 $scope.save = function () {
-                    console.log(fillFlightRecord($scope));
                    var newFR = fillFlightRecord($scope);
-                    flightRecordService.update(newFR, function (response) {
+                   flightRecordService.update(newFR, function (response) {
                         var _fr = $scope.flightRecords.filter(function (fr_) {
                             return fr_.id !== response.id;
                         });
+                        _fr.push(response); 
                         $scope.flightRecords = _fr;
-                        $scope.flightRecords.push(response);
+                        //console.log(_fr);
                     });
-                    console.log($scope.fr);
                     $modalInstance.dismiss();
                 };
                 
                 $scope.setSelectedPilot = function (pilot) {
-                    _theCrew = $scope.fr.theCrew.filter(function (tc) {
+                    _theCrew = theCrew.filter(function (tc) {
                         return tc.crewMemberRole !== 'PIC';
                     });
-                    $scope.fr.theCrew = _theCrew;
-                    $scope.fr.theCrew.push({person: pilot, crewMemberRole: 'PIC'});
+                    theCrew = _theCrew;
+                    theCrew.push({person: pilot, crewMemberRole: 'PIC'});
                 };
 
                 $scope.setSelectedInstructor = function (instructor) {
-                    _theCrew = $scope.fr.theCrew.filter(function (tc) {
+                    _theCrew = theCrew.filter(function (tc) {
                         return tc.crewMemberRole !== 'INST';
                     });
-                    $scope.fr.theCrew = _theCrew;
-                    $scope.fr.theCrew.push({person: instructor, crewMemberRole: 'INST'});
+                    theCrew = _theCrew;
+                    theCrew.push({person: instructor, crewMemberRole: 'INST'});
                 };
 
                 $scope.setSelectedOrigin = function (origin) {
-                    $scope.fr.aOrigin = origin;
+                    aOrigin = origin;
                 };
 
                 $scope.setSelectedDestiny = function (destiny) {
-                    $scope.fr.aDestiny = destiny;
+                    aDestiny = destiny;
                 };
 
                 fillFlightRecord = function (scope) {
                     return {
                         id: scope.fr.id,
-                        crew: scope.fr.theCrew,
+                        crew: theCrew,
                         aircraft: scope.fr.aircraft,
                         startFlight: formatDateToOutput(scope.fr.startFlightDate, scope.fr.startFlightTime),
                         endFlight: formatDateToOutput(scope.fr.endFlightDate, scope.fr.endFlightTime),
@@ -163,8 +163,8 @@ angular.module('app').controller('flightRecordUpdateController',
                         purpose: scope.fr.purpose,
                         nature: scope.fr.nature,
                         type: scope.fr.type,
-                        origin: scope.fr.aOrigin,
-                        destiny: scope.fr.aDestiny,
+                        origin: aOrigin,
+                        destiny: aDestiny,
                         status: scope.fr.isClosed ? 'CLOSED' : 'OPENED',
                         amountOfHours: scope.fr.amountOfHours
                     };
