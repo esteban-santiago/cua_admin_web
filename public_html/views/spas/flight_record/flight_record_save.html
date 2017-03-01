@@ -24,8 +24,7 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Piloto</label>
                                         <div class="col-sm-10">
-                                            <input type="hidden" ng-model="pilot.person.id">
-                                            <input type="text" placeholder="" ng-model="pilot.person.name" class="form-control" 
+                                            <input type="text" ng-blur="clearCrewMember('PIC')" placeholder="" ng-model="pilot.person.name" class="form-control" 
                                                    typeahead-on-select="setSelectedCrewMember($item, 'PIC')"
                                                    uib-typeahead="pilot.name for pilot in pilots | filter:$viewValue | limitTo:8" 
                                                    ng-required='true' pattern=".{2,}" typeahead-editable="false">
@@ -36,10 +35,8 @@
                                     <div class="form-group-sm">
                                         <label class="col-sm-2 control-label">Instructor</label>
                                         <div class="col-sm-10">
-                                            <input type="hidden" ng-model="instructor.person.id">
-                                            <input type="text" ng-change="clearSelectedInstructor()" placeholder="" ng-model="instructor.person.name" class="form-control" 
+                                            <input type="text" ng-blur="clearCrewMember('INST')" placeholder="" ng-model="instructor.person.name" class="form-control" 
                                                    typeahead-on-select="setSelectedCrewMember($item, 'INST')"
-                                                   
                                                    uib-typeahead="instructor.name for instructor in instructors | filter:$viewValue | limitTo:8" 
                                                    pattern=".{2,}" typeahead-editable="false">
                                             <br>

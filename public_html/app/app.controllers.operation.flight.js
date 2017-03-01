@@ -49,7 +49,11 @@ angular.module('app').controller('flightRecordController',
                             flightRecord: flightRecord
                         }
                     }).result.then(function(_fr) {
-                        $scope.flightRecords = _fr;
+                        var fr = $scope.flightRecords.filter(function (fr_) {
+                            return fr_.id !== _fr.id;
+                        });
+                        fr.push(_fr); 
+                        $scope.flightRecords = fr;
                     });
                 };
 
@@ -100,11 +104,11 @@ angular.module('app').controller('flightRecordUpdateController',
                 aOrigin = $scope.fr.origin;
                 aDestiny = $scope.fr.destiny;
 
-                $scope.pilot = $scope.fr.crew.filter(function (tc) {
+                $scope.pilot = theCrew.filter(function (tc) {
                         return tc.crewMemberRole === 'PIC';
                     })[0];
 
-                $scope.instructor = $scope.fr.crew.filter(function (tc) {
+                $scope.instructor = theCrew.filter(function (tc) {
                         return tc.crewMemberRole === 'INST';
                     })[0];
                 
@@ -112,27 +116,6 @@ angular.module('app').controller('flightRecordUpdateController',
                 $scope.fr.startFlightTime = $filter('date')($scope.fr.startFlight, "HH:mm");
                 $scope.fr.endFlightDate = $filter('date')($scope.fr.endFlight, "dd/MM/yyyy");
                 $scope.fr.endFlightTime = $filter('date')($scope.fr.endFlight, "HH:mm");
- 
-                //console.log($scope.fr);
-                
-                $scope.close = function () {
-                    $modalInstance.dismiss();
-                };
-
-                $scope.save = function () {
-                   var newFR = fillFlightRecord($scope);
-                   flightRecordService.update(newFR, function (response) {
-                        var _fr = $scope.flightRecords.filter(function (fr_) {
-                            return fr_.id !== response.id;
-                        });
-                        _fr.push(response); 
-                        $modalInstance.close(_fr);
-                    });
-                };
-
-                $scope.setSelectedCrewMember = function (member, kind) {
-                    $scope.fr.theCrew.push({person: member, crewMemberRole: kind});
-                };
                 
                 $scope.setSelectedCrewMember = function (member, kind) {
                     _theCrew = theCrew.filter(function (tc) {
@@ -141,7 +124,11 @@ angular.module('app').controller('flightRecordUpdateController',
                     theCrew = _theCrew;
                     theCrew.push({person: member, crewMemberRole: kind});
                 };
-
+                
+                $scope.clearCrewMember = function (item, kind) {
+                    console.log(item);
+                    console.log(kind);
+                };
 
                 $scope.setSelectedOrigin = function (origin) {
                     aOrigin = origin;
@@ -149,6 +136,17 @@ angular.module('app').controller('flightRecordUpdateController',
 
                 $scope.setSelectedDestiny = function (destiny) {
                     aDestiny = destiny;
+                };
+
+                $scope.close = function () {
+                    $modalInstance.dismiss();
+                };
+
+                $scope.save = function () {
+                   var newFR = fillFlightRecord($scope);
+                   flightRecordService.update(newFR, function (response) {
+                        $modalInstance.close(response);
+                    });
                 };
 
                 fillFlightRecord = function (scope) {
@@ -196,8 +194,8 @@ angular.module('app').controller('flightRecordCreateController',
                     $scope.fr.theCrew.push({person: member, crewMemberRole: kind});
                 };
 
-                $scope.clearSelectedInstructor = function () {
-                    console.log($scope.instructor.person.name);
+                $scope.clearCrewMember = function (item, kind) {
+                    console.log($scope.instructor);
                 };
 
                 $scope.setSelectedOrigin = function (origin) {
@@ -212,7 +210,6 @@ angular.module('app').controller('flightRecordCreateController',
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.save(newFR, function (response) {
                         newFR.id = response.id;
-                        //$scope.flightRecords.push(newFR);
                         $modalInstance.close(newFR);
                     });
                 };
