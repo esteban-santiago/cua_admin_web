@@ -1,7 +1,7 @@
 
 angular.module('app')
         .factory('aircraftService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/aircraft';
+            var url = 'http://localhost:8080/sapi/operation/aircraft';
             return $resource(url + '/:id', {id: '@id'}, {
                 'get': {method: 'GET'},
                 'update': {method: 'PUT'},
@@ -16,7 +16,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('airfieldService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/airfield';
+            var url = 'http://localhost:8080/sapi/operation/airfield';
             return $resource(url + '/:id', {id: '@id'}, {
                 'get': {method: 'GET'},
                 'update': {method: 'PUT'},
@@ -32,7 +32,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('flightRecordService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/flight_record';
+            var url = 'http://localhost:8080/sapi/operation/flight_record';
             return $resource(url + '/:id', {id: '@id'}, {
                 'get': {method: 'GET'},
                 'update': {method: 'PUT'},
