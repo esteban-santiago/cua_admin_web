@@ -56,7 +56,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('pilotRatingService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/pilot/rating';
+            var url = 'http://localhost:8080/sapi/operation/pilot/rating';
             return $resource(url, {
                 'get': {method: 'GET'}
             });
@@ -64,7 +64,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('flightPurposeService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/flight/purpose';
+            var url = 'http://localhost:8080/sapi/operation/flight/purpose';
             return $resource(url, {
                 'get': {method: 'GET'}
             });
@@ -72,7 +72,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('flightNatureService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/flight/nature';
+            var url = 'http://localhost:8080/sapi/operation/flight/nature';
             return $resource(url, {
                 'get': {method: 'GET'}
             });
@@ -80,7 +80,7 @@ angular.module('app')
 
 angular.module('app')
         .factory('flightTypeService', function ($resource) {
-            var url = 'http://localhost:8080/sapi/flight/type';
+            var url = 'http://localhost:8080/sapi/operation/flight/type';
             return $resource(url, {
                 'get': {method: 'GET'}
             });
