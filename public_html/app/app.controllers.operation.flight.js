@@ -8,9 +8,9 @@ angular.module('app').controller('flightRecordController',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
             function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
                     flightPurposeService, flightTypeService, aircraftService) {
-                        
+
                 fulFill();
-                
+
                 $scope.view = function (flightRecord) {
                     $modal.open({
                         templateUrl: 'views/spas/flight_record/flight_record_view.html',
@@ -32,7 +32,7 @@ angular.module('app').controller('flightRecordController',
                         scope: $scope,
                         backdrop: false,
                         sticky: true
-                    }).result.then(function(_fr) {
+                    }).result.then(function (_fr) {
                         $scope.flightRecords.push(_fr);
                     });
                 };
@@ -48,23 +48,24 @@ angular.module('app').controller('flightRecordController',
                             //Paso las instancias que necesito
                             flightRecord: flightRecord
                         }
-                    }).result.then(function(_fr) {
+                    }).result.then(function (_fr) {
                         var fr = $scope.flightRecords.filter(function (fr_) {
                             return fr_.id !== _fr.id;
                         });
-                        fr.push(_fr); 
+                        fr.push(_fr);
                         $scope.flightRecords = fr;
                     });
                 };
 
                 $scope.remove = function (flightRecord) {
                     flightRecordService.delete({'id': flightRecord.id});
-                    $scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord),1);                };
+                    $scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
+                };
 
                 $scope.compensate = function (flightRecord) {
 
                 };
-                
+
                 function fulFill() {
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
@@ -74,7 +75,8 @@ angular.module('app').controller('flightRecordController',
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
                     $scope.flightRecords = flightRecordService.query();
-                };
+                }
+                ;
 
             }]);
 
@@ -97,26 +99,26 @@ angular.module('app').controller('flightRecordUpdateController',
         ['$filter', '$scope', '$uibModalInstance', 'flightRecordService', 'flightRecord',
             function ($filter, $scope, $modalInstance, flightRecordService, flightRecord) {
 
-                $scope.fr = JSON.parse(JSON.stringify(flightRecord));                
-                
+                $scope.fr = JSON.parse(JSON.stringify(flightRecord));
+
                 theCrew = [];
                 theCrew = $scope.fr.crew;
                 aOrigin = $scope.fr.origin;
                 aDestiny = $scope.fr.destiny;
 
                 $scope.pilot = theCrew.filter(function (tc) {
-                        return tc.crewMemberRole === 'PIC';
-                    })[0];
+                    return tc.crewMemberRole === 'PIC';
+                })[0];
 
                 $scope.instructor = theCrew.filter(function (tc) {
-                        return tc.crewMemberRole === 'INST';
-                    })[0];
-                
+                    return tc.crewMemberRole === 'INST';
+                })[0];
+
                 $scope.fr.startFlightDate = $filter('date')($scope.fr.startFlight, "dd/MM/yyyy");
                 $scope.fr.startFlightTime = $filter('date')($scope.fr.startFlight, "HH:mm");
                 $scope.fr.endFlightDate = $filter('date')($scope.fr.endFlight, "dd/MM/yyyy");
                 $scope.fr.endFlightTime = $filter('date')($scope.fr.endFlight, "HH:mm");
-                
+
                 $scope.setSelectedCrewMember = function (member, kind) {
                     _theCrew = theCrew.filter(function (tc) {
                         return tc.crewMemberRole !== kind;
@@ -124,7 +126,7 @@ angular.module('app').controller('flightRecordUpdateController',
                     theCrew = _theCrew;
                     theCrew.push({person: member, crewMemberRole: kind});
                 };
-                
+
                 $scope.clearCrewMember = function (item, kind) {
                     console.log(item);
                     console.log(kind);
@@ -143,8 +145,8 @@ angular.module('app').controller('flightRecordUpdateController',
                 };
 
                 $scope.save = function () {
-                   var newFR = fillFlightRecord($scope);
-                   flightRecordService.update(newFR, function (response) {
+                    var newFR = fillFlightRecord($scope);
+                    flightRecordService.update(newFR, function (response) {
                         $modalInstance.close(response);
                     });
                 };
@@ -166,12 +168,12 @@ angular.module('app').controller('flightRecordUpdateController',
                         amountOfHours: scope.fr.amountOfHours
                     };
                 };
-                
-               formatDateToOutput = function (date, time) {
+
+                formatDateToOutput = function (date, time) {
                     return moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' +
                             moment(time, 'HH:mm').format('HH:mm');
                 };
-                
+
             }]);
 
 /*
@@ -219,10 +221,16 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 function fulFill() {
-                    //Corregir el bug de sumar 1 hora solo al horario!
-                    $scope.fr.startFlightDate = $scope.fr.endFlightDate = moment().format('DD/MM/YYYY');
-                    $scope.fr.startFlightTime = moment().format('HH:mm');
-                    $scope.fr.endFlightTime = moment($scope.fr.startFlightTime, 'HH:mm').add(1, 'hours').format('HH:mm');
+                    var TIME_TO_ADD = 1;
+                    var UNIT_TO_ADD = 'hours';
+                    var DATE_FORMAT = 'DD/MM/YYYY';
+                    var TIME_FORMAT = 'HH:mm';
+                    
+                    var startDate = endDate = new moment();
+                    $scope.fr.startFlightDate = startDate.format(DATE_FORMAT);
+                    $scope.fr.startFlightTime = moment(startDate).format(TIME_FORMAT);
+                    $scope.fr.endFlightDate = endDate.add(TIME_TO_ADD, UNIT_TO_ADD).format(DATE_FORMAT);                    
+                    $scope.fr.endFlightTime = endDate.format(TIME_FORMAT);
                 }
 
                 fillFlightRecord = function (scope) {
@@ -243,7 +251,7 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 formatDateToOutput = function (date, time) {
-                    return moment(date, 'dd/MM/yyyy').format('YYYY-MM-DD') + 'T' +
+                    return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + 'T' +
                             moment(time, 'HH:mm').format('HH:mm');
                 };
             }]);
