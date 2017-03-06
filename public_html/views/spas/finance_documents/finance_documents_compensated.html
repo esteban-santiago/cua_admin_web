@@ -1,0 +1,59 @@
+
+<!-- /.box-header -->
+<div class="box-body table-responsive">
+    <table id="example2" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th class="text-center">Id</th>
+                <th class="text-center">Documento</th>
+                <th class="text-center">Socio</th>
+                <th class="text-center">Fecha</th>
+                <th class="text-center">Fin</th>
+                <th class="text-center">Monto</th>
+                <th class="text-center">Moneda</th>
+                <th class="text-center">Tipo</th>
+                <th class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody> <!-- users.content - para la página -->
+            <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
+            <tr ng-repeat="financeDocument in financeDocuments| orderBy:'-id'" class="table">
+                <td class="text-center">{{financeDocument.id}}</td>
+                <td class="text-center">{{financeDocument.legalId}}</td>
+                <td class="text-center">{{financeDocument.person.name}}</td>
+                <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
+                <td class="text-center">{{financeDocument.amount| currency:"$ ":2}}</td>
+                <td class="text-center">{{financeDocument.currency}}</td>
+                <td class="text-center">{{financeDocument.documentType}}</td>
+                <td>
+                    <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
+                        <span class="fa fa-search"></span>
+                    </button>
+                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update(flightRecord)">
+                        <span class="fa fa-pencil"></span>
+                    </button>
+                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove(flightRecord)">
+                        <span class="fa fa-trash"></span>
+                    </button>
+                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="compensate(flightRecord)">
+                        <span class="fa fa-money"></span>
+                    </button>
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>         
+<!-- /.box-body -->
+<div class="box-footer clearfix">
+    <!--ul class="pagination pagination-sm no-margin pull-right"-->
+    <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
+    {{users.totalPages}}
+    <!--li ng-repeat="page in users.totalPages"><a href="#">{{page}}</a></li-->
+    <!--li><a href="#">2</a></li>
+    <li><a href="#">3</a></li-->
+    <!--li><a href="#">&raquo;</a></li>
+  </ul-->
+</div>
+<!-- /.box -->                    

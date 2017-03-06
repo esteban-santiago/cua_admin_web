@@ -1,11 +1,10 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        Fichas de Vuelo
+        Documentos Financieros
         <small>Panel de Control</small>
         <br>
     </h1>
-
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li class="active">Administraci&oacute;n</li>
@@ -24,13 +23,11 @@
                                         <div class="input-group input-group-sm">
                                             <div class="input-group-btn search-panel">
                                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    <span id="search_concept">Buscar por</span> <span class="caret"></span>
+                                                    <span id="search_concept">Búsqueda por Socio</span> <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#contains">Contains</a></li>
-                                                    <li><a href="#its_equal">It's equal</a></li>
-                                                    <li><a href="#greather_than">Greather than ></a></li>
-                                                    <li><a href="#less_than">Less than < </a></li>
+                                                    <li><a href="">Abiertos</a></li>
+                                                    <li><a href="#its_equal">Compensados</a></li>
                                                     <li class="divider"></li>
                                                     <li><a href="#all">Anything</a></li>
                                                 </ul>
@@ -49,7 +46,7 @@
                         </div>
                         <div class="box-tools">
                             <span class="btn btn-primary">
-                                <i class="fa fa-sticky-note-o" ng-click="create()"></i>
+                                <i class="fa fa-sticky-note-o" ng-click="create()" data-toggle="modal" data-target="#myModal"></i>
                             </span>
                         </div>
                     </div>
@@ -59,35 +56,27 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Id</th>
-                                    <th class="text-center">Piloto</th>
-                                    <th class="text-center">Instructor</th>
-                                    <th class="text-center">Inicio</th>
+                                    <th class="text-center">Documento</th>
+                                    <th class="text-center">Socio</th>
+                                    <th class="text-center">Fecha</th>
                                     <th class="text-center">Fin</th>
-                                    <th class="text-center">Aeronave</th>
-                                    <th class="text-center">Aterrizajes</th>
-                                    <th class="text-center">Tiempo (hrs)</th>
+                                    <th class="text-center">Monto</th>
+                                    <th class="text-center">Moneda</th>
+                                    <th class="text-center">Tipo</th>
                                     <th class="text-center">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody> <!-- users.content - para la página -->
                                 <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
-                                <tr ng-repeat="flightRecord in flightRecords | orderBy:'-id'" class="table">
-                                    <td class="text-center">{{flightRecord.id}}</td>
-                                    <td>
-                                        <div ng-repeat="crewMember in flightRecord.crew| filter:{crewMemberRole:'PIC'}">
-                                            {{crewMember.person.name}}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div ng-repeat="crewMember in flightRecord.crew| filter:{crewMemberRole:'INST'}">
-                                            {{crewMember.person.name}}
-                                        </div>
-                                    </td>
-                                    <td>{{flightRecord.startFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
+                                <tr ng-repeat="financeDocument in financeDocuments | orderBy:'-id'" class="table">
+                                    <td class="text-center">{{financeDocument.id}}</td>
+                                    <td class="text-center">{{financeDocument.legalId}}</td>
+                                    <td class="text-center">{{financeDocument.person.name}}</td>
+                                    <td class="text-center">{{financeDocument.creationDate | date : 'dd/MM/yyyy HH:mm'}}</td>
                                     <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
-                                    <td class="text-center">{{flightRecord.aircraft.registration}}</td>
-                                    <td class="text-center">{{flightRecord.landings}}</td>
-                                    <td class="text-center">{{flightRecord.amountOfHours}}</td>
+                                    <td class="text-center">{{financeDocument.amount  | currency:"$ ":2}}</td>
+                                    <td class="text-center">{{financeDocument.currency}}</td>
+                                    <td class="text-center">{{financeDocument.documentType}}</td>
                                     <td>
                                         <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
                                             <span class="fa fa-search"></span>
