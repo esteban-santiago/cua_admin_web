@@ -6,3 +6,14 @@ angular.module('app').controller('financeDocumentsController', ['$scope', 'finan
         console.log($scope.financeDocuments);
 
     }]);
+
+angular.module('app').controller('financeDocumentsCompensationController',
+        ['$scope', '$uibModalInstance', 'financeDocumentsService', 'financeDocument',
+            function ($scope, $uibModalInstance, financeDocumentsService, financeDocument) {
+
+                console.log($scope.financeDocuments);
+                console.log(financeDocument);
+                $scope.close = function () {
+                    $uibModalInstance.dismiss();
+                };
+            }]);

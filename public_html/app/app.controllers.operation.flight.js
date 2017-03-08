@@ -63,6 +63,25 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.compensate = function (flightRecord) {
+                    $modal.open({
+                        templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
+                        controller: 'financeDocumentsCompensationController',
+                        scope: $scope,
+                        backdrop: false,
+                        sticky: true,
+                        resolve: {
+                            //Paso las instancias que necesito
+                            financeDocument: flightRecord
+                        }
+                    }).result.then(function (_fr) {
+                        /*
+                         var fr = $scope.flightRecords.filter(function (fr_) {
+                         return fr_.id !== _fr.id;
+                         });
+                         fr.push(_fr);
+                         $scope.flightRecords = fr;
+                         */
+                    });
 
                 };
 
@@ -225,11 +244,11 @@ angular.module('app').controller('flightRecordCreateController',
                     var UNIT_TO_ADD = 'hours';
                     var DATE_FORMAT = 'DD/MM/YYYY';
                     var TIME_FORMAT = 'HH:mm';
-                    
+
                     var startDate = endDate = new moment();
                     $scope.fr.startFlightDate = startDate.format(DATE_FORMAT);
                     $scope.fr.startFlightTime = moment(startDate).format(TIME_FORMAT);
-                    $scope.fr.endFlightDate = endDate.add(TIME_TO_ADD, UNIT_TO_ADD).format(DATE_FORMAT);                    
+                    $scope.fr.endFlightDate = endDate.add(TIME_TO_ADD, UNIT_TO_ADD).format(DATE_FORMAT);
                     $scope.fr.endFlightTime = endDate.format(TIME_FORMAT);
                 }
 

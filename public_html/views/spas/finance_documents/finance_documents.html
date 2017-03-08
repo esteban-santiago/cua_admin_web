@@ -32,8 +32,8 @@
                                                     <li><a href="#all">Anything</a></li>
                                                 </ul>
                                             </div>
-                                            <input type="hidden" name="search_param" value="all" id="search_param">         
-                                            <input type="text" class="form-control" name="x" placeholder="Buscar...">
+                                            <!--input type="hidden" name="search_param" value="all" id="search_param"-->         
+                                            <input type="text" class="form-control" ng-model="search_param" name="x" placeholder="Buscar...">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button">
                                                     <span class="glyphicon glyphicon-search"></span>
@@ -51,7 +51,8 @@
                         </div>
                     </div>
                     
-                  <div ng-include="views/spas/finance_documents/finance_compensated_documents.html"></div>
+                  <div ng-if="search_param !== ''" ng-include src="'views/spas/finance_documents/finance_documents_compensated.html'"></div>
+                  <div ng-if="search_param === ''" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
                     
                 </div>
             </div>
