@@ -6,9 +6,8 @@
             <tr>
                 <th class="text-center">Id</th>
                 <th class="text-center">Document</th>
-                <th class="text-center">Socio</th>
+                <th class="text-center">Cliente</th>
                 <th class="text-center">Fecha</th>
-                <th class="text-center">Fin</th>
                 <th class="text-center">Monto</th>
                 <th class="text-center">Moneda</th>
                 <th class="text-center">Tipo</th>
@@ -21,8 +20,7 @@
                 <td class="text-center">{{financeDocument.id}}</td>
                 <td class="text-center">{{financeDocument.legalId}}</td>
                 <td class="text-center">{{financeDocument.person.name}}</td>
-                <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy HH:mm'}}</td>
-                <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
+                <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>
                 <td class="text-center">{{financeDocument.amount| currency:"$ ":2}}</td>
                 <td class="text-center">{{financeDocument.currency}}</td>
                 <td class="text-center">{{financeDocument.documentType}}</td>
@@ -30,13 +28,13 @@
                     <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
                         <span class="fa fa-search"></span>
                     </button>
-                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update(flightRecord)">
+                    <button class="btn btn-xs" type="button" ng-show="financeDocument.status !== 'CLOSED'" ng-click="update(flightRecord)">
                         <span class="fa fa-pencil"></span>
                     </button>
-                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove(flightRecord)">
+                    <button class="btn btn-xs" type="button" ng-show="financeDocument.status !== 'CLOSED'" ng-click="remove(flightRecord)">
                         <span class="fa fa-trash"></span>
                     </button>
-                    <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="compensate(flightRecord)">
+                    <button class="btn btn-xs" type="button" ng-show="financeDocument.status === 'CLOSED'" ng-click="compensate(flightRecord)">
                         <span class="fa fa-money"></span>
                     </button>
 
