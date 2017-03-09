@@ -26,10 +26,10 @@
                                                     <span id="search_concept">Búsqueda por Socio</span> <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="">Abiertos</a></li>
-                                                    <li><a href="#its_equal">Compensados</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#all">Anything</a></li>
+                                                    <li><a href="" ng-click="list = 'open'">Abiertos</a></li>
+                                                    <li><a href="" ng-click="list = 'closed'">Compensados</a></li>
+                                                    <!--li class="divider"></li>
+                                                    <li><a href="#all">Anything</a></li-->
                                                 </ul>
                                             </div>
                                             <!--input type="hidden" name="search_param" value="all" id="search_param"-->         
@@ -51,8 +51,8 @@
                         </div>
                     </div>
                     
-                  <div ng-if="search_param !== ''" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
-                  <div ng-if="search_param === ''" ng-include src="'views/spas/finance_documents/finance_documents_compensated.html'"></div>
+                  <div ng-if="list === 'open'" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
+                  <div ng-if="list === 'closed'" ng-include src="'views/spas/finance_documents/finance_documents_compensated.html'"></div>
                     
                 </div>
             </div>
