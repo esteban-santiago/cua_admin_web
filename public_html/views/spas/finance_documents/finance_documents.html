@@ -20,7 +20,23 @@
                             <div class="container">
                                 <div class="row">    
                                     <div class="col-xs-7 col-xs-offset-0">
+                                        <div class="checkbox">
+                                            <label class="input-group-sm">
+                                                <input type="checkbox">
+                                                Abiertos
+                                            </label>
+                                        </div>
+
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox">
+                                                Cerrados
+                                            </label>
+                                        </div>
+
                                         <div class="input-group input-group-sm">
+
+
                                             <div class="input-group-btn search-panel">
                                                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                                                     <span id="search_concept">Búsqueda por Socio</span> <span class="caret"></span>
@@ -33,7 +49,7 @@
                                                 </ul>
                                             </div>
                                             <!--input type="hidden" name="search_param" value="all" id="search_param"-->         
-                                            <input type="text" class="form-control" ng-init="search_param=''" ng-model="search_param" placeholder="Buscar...">
+                                            <input type="text" class="form-control" ng-init="search_param = ''" ng-model="search_param" placeholder="Buscar...">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button">
                                                     <span class="glyphicon glyphicon-search"></span>
@@ -50,10 +66,65 @@
                             </span>
                         </div>
                     </div>
-                    
-                  <div ng-if="list === 'open'" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
-                  <div ng-if="list === 'closed'" ng-include src="'views/spas/finance_documents/finance_documents_compensated.html'"></div>
-                    
+
+                    <!--div ng-if="list === 'open'" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
+                    <div ng-if="list === 'closed'" ng-include src="'views/spas/finance_documents/finance_documents_compensated.html'"></div-->
+                    <!-- /.box-header -->
+                    <div class="box-body table-responsive">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Id</th>
+                                    <th class="text-center">Documento</th>
+                                    <th class="text-center">Cliente</th>
+                                    <th class="text-center">Fecha</th>
+                                    <th class="text-center">Monto</th>
+                                    <th class="text-center">Moneda</th>
+                                    <th class="text-center">Tipo</th>
+                                    <th class="text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody> <!-- users.content - para la página -->
+                                <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
+                                <tr ng-repeat="financeDocument in financeDocuments| orderBy:'-id'" class="table">
+                                    <td class="text-center">{{financeDocument.id}}</td>
+                                    <td class="text-center">{{financeDocument.legalId}}</td>
+                                    <td class="text-center">{{financeDocument.person.name}}</td>
+                                    <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>
+                                    <td class="text-center">{{financeDocument.amount| currency:"$ ":2}}</td>
+                                    <td class="text-center">{{financeDocument.currency}}</td>
+                                    <td class="text-center">{{financeDocument.documentType}}</td>
+                                    <td>
+                                        <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
+                                            <span class="fa fa-search"></span>
+                                        </button>
+                                        <button class="btn btn-xs" type="button" ng-show="financeDocument.status !== 'CLOSED'" ng-click="update(flightRecord)">
+                                            <span class="fa fa-pencil"></span>
+                                        </button>
+                                        <button class="btn btn-xs" type="button" ng-show="financeDocument.status !== 'CLOSED'" ng-click="remove(flightRecord)">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                        <button class="btn btn-xs" type="button" ng-show="financeDocument.status === 'CLOSED'" ng-click="compensate(flightRecord)">
+                                            <span class="fa fa-money"></span>
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>         
+                    <!-- /.box-body -->
+                    <div class="box-footer clearfix">
+                        <!--ul class="pagination pagination-sm no-margin pull-right"-->
+                        <ul uib-pagination total-items="users.totalElements" ng-model="users.number" max-size="users.totalPages" class="pagination-sm" boundary-links="true" num-pages="users.totalPages"></ul>
+                        {{users.totalPages}}
+                        <!--li ng-repeat="page in users.totalPages"><a href="#">{{page}}</a></li-->
+                        <!--li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li-->
+                        <!--li><a href="#">&raquo;</a></li>
+                      </ul-->
+                    </div>
+                    <!-- /.box -->
                 </div>
             </div>
         </div>
