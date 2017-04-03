@@ -42,8 +42,12 @@
                                                     <span id="search_concept">Búsqueda por Socio</span> <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="" ng-click="list = 'open'">Abiertos</a></li>
-                                                    <li><a href="" ng-click="list = 'closed'">Compensados</a></li>
+                                                    <li>
+                                                        <input type="checkbox">
+                                                        <a href="" ng-click="list = 'open'">Abiertos</a>
+                                                    </li>
+                                                    <li><a href="" ng-click="list = 'closed'">Compensados</a>
+                                                    </li>
                                                     <!--li class="divider"></li>
                                                     <li><a href="#all">Anything</a></li-->
                                                 </ul>
@@ -75,7 +79,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Id</th>
-                                    <th class="text-center">Documento</th>
+                                    <th class="text-center">Doc. Referencia</th>
                                     <th class="text-center">Cliente</th>
                                     <th class="text-center">Fecha</th>
                                     <th class="text-center">Monto</th>
@@ -87,12 +91,12 @@
                             <tbody> <!-- users.content - para la página -->
                                 <!--tr ng-repeat="flightRecord in flightRecords| filter:tableSearch" class="table" ng-click="setSelected(flightRecord.id)"-->
                                 <tr ng-repeat="financeDocument in financeDocuments| orderBy:'-id'" class="table">
-                                    <td class="text-center">{{financeDocument.id}}</td>
                                     <td class="text-center">{{financeDocument.legalId}}</td>
+                                    <td class="text-center">{{financeDocument.referencedDocumentId}}</td>
                                     <td class="text-center">{{financeDocument.person.name}}</td>
                                     <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>
                                     <td class="text-center">{{financeDocument.amount| currency:"$ ":2}}</td>
-                                    <td class="text-center">{{financeDocument.currency}}</td>
+                                    <td class="text-center">{{financeDocument.payments[0].currency}}</td>
                                     <td class="text-center">{{financeDocument.documentType}}</td>
                                     <td>
                                         <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">

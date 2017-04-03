@@ -62,7 +62,7 @@ angular.module('app').controller('flightRecordController',
                     $scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
                 };
 
-                $scope.compensate = function (flightRecord) {
+                $scope.payment = function (flightRecord) {
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
                         controller: 'financeDocumentsCompensationController',
