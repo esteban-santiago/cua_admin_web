@@ -1,7 +1,7 @@
 angular.module('app')
         .factory('financeDocumentsService', ['$resource', 'SERVER_FOR_SERVICES',
             function ($resource, SERVER_FOR_SERVICES) {
-                var url = SERVER_FOR_SERVICES + '/sapi/finance/documents/';
+                var url = SERVER_FOR_SERVICES + '/sapi/finance/document/';
                 return $resource(url + '/:id', {id: '@id'}, {
                     'get': {method: 'GET'},
                     'update': {method: 'PUT'},
@@ -19,7 +19,7 @@ angular.module('app')
 angular.module('app')
         .factory('flightRecordIssuedService', ['$resource', 'SERVER_FOR_SERVICES',
             function ($resource, SERVER_FOR_SERVICES) {
-                var url = SERVER_FOR_SERVICES + '/sapi/finance/documents/flight_record_issued';
+                var url = SERVER_FOR_SERVICES + '/sapi/finance/document/flight_record_issued';
                 return $resource(url + '/:id', {id: '@id'}, {
                     'get': {method: 'GET'},
                     'update': {method: 'PUT'},
