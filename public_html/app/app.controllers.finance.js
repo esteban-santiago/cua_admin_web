@@ -1,4 +1,3 @@
-
 /* global moment */
 
 angular.module('app').controller('financeDocumentsController', ['$scope','financeDocumentsService', function ($scope, financeDocumentsService) {
@@ -6,6 +5,7 @@ angular.module('app').controller('financeDocumentsController', ['$scope','financ
         console.log($scope.financeDocuments);
 
     }]);
+
 
 angular.module('app').controller('financeDocumentsCompensationController',
         ['$scope', '$uibModalInstance', 'financeDocumentsService', 'financeDocument',
