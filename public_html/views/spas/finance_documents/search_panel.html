@@ -1,0 +1,50 @@
+                                <div class="row">    
+
+                                    <div class="col-xs-9 col-xs-offset-0">
+                                        <uib-accordion close-others="oneAtATime">
+                                            <div uib-accordion-group class="panel-info" is-open="status.open">
+                                                <uib-accordion-heading>
+                                                    <label class="small">Panel de búsqueda</label> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+                                                </uib-accordion-heading>
+                                                <div class="checkbox">
+                                                    <label class="input-group-sm">
+                                                        <input type="checkbox" ng-model="openDocuments" checked>
+                                                        Abiertos
+                                                    </label>
+                                                </div>
+
+                                                <div class="checkbox">
+                                                    <label>
+                                                        <input type="checkbox">
+                                                        Cerrados
+                                                    </label>
+                                                </div>
+
+                                                <div class="row">    
+
+                                                    <div class="col-xs-3 col-xs-offset-0">
+
+                                                        <div class="input-group input-group-sm">
+
+
+                                                            <div class="input-group-btn search-panel">
+                                                                <button type="button" class="btn btn-primary">
+                                                                    <span id="search_concept">Socio</span> 
+                                                                </button>
+                                                            </div>
+                                                            <!--input type="hidden" name="search_param" value="all" id="search_param"-->         
+                                                            <input type="text" class="form-control" ng-init="search_param = ''" ng-model="search_param" placeholder="Buscar...">
+                                                            <span class="input-group-btn">
+                                                                <!--button class="btn btn-default" type="button">
+                                                                    <span class="glyphicon glyphicon-search"></span>
+                                                                </button-->
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </uib-accordion>
+                                        <!-- hasta -->         
+                                    </div>
+                                </div>

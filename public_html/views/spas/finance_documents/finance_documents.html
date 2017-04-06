@@ -18,59 +18,21 @@
                         <!--h3 class="box-title">Responsive Hover Table</h3-->
                         <div class="input-group input-group-sm" style="width: 220px;">
                             <div class="container">
-                                <div class="row">    
-                                    <div class="col-xs-7 col-xs-offset-0">
-                                        <div class="checkbox">
-                                            <label class="input-group-sm">
-                                                <input type="checkbox">
-                                                Abiertos
-                                            </label>
-                                        </div>
-
-                                        <div class="checkbox">
-                                            <label>
-                                                <input type="checkbox">
-                                                Cerrados
-                                            </label>
-                                        </div>
-
-                                        <div class="input-group input-group-sm">
-
-
-                                            <div class="input-group-btn search-panel">
-                                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                                    <span id="search_concept">Búsqueda por Socio</span> <span class="caret"></span>
-                                                </button>
-                                                <ul class="dropdown-menu">
-                                                    <li>
-                                                        
-                                                        <a href="" class="small" data-value="option1" ng-click="list = 'open'" tabindex="-1">
-                                                            <input type="checkbox"/>&nbsp;Abiertos
-                                                        </a>
-                                                    </li>
-                                                    <li><a href="" ng-click="list = 'closed'">Compensados</a>
-                                                    </li>
-                                                    <!--li class="divider"></li>
-                                                    <li><a href="#all">Anything</a></li-->
-                                                </ul>
-                                            </div>
-                                            <!--input type="hidden" name="search_param" value="all" id="search_param"-->         
-                                            <input type="text" class="form-control" ng-init="search_param = ''" ng-model="search_param" placeholder="Buscar...">
-                                            <span class="input-group-btn">
-                                                <button class="btn btn-default" type="button">
-                                                    <span class="glyphicon glyphicon-search"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                    </div>
+                                <br>
+                                <div ng-include src="'views/spas/finance_documents/search_panel.html'">
+                                    
                                 </div>
+
                             </div>                   
                         </div>
-                        <div class="box-tools">
+
+
+
+                        <!--div class="box-tools">
                             <span class="btn btn-primary">
                                 <i class="fa fa-sticky-note-o" ng-click="create()"></i>
                             </span>
-                        </div>
+                        </div-->
                     </div>
 
                     <!--div ng-if="list === 'open'" ng-include src="'views/spas/finance_documents/finance_documents_non_compensated.html'"></div>
