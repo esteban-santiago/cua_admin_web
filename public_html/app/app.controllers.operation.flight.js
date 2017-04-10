@@ -5,9 +5,9 @@
  */
 angular.module('app').controller('flightRecordController',
         ['$scope', '$uibModal', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
-            'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService',
-            function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService, flightNatureService,
-                    flightPurposeService, flightTypeService, aircraftService) {
+            'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
+            function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService,
+                    flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
 
                 fulFill();
 
@@ -63,15 +63,20 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.payment = function (flightRecord) {
+                    //Traer los documentos financieros por el documento de referencia
+                    financeDocuments = [];
+                    financeDocuments.push(financeDocumentService
+                               .getByReferencedDocumentId({id: flightRecord.id}));
+                    //Traer los tipos de pagos
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
-                        controller: 'financeDocumentsCompensationController',
-                        scope: $scope,
+                        controller: 'flightRecordCompensationController',
+                        //scope: $scope,
                         backdrop: false,
                         sticky: true,
                         resolve: {
                             //Paso las instancias que necesito
-                            financeDocument: flightRecord
+                            financeDocument: financeDocuments
                         }
                     }).result.then(function (_fr) {
                         /*
