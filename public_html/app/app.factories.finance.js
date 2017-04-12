@@ -55,3 +55,15 @@ angular.module('app')
                     }
                 });
             }]);
+
+angular.module('app')
+        .factory('paymentService', ['$resource', 'SERVER_FOR_SERVICES',
+            function ($resource, SERVER_FOR_SERVICES) {
+                var url = SERVER_FOR_SERVICES + '/sapi/finance/billing/payment';
+                return $resource(url + '/:id', {id: '@id'}, {
+                    'get': {method: 'GET'},
+                    'update': {method: 'PUT'},
+                    'save': {method: 'POST'},
+                    'query': {method: 'GET', isArray: true}
+                });
+            }]);

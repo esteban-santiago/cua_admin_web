@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" ng-click="close()" data-dismiss="modal" aria-label="Close">
@@ -27,32 +27,32 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="items">
                             <div class="row"><br>
-                                <div class="col-md-10 col-md-offset-0">
-                                    <div class="col-md-10 col-md-offset-0">
+                                <div class="col-md-12 col-md-offset-0">
+                                    <div class="col-md-12 col-md-offset-0">
                                         <!-- Text input-->
                                         <table id="example2" class="table table-bordered table-hover">
                                             <thead>
-                                                <tr>
+                                                <tr class="table-bordered">
+                                                    <th class="text-center">#</th>
                                                     <th class="text-center">Id</th>
-                                                    <th class="text-center">Piloto</th>
-                                                    <th class="text-center">Instructor</th>
-                                                    <th class="text-center">Inicio</th>
-                                                    <th class="text-center">Instructor</th>
-                                                    <th class="text-center">Inicio</th>
-                                                    <th class="text-center">Instructor</th>
-                                                    <th class="text-center">Inicio</th>
+                                                    <th class="text-center">Cliente</th>
+                                                    <th class="text-center">Fecha</th>
+                                                    <th class="text-center">Monto</th>
+                                                    <th class="text-center">Documento</th>
+                                                    <th class="text-center">Referencia</th>
+                                                    <th class="text-center">Tipo</th>
                                                 </tr>
                                             </thead>
                                             <tbody> 
-                                                <tr>
+                                                <tr ng-repeat="financeDocument in financeDocuments">
+                                                    <td class="text-center"><input type="checkbox" checked=""></td>
                                                     <td class="text-center">{{financeDocument.id}}</td>
-                                                    <td class="text-center">{{pepe}}</td>
-                                                    <td class="text-center">{{financeDocument.id}}</td>
-                                                    <td class="text-center">Inicio</td>
-                                                    <td class="text-center">Inicio</td>
-                                                    <td class="text-center">Instructor</td>
-                                                    <td class="text-center">Inicio</td>
-                                                    <td class="text-center">{{flightRecord}}</td>
+                                                    <td class="text-center">{{financeDocument.person.name}}</td>
+                                                    <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>
+                                                    <td class="text-center">{{financeDocument.payments[0].currency}}&nbsp;{{financeDocument.payments[0].amount| currency:"$ ":2}}</td>
+                                                    <td class="text-center">{{financeDocument.legalId}}</td>
+                                                    <td class="text-center">{{financeDocument.referencedDocumentId}}</td>
+                                                    <td class="text-center">{{financeDocument.documentType}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -62,79 +62,97 @@
                         </div>
                         <div role="tabpanel" class="tab-pane" id="payments">    
                             <div class="row"><br>
-                                <div class="col-md-10 col-md-offset-1">
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-3 control-label">Fecha Inicio</label>
-                                        <div class="col-sm-3"> <!-- ng -pattern="^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$"-->
-                                            <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.startFlightDate" class="form-control has-error" required valid-date><br>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-3 control-label">Hora Inicio</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" placeholder="hh:mm" ng-model="fr.startFlightTime" class="form-control" required 
-                                                   valid-time><br>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-3 control-label">Fecha Fin</label>
-                                        <div class="col-sm-3"> <!--ng-model="fr.endDate"-->
-                                            <input type="text" placeholder="dd/mm/aaaa" ng-model="fr.endFlightDate" class="form-control" valid-date><br>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-3 control-label">Hora Fin</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" placeholder="hh:mm" ng-model="fr.endFlightTime" class="form-control" valid-time><br>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-2 control-label">Desde</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" placeholder="" ng-model="fr.origin.name" class="form-control" 
-                                                   typeahead-on-select="setSelectedOrigin($item)"
-                                                   uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
-                                                   ng-required='fr.isClosed' pattern=".{2,}" typeahead-editable="false"><br>
-                                        </div>
-                                        <label class="col-sm-2 control-label">Hasta</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" placeholder="" ng-model="fr.destiny.name" class="form-control" 
-                                                   typeahead-on-select="setSelectedDestiny($item)"
-                                                   uib-typeahead="airfield.name for airfield in airfields | filter:$viewValue | limitTo:8" 
-                                                   ng-required='fr.isClosed' pattern=".{2,}" typeahead-editable="false"><br>
-                                        </div>
-                                    </div>
+                                <div class="col-md-12 col-md-offset-0">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <!-- Text input-->
+                                        <table id="documents" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr class="table-bordered">
+                                                    <th class="text-center">Método</th>
+                                                    <th class="text-center">Términos</th>
+                                                    <th class="text-center">Recargo</th>
+                                                    <th class="text-center">Descuento</th>
+                                                    <th class="text-center">Monto</th>
+                                                    <th class="text-center">Notas</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr ng-repeat="paymentLine in paymentLines">
+                                                    <td class="text-left">      
+                                                        <select ng-options="payment.description for payment in payments" 
+                                                                ng-model="paymentLine.selectedPayment">                                                         </select>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
+                                                            <select ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
+                                                                    ng-model="paymentLine.selectedPaymentTerm">
 
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-3 control-label">Aterrizajes</label>
-                                        <div class="col-sm-3">
-                                            <input type="text" ng-model="fr.landings" placeholder="" class="form-control"><br>
-                                        </div>
-                                        <label class="col-sm-2 control-label">Tiempo</label>
-                                        <div class="col-sm-4">
-                                            <pre class="form-control">{{fr.amountOfHours}}</pre><br>
-                                        </div>
-                                    </div>
-                                    <!-- Text input-->
-                                    <div class="form-group-sm">
-                                        <label class="col-sm-2 control-label">Concluída</label>
-                                        <div class="col-sm-4">
-                                            <input type="checkbox" ng-model="fr.isClosed" ng-click="updateAmount()"><br>
-                                            <br>
-                                        </div>
-                                        <label class="col-sm-3 control-label">Valor</label>
-                                        <div class="col-sm-3">
-                                            <pre class="form-control">{{fr.amountOfHours * fr.aircraft.productProfile.product.price| currency:"$":2}}</pre>
-                                        </div>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" >
+                                                        <div ng-show="paymentLine.selectedPaymentTerm">
+                                                            {{paymentLine.selectedPaymentTerm.charge * 100}} %
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" >
+                                                        <div ng-show="paymentLine.selectedPaymentTerm">
+                                                            {{paymentLine.selectedPaymentTerm.discount * 100}} %
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div ng-show="paymentLine.selectedPaymentTerm">
+                                                            <input type="text" ng-model="paymentLine.amount">
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div ng-show="paymentLine.selectedPaymentTerm">
+                                                            <input type="text" ng-model="paymentLine.notes">
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div><!-- /.col-lg-12 -->
-                            </div><!-- /.row -->                           
+                            </div><!-- /.row -->                            
+
+                            <div class="row">
+                                <div class="col-md-12 col-md-offset-0">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <button id="cancel" type="button" class="btn btn-primary" ng-click="addPaymentLine()" data-dismiss="modal">+</button>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row"><br>
+                                <div class="col-md-12 col-md-offset-0">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <!-- Text input-->
+                                        <table id="summary" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr class="table-bordered">
+                                                    <th class="text-center">Subtotal</th>
+                                                    <th class="text-center">Recargos</th>
+                                                    <th class="text-center">Descuentos</th>
+                                                    <th class="text-center">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr>
+
+                                                    <td class="text-center"><label>{{getTotal() | currency : 'ARS$ ' : 2}}</label></td>
+                                                    <td class="text-center" ><input type="text"></td>
+                                                    <td class="text-center"><input type="text"></td>
+                                                    <td class="text-center"><input type="text"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- /.col-lg-12 -->
+                            </div><!-- /.row --> 
                         </div>
                     </div>
                 </div>    
@@ -145,7 +163,8 @@
             <div class="error-message"
                  ng-show="crear_ficha.$invalid && !crear_ficha.$pristine">
                 Completar los campos obligatorios.
-            </div><br>
+            </div>
+            <br>
             <button id="cancel" type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Cancelar</button>
             <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save()" >Guardar</button>
         </div>

@@ -18,16 +18,3 @@ angular.module('app').controller('financeDocumentsCompensationController',
                 };
             }]);
 
-angular.module('app').controller('flightRecordCompensationController',
-        ['$scope','$uibModalInstance', 'financeDocument',
-            function ($scope, $uibModalInstance, financeDocument) {
-                
-                $scope.financeDocument = financeDocument;
-                //console.log($scope.financeDocuments);
-                console.log($scope);
-                //$scope.pepe = financeDocument.id;
-                console.log(financeDocument.id);
-                $scope.close = function () {
-                    $uibModalInstance.dismiss();
-                };
-            }]);

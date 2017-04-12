@@ -66,7 +66,8 @@ angular.module('app').controller('flightRecordController',
                     //Traer los documentos financieros por el documento de referencia
                     financeDocuments = [];
                     financeDocuments.push(financeDocumentService
-                               .getByReferencedDocumentId({id: flightRecord.id}));
+                            .getByReferencedDocumentId({id: flightRecord.id}));
+                    //console.log(financeDocuments);
                     //Traer los tipos de pagos
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
@@ -74,9 +75,12 @@ angular.module('app').controller('flightRecordController',
                         //scope: $scope,
                         backdrop: false,
                         sticky: true,
+                        size: 'lg',
                         resolve: {
                             //Paso las instancias que necesito
-                            financeDocument: financeDocuments
+                            financeDocuments: function () {
+                                return financeDocuments;
+                            }
                         }
                     }).result.then(function (_fr) {
                         /*
@@ -277,5 +281,35 @@ angular.module('app').controller('flightRecordCreateController',
                 formatDateToOutput = function (date, time) {
                     return moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD') + 'T' +
                             moment(time, 'HH:mm').format('HH:mm');
+                };
+            }]);
+
+angular.module('app').controller('flightRecordCompensationController',
+        ['$scope', '$uibModalInstance', 'paymentService', 'financeDocuments',
+            function ($scope, $uibModalInstance, paymentService, financeDocuments) {
+                $scope.financeDocuments = financeDocuments;
+                //console.log($scope.financeDocuments);
+                $scope.payments = paymentService.query();
+                //$scope.pepe = financeDocument.id;
+                //console.log(financeDocument.id);
+                $scope.paymentLines = [];
+                $scope.paymentLines.push([]);
+
+                $scope.close = function () {
+                    $uibModalInstance.dismiss();
+                };
+
+                $scope.addPaymentLine = function () {
+                    $scope.paymentLines.push([]);
+                    console.log($scope);
+                };
+
+                $scope.getTotal = function () {
+                    var total = 0.00;
+                    for (var i = 0; i < $scope.paymentLines.length; i++) {
+                        if(!angular.isUndefined($scope.paymentLines[i].amount))
+                            total += parseFloat($scope.paymentLines[i].amount);
+                    }
+                    return total;
                 };
             }]);
