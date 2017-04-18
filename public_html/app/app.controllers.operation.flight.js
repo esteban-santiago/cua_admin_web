@@ -304,7 +304,7 @@ angular.module('app').controller('flightRecordCompensationController',
                     console.log($scope);
                 };
 
-                $scope.getTotal = function () {
+                $scope.getTotalPayments = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.paymentLines.length; i++) {
                         if(!angular.isUndefined($scope.paymentLines[i].amount))
@@ -312,4 +312,22 @@ angular.module('app').controller('flightRecordCompensationController',
                     }
                     return total;
                 };
+
+                $scope.getTotalItems = function () {
+                    var total = 0.00;
+                    for (var i = 0; i < $scope.financeDocuments.length; i++) {
+                            total += parseFloat($scope.financeDocuments[i].amount);
+                    }
+                    return total;
+                };
+
+                $scope.getTotalItems = function () {
+                    var total = 0.00;
+                    for (var i = 0; i < $scope.financeDocuments.length; i++) {
+                        
+                            total += parseFloat($scope.financeDocuments[i].amount);
+                    }
+                    return total;
+                };
+
             }]);

@@ -134,6 +134,7 @@
                                         <table id="summary" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr class="table-bordered">
+                                                    <th class="text-center">Total items</th>
                                                     <th class="text-center">Subtotal</th>
                                                     <th class="text-center">Recargos</th>
                                                     <th class="text-center">Descuentos</th>
@@ -142,11 +143,21 @@
                                             </thead>
                                             <tbody> 
                                                 <tr>
-
-                                                    <td class="text-center"><label>{{getTotal() | currency : 'ARS$ ' : 2}}</label></td>
-                                                    <td class="text-center" ><input type="text"></td>
-                                                    <td class="text-center"><input type="text"></td>
-                                                    <td class="text-center"><input type="text"></td>
+                                                    <td class="text-center">
+                                                        <label>{{getTotalItems() | currency:'ARS$ ':2}}</label>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                    </td>
+                                                    <td class="text-center" >
+                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>
