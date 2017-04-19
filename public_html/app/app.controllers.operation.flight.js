@@ -285,8 +285,8 @@ angular.module('app').controller('flightRecordCreateController',
             }]);
 
 angular.module('app').controller('flightRecordCompensationController',
-        ['$scope', '$uibModalInstance', 'paymentService', 'financeDocuments',
-            function ($scope, $uibModalInstance, paymentService, financeDocuments) {
+        ['$scope', '$uibModalInstance', 'receiptIssuedService', 'paymentService', 'financeDocuments',
+            function ($scope, $uibModalInstance, receiptIssuedService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
                 //console.log($scope.financeDocuments);
                 $scope.payments = paymentService.query();
@@ -307,7 +307,7 @@ angular.module('app').controller('flightRecordCompensationController',
                 $scope.getTotalPayments = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.paymentLines.length; i++) {
-                        if(!angular.isUndefined($scope.paymentLines[i].amount))
+                        if (!angular.isUndefined($scope.paymentLines[i].amount))
                             total += parseFloat($scope.paymentLines[i].amount);
                     }
                     return total;
@@ -316,7 +316,7 @@ angular.module('app').controller('flightRecordCompensationController',
                 $scope.getTotalItems = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                            total += parseFloat($scope.financeDocuments[i].amount);
+                        total += parseFloat($scope.financeDocuments[i].amount);
                     }
                     return total;
                 };
@@ -324,10 +324,34 @@ angular.module('app').controller('flightRecordCompensationController',
                 $scope.getTotalItems = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                        
-                            total += parseFloat($scope.financeDocuments[i].amount);
+
+                        total += parseFloat($scope.financeDocuments[i].amount);
                     }
                     return total;
+                };
+
+                $scope.save = function () {
+
+                    receipt = {
+                        //"documentType": "RCI", 
+                        expirationDate: '2017-05-19', 
+                        compensationDate: null, 
+                        person: {id: 100}, 
+                        payments: [{currency: 'ARS', amount: 1152.0}], 
+                        promotions: [], 
+                        user: null, 
+                        creationDate: '2017-04-19', 
+                        status: 'OPENED', 
+                        compensatedBy: null, 
+                        compensatedDocuments: []
+                    };
+
+                    receiptIssuedService.save(receipt, function (response) {
+                        console.log(response);
+                        //newFR.id = response.id;
+                        //$modalInstance.close(newFR);
+                    });
+
                 };
 
             }]);
