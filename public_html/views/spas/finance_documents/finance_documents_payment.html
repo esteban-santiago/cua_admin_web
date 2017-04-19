@@ -7,7 +7,7 @@
             <h4 class="modal-title" id="myModalLabel">Pago</h4>
         </div>
         <div class="modal-body">
-            <form name="crear_ficha">
+            <form name="crear_recibo">
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -34,25 +34,25 @@
                                             <thead>
                                                 <tr class="table-bordered">
                                                     <th class="text-center">#</th>
-                                                    <th class="text-center">Id</th>
-                                                    <th class="text-center">Cliente</th>
+                                                    <th class="text-center">Documento</th>
+                                                    <th class="text-center">Titular</th>
                                                     <th class="text-center">Fecha</th>
                                                     <th class="text-center">Monto</th>
-                                                    <th class="text-center">Documento</th>
                                                     <th class="text-center">Referencia</th>
                                                     <th class="text-center">Tipo</th>
+                                                    <th class="text-center">Id</th>
                                                 </tr>
                                             </thead>
                                             <tbody> 
                                                 <tr ng-repeat="financeDocument in financeDocuments">
                                                     <td class="text-center"><input type="checkbox" checked=""></td>
-                                                    <td class="text-center">{{financeDocument.id}}</td>
+                                                    <td class="text-center">{{financeDocument.legalId}}</td>
                                                     <td class="text-center">{{financeDocument.person.name}}</td>
                                                     <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>
                                                     <td class="text-center">{{financeDocument.payments[0].currency}}&nbsp;{{financeDocument.payments[0].amount| currency:"$ ":2}}</td>
-                                                    <td class="text-center">{{financeDocument.legalId}}</td>
                                                     <td class="text-center">{{financeDocument.referencedDocumentId}}</td>
                                                     <td class="text-center">{{financeDocument.documentType}}</td>
+                                                    <td class="text-center">{{financeDocument.id}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -65,7 +65,7 @@
                                 <div class="col-md-12 col-md-offset-0">
                                     <div class="col-md-12 col-md-offset-0">
                                         <!-- Text input-->
-                                        <table id="documents" class="table table-bordered table-striped">
+                                        <table id="payment" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr class="table-bordered">
                                                     <th class="text-center">Método</th>
@@ -126,7 +126,45 @@
                                 </div>
 
                             </div>
+                            <div class="row"><br>
+                                <div class="col-md-2 col-md-offset-0">
+                                    <div class="col-md-2 col-md-offset-0">
+                                        <!-- Text input-->
+                                        <table id="promotion" class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr class="table-bordered">
+                                                    <th class="text-center">Promoción</th>
+                                                    <th class="text-center">Porcentaje</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody> 
+                                                <tr ng-repeat="paymentLine in paymentLines">
+                                                    <td class="text-left">      
+                                                        <select ng-options="payment.description for payment in payments" 
+                                                                ng-model="paymentLine.selectedPayment">                                                         </select>
+                                                    </td>
+                                                    <td class="text-left">
+                                                        <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
+                                                            <select ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
+                                                                    ng-model="paymentLine.selectedPaymentTerm">
 
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div><!-- /.col-lg-12 -->
+                            </div><!-- /.row -->
+                            <div class="row">
+                                <div class="col-md-12 col-md-offset-0">
+                                    <div class="col-md-12 col-md-offset-0">
+                                        <button id="cancel" type="button" class="btn btn-primary" ng-click="addPromotionLine()" data-dismiss="modal">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="row"><br>
                                 <div class="col-md-12 col-md-offset-0">
                                     <div class="col-md-12 col-md-offset-0">
