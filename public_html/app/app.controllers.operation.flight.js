@@ -333,17 +333,27 @@ angular.module('app').controller('flightRecordCompensationController',
                 $scope.save = function () {
 
                     receipt = {
-                        //"documentType": "RCI", 
-                        expirationDate: '2017-05-19', 
-                        compensationDate: null, 
+                        //'@type':'ReceiptIssued',
+                        documentType: 'RCI', 
+                        expirationDate: '2017-05-20', 
+                        compensationDate: '2017-05-20', 
                         person: {id: 100}, 
-                        payments: [{currency: 'ARS', amount: 1152.0}], 
+                        payments: [{
+                                method:{id:5},
+                                term: {id:5},
+                                currency:'ARS', 
+                                amount:4632.0, 
+                                charge:0.0, 
+                                discount:0.0, 
+                                description:''
+                            }],
                         promotions: [], 
                         user: null, 
                         creationDate: '2017-04-19', 
                         status: 'OPENED', 
                         compensatedBy: null, 
-                        compensatedDocuments: []
+                        //compensatedDocuments: [{'@type':'FlightRecordIssued' ,'id': 1}]
+                        compensatedDocuments:$scope.financeDocuments
                     };
 
                     receiptIssuedService.save(receipt, function (response) {
