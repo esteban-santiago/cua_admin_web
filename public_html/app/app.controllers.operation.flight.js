@@ -352,7 +352,7 @@ angular.module('app').controller('flightRecordCompensationController',
                         creationDate: '2017-04-19', 
                         status: 'OPENED', 
                         compensatedBy: null, 
-                        //compensatedDocuments: [{'@type':'FlightRecordIssued' ,'id': 1}]
+                        //compensatedDocuments: [{'documentType':'FRI' ,'id': 1}]
                         compensatedDocuments:$scope.financeDocuments
                     };
 
