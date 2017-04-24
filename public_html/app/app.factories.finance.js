@@ -57,6 +57,16 @@ angular.module('app')
             }]);
 
 angular.module('app')
+        .factory('documentCompensationService', ['$resource', 'SERVER_FOR_SERVICES',
+            function ($resource, SERVER_FOR_SERVICES) {
+                var url = SERVER_FOR_SERVICES + '/sapi/finance/document/compensate';
+                return $resource(url + '/:id', {id: '@id'}, {
+                    'update': {method: 'PUT'},
+                    'save': {method: 'POST'}
+                });
+            }]);
+
+angular.module('app')
         .factory('paymentService', ['$resource', 'SERVER_FOR_SERVICES',
             function ($resource, SERVER_FOR_SERVICES) {
                 var url = SERVER_FOR_SERVICES + '/sapi/finance/billing/payment';
