@@ -331,7 +331,6 @@ angular.module('app').controller('flightRecordCompensationController',
                 };
 
                 $scope.save = function () {
-
                     receipt = {
                         //'@type':'ReceiptIssued',
                         documentType: 'RCI', 
