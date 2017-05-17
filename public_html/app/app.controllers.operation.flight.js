@@ -67,7 +67,6 @@ angular.module('app').controller('flightRecordController',
                     financeDocuments = [];
                     financeDocuments.push(financeDocumentService
                             .getByReferencedDocumentId({id: flightRecord.id}));
-                    //console.log(financeDocuments);
                     //Traer los tipos de pagos
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
@@ -285,8 +284,8 @@ angular.module('app').controller('flightRecordCreateController',
             }]);
 
 angular.module('app').controller('flightRecordCompensationController',
-        ['$scope', '$uibModalInstance', 'receiptIssuedService', 'paymentService', 'financeDocuments',
-            function ($scope, $uibModalInstance, receiptIssuedService, paymentService, financeDocuments) {
+        ['$scope', '$uibModalInstance', 'documentCompensationService', 'paymentService', 'financeDocuments',
+            function ($scope, $uibModalInstance, documentCompensationService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
                 //console.log($scope.financeDocuments);
                 $scope.payments = paymentService.query();
@@ -349,13 +348,12 @@ angular.module('app').controller('flightRecordCompensationController',
                         promotions: [], 
                         user: null, 
                         creationDate: '2017-04-19', 
-                        status: 'OPENED', 
-                        compensatedBy: null, 
                         //compensatedDocuments: [{'documentType':'FRI' ,'id': 1}]
                         compensatedDocuments:$scope.financeDocuments
                     };
 
-                    receiptIssuedService.save(receipt, function (response) {
+                    //receiptIssuedService.save(receipt, function (response) {
+                    documentCompensationService.save(receipt, function (response) {
                         console.log(response);
                         //newFR.id = response.id;
                         //$modalInstance.close(newFR);
