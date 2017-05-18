@@ -16,10 +16,17 @@ angular.module('app')
                     'getByReferencedDocumentId': {method: 'GET', isArray: false,
                         url: url + '/?referenced_document_id=:id',
                         params: {id: '@id'}
+                    },
+                    'compensateU': { method: 'PUT', isArray: false,
+                        url: url + '/compensate/:id',
+                        params: {id: '@id'}
+                    },
+                    'compensateP': { method: 'POST', isArray: false,
+                        url: url + '/compensate/'
                     }
                 });
             }]);
-
+        
 angular.module('app')
         .factory('flightRecordIssuedService', ['$resource', 'SERVER_FOR_SERVICES',
             function ($resource, SERVER_FOR_SERVICES) {
@@ -53,16 +60,6 @@ angular.module('app')
                         url: url + '/?page=:page&size=:size',
                         params: {page: '@page', size: '@size'}
                     }
-                });
-            }]);
-
-angular.module('app')
-        .factory('documentCompensationService', ['$resource', 'SERVER_FOR_SERVICES',
-            function ($resource, SERVER_FOR_SERVICES) {
-                var url = SERVER_FOR_SERVICES + '/sapi/finance/document/compensate';
-                return $resource(url + '/:id', {id: '@id'}, {
-                    'update': {method: 'PUT'},
-                    'save': {method: 'POST'}
                 });
             }]);
 

@@ -284,13 +284,12 @@ angular.module('app').controller('flightRecordCreateController',
             }]);
 
 angular.module('app').controller('flightRecordCompensationController',
-        ['$scope', '$uibModalInstance', 'documentCompensationService', 'paymentService', 'financeDocuments',
-            function ($scope, $uibModalInstance, documentCompensationService, paymentService, financeDocuments) {
+        ['$scope', '$uibModalInstance', 'financeDocumentService', 'paymentService', 'financeDocuments',
+            function ($scope, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
-                //console.log($scope.financeDocuments);
+
                 $scope.payments = paymentService.query();
-                //$scope.pepe = financeDocument.id;
-                //console.log(financeDocument.id);
+
                 $scope.paymentLines = [];
                 $scope.paymentLines.push([]);
 
@@ -300,7 +299,7 @@ angular.module('app').controller('flightRecordCompensationController',
 
                 $scope.addPaymentLine = function () {
                     $scope.paymentLines.push([]);
-                    console.log($scope);
+                    console.log($scope.paymentLines);
                 };
 
                 $scope.getTotalPayments = function () {
@@ -320,22 +319,13 @@ angular.module('app').controller('flightRecordCompensationController',
                     return total;
                 };
 
-                $scope.getTotalItems = function () {
-                    var total = 0.00;
-                    for (var i = 0; i < $scope.financeDocuments.length; i++) {
-
-                        total += parseFloat($scope.financeDocuments[i].amount);
-                    }
-                    return total;
-                };
-
                 $scope.save = function () {
                     receipt = {
-                        //'@type':'ReceiptIssued',
                         documentType: 'RCI', 
-                        expirationDate: '2017-05-20', 
-                        compensationDate: '2017-05-20', 
+                        expirationDate: new moment().format('YYYY-MM-DD'), 
+                        compensationDate: new moment().format('YYYY-MM-DD'), 
                         person: {id: 100}, 
+                        /*
                         payments: [{
                                 method:{id:5},
                                 term: {id:5},
@@ -344,17 +334,22 @@ angular.module('app').controller('flightRecordCompensationController',
                                 charge:0.0, 
                                 discount:0.0, 
                                 description:''
-                            }],
+                            }],*/
+                        payments: [{
+                            method: {id: $scope.paymentLines[0].selectedPayment.id},
+                            term: {id: $scope.paymentLines[0].selectedTerm.id},
+                            currency:'ARS', 
+                            amount:$scope.paymentLines[0].amount
+                        }],
                         promotions: [], 
                         user: null, 
-                        creationDate: '2017-04-19', 
-                        //compensatedDocuments: [{'documentType':'FRI' ,'id': 1}]
+                        creationDate: new moment().format('YYYY-MM-DD'), 
                         compensatedDocuments:$scope.financeDocuments
                     };
 
                     //receiptIssuedService.save(receipt, function (response) {
-                    documentCompensationService.save(receipt, function (response) {
-                        console.log(response);
+                    financeDocumentService.compensateP(receipt, function (response) {
+                        //console.log(response);
                         //newFR.id = response.id;
                         //$modalInstance.close(newFR);
                     });

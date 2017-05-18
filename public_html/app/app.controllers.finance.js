@@ -2,7 +2,7 @@
 
 angular.module('app').controller('financeDocumentController', ['$scope','financeDocumentService', function ($scope, financeDocumentService) {
         $scope.financeDocuments = financeDocumentService.query();
-        console.log($scope.financeDocuments);
+        //console.log($scope.financeDocuments);
 
     }]);
 
@@ -12,7 +12,7 @@ angular.module('app').controller('financeDocumentsCompensationController',
             function ($scope, $uibModalInstance, financeDocumentService, financeDocument) {
 
                 //console.log($scope.financeDocuments);
-                console.log(financeDocument);
+                //console.log(financeDocument);
                 $scope.close = function () {
                     $uibModalInstance.dismiss();
                 };

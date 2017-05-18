@@ -18,8 +18,8 @@ angular.module('app')
 
 angular.module('app')
         .factory('userServices', ['SERVER_FOR_SERVICES', function (SERVER_FOR_SERVICES) {
-                console.log('Server for services: ');
-                console.log(SERVER_FOR_SERVICES);
+                //console.log('Server for services: ');
+                //console.log(SERVER_FOR_SERVICES);
                 return [
                     {
                         "name": "esantiago",

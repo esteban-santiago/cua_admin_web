@@ -12,6 +12,6 @@ angular.module('app').controller('userController', ['$scope', 'userServices', '$
         $scope.setSelected = function (id) {
             $scope.selectd = id;
             $scope.action = "Modificación ";
-            console.log("selectd: " + id);
+            //console.log("selectd: " + id);
         };
     }]);
