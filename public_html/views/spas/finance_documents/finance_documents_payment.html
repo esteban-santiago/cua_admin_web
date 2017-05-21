@@ -138,15 +138,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody> 
-                                                <tr ng-repeat="paymentLine in paymentLines">
+                                                <tr ng-repeat="promotionLine in promotionLines">
                                                     <td class="text-left">      
-                                                        <select ng-options="payment.description for payment in payments" 
-                                                                ng-model="paymentLine.selectedPayment">                                                         </select>
+                                                        <select ng-options="promotion.description for promotion in promotions" 
+                                                                ng-model="promotionLine.selectedPromotion">                                                         </select>
                                                     </td>
                                                     <td class="text-left">
-                                                        <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
-                                                            <select ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
-                                                                    ng-model="paymentLine.selectedPaymentTerm">
+                                                        <div ng-show="paymentLine.selectedPromotion.promotionTerms.length > 0">
+                                                            <select ng-options="promotionTerm.description for promotionTerm in promotionLine.selectedPromotion.promotionTerms" 
+                                                                    ng-model="promotionLine.selectedPromotionTerm">
 
                                                             </select>
                                                         </div>
