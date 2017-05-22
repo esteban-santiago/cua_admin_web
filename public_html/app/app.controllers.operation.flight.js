@@ -299,7 +299,6 @@ angular.module('app').controller('flightRecordCompensationController',
 
                 $scope.addPaymentLine = function () {
                     $scope.paymentLines.push([]);
-                    console.log($scope.paymentLines);
                 };
 
                 $scope.getTotalPayments = function () {
@@ -319,39 +318,38 @@ angular.module('app').controller('flightRecordCompensationController',
                     return total;
                 };
 
+                function getPayments() {
+                    var payments = [];
+                    for (var i = 0; i < $scope.paymentLines.length; i++) {
+                        if (!angular.isUndefined($scope.paymentLines[i].selectedPayment)) {
+                            payments.push({
+                                method: {id: $scope.paymentLines[i].selectedPayment.id},
+                                term: {id: $scope.paymentLines[i].selectedPaymentTerm.id},
+                                currency: 'ARS',
+                                amount: $scope.paymentLines[i].amount
+                            });
+                        }
+                    }
+                    return payments;
+                }
+                ;
+
                 $scope.save = function () {
                     receipt = {
-                        documentType: 'RCI', 
-                        expirationDate: new moment().format('YYYY-MM-DD'), 
-                        compensationDate: new moment().format('YYYY-MM-DD'), 
-                        person: {id: 100}, 
-                        /*
-                        payments: [{
-                                method:{id:5},
-                                term: {id:5},
-                                currency:'ARS', 
-                                amount:4632.0, 
-                                charge:0.0, 
-                                discount:0.0, 
-                                description:''
-                            }],*/
-                        payments: [{
-                            method: {id: $scope.paymentLines[0].selectedPayment.id},
-                            term: {id: $scope.paymentLines[0].selectedTerm.id},
-                            currency:'ARS', 
-                            amount:$scope.paymentLines[0].amount
-                        }],
-                        promotions: [], 
-                        user: null, 
-                        creationDate: new moment().format('YYYY-MM-DD'), 
-                        compensatedDocuments:$scope.financeDocuments
+                        documentType: 'RCI',
+                        expirationDate: new moment().format('YYYY-MM-DD'),
+                        compensationDate: new moment().format('YYYY-MM-DD'),
+                        person: {id: 100},
+                        payments: getPayments(),
+                        promotions: [],
+                        user: null,
+                        creationDate: new moment().format('YYYY-MM-DD'),
+                        compensatedDocuments: $scope.financeDocuments
                     };
-
-                    //receiptIssuedService.save(receipt, function (response) {
                     financeDocumentService.compensateP(receipt, function (response) {
                         //console.log(response);
                         //newFR.id = response.id;
-                        //$modalInstance.close(newFR);
+                        $uibModalInstance.close(response);
                     });
 
                 };
