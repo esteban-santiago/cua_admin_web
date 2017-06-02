@@ -17,9 +17,8 @@ angular.module('app')
                         url: url + '/?referenced_document_id=:id',
                         params: {id: '@id'}
                     },
-                    'compensateU': { method: 'PUT', isArray: false,
-                        url: url + '/compensate/:id',
-                        params: {id: '@id'}
+                    'isCompensable': { method: 'POST', isArray: false,
+                        url: url + '/is_compensable'
                     },
                     'compensateP': { method: 'POST', isArray: false,
                         url: url + '/compensate/'

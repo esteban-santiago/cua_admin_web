@@ -44,8 +44,6 @@ angular.module('app')
                     'delete': {method: 'DELETE',
                         headers: {
                             'Content-Type': 'application/json',
-                            //'Access-Control-Allow-Origin': '*',
-                            //'Access-Control-Allow-Methods' : 'POST, GET, OPTIONS, PUT, DELETE,PATCH',
                             'Accept': 'application/json'
                         }
                     },

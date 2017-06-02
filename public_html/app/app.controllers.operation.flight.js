@@ -338,7 +338,6 @@ angular.module('app').controller('flightRecordCompensationController',
                     receipt = {
                         documentType: 'RCI',
                         expirationDate: new moment().format('YYYY-MM-DD'),
-                        compensationDate: new moment().format('YYYY-MM-DD'),
                         person: {id: 100},
                         payments: getPayments(),
                         promotions: [],
@@ -346,11 +345,14 @@ angular.module('app').controller('flightRecordCompensationController',
                         creationDate: new moment().format('YYYY-MM-DD'),
                         compensatedDocuments: $scope.financeDocuments
                     };
-                    financeDocumentService.compensateP(receipt, function (response) {
+                    financeDocumentService.save(receipt, function (response) {
+                      console.log(response); 
+                    });
+                    /*financeDocumentService.compensateP(receipt, function (response) {
                         //console.log(response);
                         //newFR.id = response.id;
                         $uibModalInstance.close(response);
-                    });
+                    });*/
 
                 };
 
