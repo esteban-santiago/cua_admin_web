@@ -70,7 +70,7 @@ angular.module('app').controller('flightRecordController',
                     //Traer los tipos de pagos
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
-                        controller: 'flightRecordCompensationController',
+                        controller: 'flightRecordPaymentController',
                         //scope: $scope,
                         backdrop: false,
                         sticky: true,
@@ -283,29 +283,63 @@ angular.module('app').controller('flightRecordCreateController',
                 };
             }]);
 
-angular.module('app').controller('flightRecordCompensationController',
+angular.module('app').controller('flightRecordPaymentController',
         ['$scope', '$uibModalInstance', 'financeDocumentService', 'paymentService', 'financeDocuments',
             function ($scope, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
 
                 $scope.payments = paymentService.query();
 
-                $scope.paymentLines = [];
-                $scope.paymentLines.push([]);
+                $scope.paymentLines = [getPaymentTemplate()];
+
+$scope.$watch('paymentLine.amount', function(newValue,oldValue){
+    console.log(newValue);
+    console.log(oldValue);
+    });
+
+                //$scope.paymentLines.push([]);
 
                 $scope.close = function () {
                     $uibModalInstance.dismiss();
                 };
 
                 $scope.addPaymentLine = function () {
-                    $scope.paymentLines.push([]);
+                    $scope.paymentLines.push(getPaymentTemplate());
+                    console.log($scope.paymentLines);
                 };
 
-                $scope.getTotalPayments = function () {
+                function getPaymentTemplate() {
+                    return {
+                        amount: 0.00,
+                        charge: 0.00,
+                        discount: 0.00,
+                        notes: ''
+                    };
+                }
+
+                $scope.getTotalPaymentsAmount = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.paymentLines.length; i++) {
                         if (!angular.isUndefined($scope.paymentLines[i].amount))
                             total += parseFloat($scope.paymentLines[i].amount);
+                    }
+                    return total;
+                };
+
+                $scope.getTotalPaymentsCharge = function () {
+                    var total = 0.00;
+                    for (var i = 0; i < $scope.paymentLines.length; i++) {
+                        if (!angular.isUndefined($scope.paymentLines[i].charge))
+                            total += parseFloat($scope.paymentLines[i].charge);
+                    }
+                    return total;
+                };
+
+                $scope.getTotalPaymentsDiscount = function () {
+                    var total = 0.00;
+                    for (var i = 0; i < $scope.paymentLines.length; i++) {
+                        if (!angular.isUndefined($scope.paymentLines[i].discount))
+                            total += parseFloat($scope.paymentLines[i].discount);
                     }
                     return total;
                 };
@@ -326,7 +360,8 @@ angular.module('app').controller('flightRecordCompensationController',
                                 method: {id: $scope.paymentLines[i].selectedPayment.id},
                                 term: {id: $scope.paymentLines[i].selectedPaymentTerm.id},
                                 currency: 'ARS',
-                                amount: $scope.paymentLines[i].amount
+                                amount: $scope.paymentLines[i].amount,
+                                charge: $scope.paymentLines[i].charge
                             });
                         }
                     }
@@ -346,13 +381,13 @@ angular.module('app').controller('flightRecordCompensationController',
                         compensatedDocuments: $scope.financeDocuments
                     };
                     financeDocumentService.save(receipt, function (response) {
-                      console.log(response); 
+                        console.log(response);
                     });
                     /*financeDocumentService.compensateP(receipt, function (response) {
-                        //console.log(response);
-                        //newFR.id = response.id;
-                        $uibModalInstance.close(response);
-                    });*/
+                     //console.log(response);
+                     //newFR.id = response.id;
+                     $uibModalInstance.close(response);
+                     });*/
 
                 };
 

@@ -80,7 +80,8 @@
                                                 <tr ng-repeat="paymentLine in paymentLines">
                                                     <td class="text-left">      
                                                         <select ng-options="payment.description for payment in payments" 
-                                                                ng-model="paymentLine.selectedPayment">                                                         </select>
+                                                                ng-model="paymentLine.selectedPayment">
+                                                        </select>
                                                     </td>
                                                     <td class="text-left">
                                                         <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
@@ -102,7 +103,11 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div ng-show="paymentLine.selectedPaymentTerm">
-                                                            <input type="text" ng-model="paymentLine.amount">
+                                                            <input type="text" ng-model="paymentLine.amount"
+                                                                   ng-change="paymentLine.charge=((paymentLine.amount/(1-paymentLine.selectedPaymentTerm.charge))-paymentLine.amount)">
+                                                                   
+                                                            <input type="hidden" ng-model="paymentLine.charge">
+                                         
                                                         </div>
                                                     </td>
                                                     <td class="text-center">
@@ -141,7 +146,8 @@
                                                 <tr ng-repeat="promotionLine in promotionLines">
                                                     <td class="text-left">      
                                                         <select ng-options="promotion.description for promotion in promotions" 
-                                                                ng-model="promotionLine.selectedPromotion">                                                         </select>
+                                                                ng-model="promotionLine.selectedPromotion">
+                                                        </select>
                                                     </td>
                                                     <td class="text-left">
                                                         <div ng-show="paymentLine.selectedPromotion.promotionTerms.length > 0">
@@ -185,13 +191,13 @@
                                                         <label>{{getTotalItems() | currency:'ARS$ ':2}}</label>
                                                     </td>
                                                     <td class="text-center">
-                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                        <label>{{getTotalPaymentsAmount() | currency:'ARS$ ':2}}</label>
                                                     </td>
                                                     <td class="text-center" >
-                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                        <label>{{getTotalPaymentsCharge() | currency:'ARS$ ':2}}</label>
                                                     </td>
                                                     <td class="text-center">
-                                                        <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
+                                                        <label>{{getTotalPaymentsDiscount() | currency:'ARS$ ':2}}</label>
                                                     </td>
                                                     <td class="text-center">
                                                         <label>{{getTotalPayments() | currency:'ARS$ ':2}}</label>
