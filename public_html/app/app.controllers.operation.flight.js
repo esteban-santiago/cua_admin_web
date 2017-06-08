@@ -323,7 +323,7 @@ $scope.$watch('paymentLine.amount', function(newValue,oldValue){
                         if (!angular.isUndefined($scope.paymentLines[i].amount))
                             total += parseFloat($scope.paymentLines[i].amount);
                     }
-                    return total;
+                    return Number(total).toFixed(2);
                 };
 
                 $scope.getTotalPaymentsCharge = function () {
@@ -332,7 +332,7 @@ $scope.$watch('paymentLine.amount', function(newValue,oldValue){
                         if (!angular.isUndefined($scope.paymentLines[i].charge))
                             total += parseFloat($scope.paymentLines[i].charge);
                     }
-                    return total;
+                    return Number(total).toFixed(2);
                 };
 
                 $scope.getTotalPaymentsDiscount = function () {
@@ -341,7 +341,7 @@ $scope.$watch('paymentLine.amount', function(newValue,oldValue){
                         if (!angular.isUndefined($scope.paymentLines[i].discount))
                             total += parseFloat($scope.paymentLines[i].discount);
                     }
-                    return total;
+                    return Number(total).toFixed(2);
                 };
 
                 $scope.getTotalItems = function () {
