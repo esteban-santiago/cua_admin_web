@@ -292,10 +292,6 @@ angular.module('app').controller('flightRecordPaymentController',
 
                 $scope.paymentLines = [getPaymentTemplate()];
 
-$scope.$watch('paymentLine.amount', function(newValue,oldValue){
-    console.log(newValue);
-    console.log(oldValue);
-    });
 
                 //$scope.paymentLines.push([]);
 
@@ -369,8 +365,15 @@ $scope.$watch('paymentLine.amount', function(newValue,oldValue){
                 }
                 ;
 
+                function getSelectedFinanceDocuments() {
+                    var selectedDocuments = [];
+                    for (var i = 0; i < $scope.paymentLines.length; i++) {
+                    }
+                }
+
                 $scope.save = function () {
-                    receipt = {
+                    console.log($scope);
+                    var receipt = {
                         documentType: 'RCI',
                         expirationDate: new moment().format('YYYY-MM-DD'),
                         person: {id: 100},
@@ -378,10 +381,11 @@ $scope.$watch('paymentLine.amount', function(newValue,oldValue){
                         promotions: [],
                         user: null,
                         creationDate: new moment().format('YYYY-MM-DD'),
-                        compensatedDocuments: $scope.financeDocuments
+                        compensatedDocuments: [{id: 1, documentType: 'FRI'}]
                     };
                     financeDocumentService.save(receipt, function (response) {
                         console.log(response);
+                        $uibModalInstance.close(response);
                     });
                     /*financeDocumentService.compensateP(receipt, function (response) {
                      //console.log(response);

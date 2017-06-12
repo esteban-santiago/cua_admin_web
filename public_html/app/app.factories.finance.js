@@ -16,12 +16,6 @@ angular.module('app')
                     'getByReferencedDocumentId': {method: 'GET', isArray: false,
                         url: url + '/?referenced_document_id=:id',
                         params: {id: '@id'}
-                    },
-                    'isCompensable': { method: 'POST', isArray: false,
-                        url: url + '/is_compensable'
-                    },
-                    'compensateP': { method: 'POST', isArray: false,
-                        url: url + '/compensate/'
                     }
                 });
             }]);
