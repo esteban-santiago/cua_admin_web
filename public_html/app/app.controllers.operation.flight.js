@@ -292,16 +292,12 @@ angular.module('app').controller('flightRecordPaymentController',
 
                 $scope.paymentLines = [getPaymentTemplate()];
 
-
-                //$scope.paymentLines.push([]);
-
-                $scope.close = function () {
+                $scope.close = function () {                  
                     $uibModalInstance.dismiss();
                 };
 
                 $scope.addPaymentLine = function () {
                     $scope.paymentLines.push(getPaymentTemplate());
-                    console.log($scope.paymentLines);
                 };
 
                 function getPaymentTemplate() {
@@ -362,15 +358,26 @@ angular.module('app').controller('flightRecordPaymentController',
                         }
                     }
                     return payments;
-                }
-                ;
+                };
 
-                $scope.selectedDocuments = [];
+                function getDocumentsToPay(){
+                    var documents = [];
+                    for(var i = 0; i < $scope.financeDocuments.length; i++) {
+                        if($scope.financeDocuments[i].checked === true) {
+                            documents.push({
+                                'id': $scope.financeDocuments[i].id,
+                                'documentType': $scope.financeDocuments[i].documentType
+                            });
+                        }
+                    }
+                    return documents;
+                }
+
                 $scope.show = function() {//function getSelectedFinanceDocuments() {
                     //var selectedDocuments = [];
                     //for (var i = 0; i < $scope.paymentLines.length; i++) {
                     //}
-                    console.log($scope);
+                    console.log(getDocumentsToPay());
                 };
 
                 $scope.save = function () {
@@ -383,7 +390,7 @@ angular.module('app').controller('flightRecordPaymentController',
                         promotions: [],
                         user: null,
                         creationDate: new moment().format('YYYY-MM-DD'),
-                        compensatedDocuments: [{id: 1, documentType: 'FRI'}]
+                        compensatedDocuments: getDocumentsToPay()
                     };
                     financeDocumentService.save(receipt, function (response) {
                         console.log(response);
