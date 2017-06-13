@@ -365,11 +365,13 @@ angular.module('app').controller('flightRecordPaymentController',
                 }
                 ;
 
-                function getSelectedFinanceDocuments() {
-                    var selectedDocuments = [];
-                    for (var i = 0; i < $scope.paymentLines.length; i++) {
-                    }
-                }
+                $scope.selectedDocuments = [];
+                $scope.show = function() {//function getSelectedFinanceDocuments() {
+                    //var selectedDocuments = [];
+                    //for (var i = 0; i < $scope.paymentLines.length; i++) {
+                    //}
+                    console.log($scope);
+                };
 
                 $scope.save = function () {
                     console.log($scope);

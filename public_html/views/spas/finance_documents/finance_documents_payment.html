@@ -46,7 +46,11 @@
                                             <tbody> 
                                                 <tr ng-repeat="financeDocument in financeDocuments">
                                                     <td class="text-center">
-                                                        <input ng-model="chkFinanceDocument" type="checkbox" checked="true">
+                                                        <input name="selectedDocuments[]" 
+                                                               ng-model="financeDocument.checked"
+                                                               type="checkbox" 
+                                                               ng-value="'{{financeDocument.id}}'"
+                                                               ng-click="show()">
                                                     </td>
                                                     <td class="text-center">{{financeDocument.legalId}}</td>
                                                     <td class="text-center">{{financeDocument.person.name}}</td>
