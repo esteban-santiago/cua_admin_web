@@ -292,7 +292,8 @@ angular.module('app').controller('flightRecordPaymentController',
 
                 $scope.paymentLines = [getPaymentTemplate()];
 
-                $scope.close = function () {                  
+                $scope.close = function () {       
+                    console.log($scope.financeDocuments);
                     $uibModalInstance.dismiss();
                 };
 
@@ -373,12 +374,6 @@ angular.module('app').controller('flightRecordPaymentController',
                     return documents;
                 }
 
-                $scope.show = function() {//function getSelectedFinanceDocuments() {
-                    //var selectedDocuments = [];
-                    //for (var i = 0; i < $scope.paymentLines.length; i++) {
-                    //}
-                    console.log(getDocumentsToPay());
-                };
 
                 $scope.save = function () {
                     console.log($scope);
