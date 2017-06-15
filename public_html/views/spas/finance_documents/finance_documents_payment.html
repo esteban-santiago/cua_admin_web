@@ -48,12 +48,14 @@
                                                     <td class="text-center">
                                                         
                                                         <input  
+                                                            type="checkbox" 
                                                             ng-model="financeDocument.checked"
                                                             ng-bind="financeDocument.checked"
-                                                            type="checkbox" 
                                                             ng-init="financeDocument.checked=true"
+                                                            ng-checked="true"
                                                             ng-true-value="true"
-                                                            ng-false-value="false">
+                                                            ng-false-value="false"
+                                                            ng-click="show()" checked/>
                                                         
 
                                                     </td>

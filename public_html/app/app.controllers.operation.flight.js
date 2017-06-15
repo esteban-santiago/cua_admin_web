@@ -288,12 +288,26 @@ angular.module('app').controller('flightRecordPaymentController',
             function ($scope, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
 
+                //$scope.checked = [];
+
+                /*
+                for (var i = 0; i < $scope.financeDocuments.length; i++) {
+                    $scope.checked.push(
+                            {
+                                "id": $scope.financeDocuments[i].id,
+                                "selected": true
+                            });
+                }*/
+
+                $scope.show = function() {
+                  console.log($scope.financeDocuments);  
+                };
+
                 $scope.payments = paymentService.query();
 
                 $scope.paymentLines = [getPaymentTemplate()];
 
-                $scope.close = function () {       
-                    console.log($scope.financeDocuments);
+                $scope.close = function () {
                     $uibModalInstance.dismiss();
                 };
 
@@ -359,12 +373,13 @@ angular.module('app').controller('flightRecordPaymentController',
                         }
                     }
                     return payments;
-                };
+                }
+                ;
 
-                function getDocumentsToPay(){
+                function getDocumentsToPay() {
                     var documents = [];
-                    for(var i = 0; i < $scope.financeDocuments.length; i++) {
-                        if($scope.financeDocuments[i].checked === true) {
+                    for (var i = 0; i < $scope.financeDocuments.length; i++) {
+                        if ($scope.financeDocuments[i].checked === true) {
                             documents.push({
                                 'id': $scope.financeDocuments[i].id,
                                 'documentType': $scope.financeDocuments[i].documentType
