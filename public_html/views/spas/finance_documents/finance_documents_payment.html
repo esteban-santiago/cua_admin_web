@@ -33,7 +33,7 @@
                                         <table id="example2" class="table table-bordered table-hover">
                                             <thead>
                                                 <tr class="table-bordered">
-                                                    <th class="text-center">#</th>
+                                                    <!--th class="text-center">#</th-->
                                                     <th class="text-center">Documento</th>
                                                     <th class="text-center">Titular</th>
                                                     <th class="text-center">Fecha</th>
@@ -45,7 +45,7 @@
                                             </thead>
                                             <tbody> 
                                                 <tr ng-repeat="financeDocument in financeDocuments">
-                                                    <td class="text-center">
+                                                    <!--td class="text-center">
                                                         
                                                         <input  
                                                             type="checkbox" 
@@ -58,7 +58,7 @@
                                                             ng-click="show()" checked/>
                                                         
 
-                                                    </td>
+                                                    </td-->
                                                     <td class="text-center">{{financeDocument.legalId}}</td>
                                                     <td class="text-center">{{financeDocument.person.name}}</td>
                                                     <td class="text-center">{{financeDocument.creationDate| date : 'dd/MM/yyyy'}}</td>

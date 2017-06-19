@@ -379,12 +379,12 @@ angular.module('app').controller('flightRecordPaymentController',
                 function getDocumentsToPay() {
                     var documents = [];
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                        if ($scope.financeDocuments[i].checked === true) {
+                        //if ($scope.financeDocuments[i].checked === true) {
                             documents.push({
                                 'id': $scope.financeDocuments[i].id,
                                 'documentType': $scope.financeDocuments[i].documentType
                             });
-                        }
+                        //}
                     }
                     return documents;
                 }
