@@ -102,6 +102,15 @@ angular.module('app').controller('flightRecordController',
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
                     $scope.flightRecords = flightRecordService.query();
+                    //traigo el estado del documento financiero
+                    console.log("corro: " + $scope.flightRecords.length);
+                    for(var i = 0 ; i < $scope.flightRecords.length ; i++) {
+                        console.log("corro: " + i);
+                        $scope.flightRecords[i].financeDocument = 
+                                financeDocumentService
+                            .getByReferencedDocumentId({id: $scope.flightRecords[i].id});
+                    }
+                    console.log($scope.flightRecords);
                 }
                 ;
 
