@@ -16,10 +16,26 @@ angular.module('app')
                     'getByReferencedDocumentId': {method: 'GET', isArray: false,
                         url: url + '/?referenced_document_id=:id',
                         params: {id: '@id'}
-                    }
+                    },
+                    'isReferencedDocumentIdCompensated':
+                            {
+                                method: 'GET',
+                                isArray: false,
+                                url: url + '/is_compensated?referenced_document_id=:id',
+                                params: {id: '@id'},
+                                headers: {'Access-Control-Expose-Headers': 'Iscompensated'},
+                                transformResponse: function (data, headers) {
+                                    //MESS WITH THE DATA
+                                    response = {};
+                                    response.data = data;
+                                    response.headers = headers();
+                                    console.log(headers());
+                                    return response;
+                                }
+                            }
                 });
             }]);
-        
+
 angular.module('app')
         .factory('flightRecordIssuedService', ['$resource', 'SERVER_FOR_SERVICES',
             function ($resource, SERVER_FOR_SERVICES) {

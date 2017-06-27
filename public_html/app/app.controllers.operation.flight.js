@@ -102,15 +102,34 @@ angular.module('app').controller('flightRecordController',
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
                     $scope.flightRecords = flightRecordService.query();
+                    $scope.flightRecords.$promise.then(function (result) {
+                        $scope.flightRecords = result;
+                        for (var i = 0; i < $scope.flightRecords.length; i++) {
+                            try {
+                                $scope.flightRecords[i].financeDocument =
+                                        financeDocumentService
+                                        .isReferencedDocumentIdCompensated(
+                                            {id: $scope.flightRecords[i].id}).$promise.then(
+                                            function(data) {
+                                                console.log(data.headers);
+                                                
+                                            }
+                                            );
+                                //console.log($scope.flightRecords);
+                            } catch (err) {
+                            }
+                        }
+                    });
+
                     //traigo el estado del documento financiero
-                    console.log("corro: " + $scope.flightRecords.length);
-                    for(var i = 0 ; i < $scope.flightRecords.length ; i++) {
-                        console.log("corro: " + i);
-                        $scope.flightRecords[i].financeDocument = 
-                                financeDocumentService
-                            .getByReferencedDocumentId({id: $scope.flightRecords[i].id});
-                    }
-                    console.log($scope.flightRecords);
+                    //console.log($scope.flightRecords);
+                    /*for(var i in $scope.flightRecords) {
+                     console.log("corro: " + i);
+                     i.financeDocument = 
+                     financeDocumentService
+                     .getByReferencedDocumentId({id: i.id});
+                     }*/
+                    //console.log($scope.flightRecords);
                 }
                 ;
 
@@ -300,16 +319,16 @@ angular.module('app').controller('flightRecordPaymentController',
                 //$scope.checked = [];
 
                 /*
-                for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                    $scope.checked.push(
-                            {
-                                "id": $scope.financeDocuments[i].id,
-                                "selected": true
-                            });
-                }*/
+                 for (var i = 0; i < $scope.financeDocuments.length; i++) {
+                 $scope.checked.push(
+                 {
+                 "id": $scope.financeDocuments[i].id,
+                 "selected": true
+                 });
+                 }*/
 
-                $scope.show = function() {
-                  console.log($scope.financeDocuments);  
+                $scope.show = function () {
+                    console.log($scope.financeDocuments);
                 };
 
                 $scope.payments = paymentService.query();
@@ -389,10 +408,10 @@ angular.module('app').controller('flightRecordPaymentController',
                     var documents = [];
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
                         //if ($scope.financeDocuments[i].checked === true) {
-                            documents.push({
-                                'id': $scope.financeDocuments[i].id,
-                                'documentType': $scope.financeDocuments[i].documentType
-                            });
+                        documents.push({
+                            'id': $scope.financeDocuments[i].id,
+                            'documentType': $scope.financeDocuments[i].documentType
+                        });
                         //}
                     }
                     return documents;
