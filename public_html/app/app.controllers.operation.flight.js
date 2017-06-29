@@ -111,7 +111,7 @@ angular.module('app').controller('flightRecordController',
                                         .isReferencedDocumentIdCompensated(
                                             {id: $scope.flightRecords[i].id}).$promise.then(
                                             function(data) {
-                                                console.log(data.headers);
+                                                console.log(data.headers["iscompensated"]);
                                                 
                                             }
                                             );

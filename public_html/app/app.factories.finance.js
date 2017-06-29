@@ -23,13 +23,12 @@ angular.module('app')
                                 isArray: false,
                                 url: url + '/is_compensated?referenced_document_id=:id',
                                 params: {id: '@id'},
-                                headers: {'Access-Control-Expose-Headers': 'Iscompensated'},
                                 transformResponse: function (data, headers) {
-                                    //MESS WITH THE DATA
+                                    //Datos y headers
                                     response = {};
                                     response.data = data;
                                     response.headers = headers();
-                                    console.log(headers());
+                                    //console.log(headers());
                                     return response;
                                 }
                             }
