@@ -101,35 +101,25 @@ angular.module('app').controller('flightRecordController',
                     $scope.pilots = pilotService.query();
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
-                    $scope.flightRecords = flightRecordService.query();
-                    $scope.flightRecords.$promise.then(function (result) {
-                        $scope.flightRecords = result;
+
+                    flightRecordService.query().$promise.then(function (flightRecords) {
+                        $scope.flightRecords = flightRecords;
                         for (var i = 0; i < $scope.flightRecords.length; i++) {
-                            try {
-                                $scope.flightRecords[i].financeDocument =
-                                        financeDocumentService
-                                        .isReferencedDocumentIdCompensated(
-                                            {id: $scope.flightRecords[i].id}).$promise.then(
-                                            function(data) {
-                                                console.log(data.headers["iscompensated"]);
-                                                
-                                            }
-                                            );
-                                //console.log($scope.flightRecords);
-                            } catch (err) {
-                            }
+                            (function (record) {
+                                financeDocumentService
+                                        .isReferencedDocumentIdCompensated({
+                                            id: $scope.flightRecords[record].id
+                                        }).$promise.then(
+                                        function (data) {
+                                            $scope.flightRecords[record].financeDocument = {
+                                                'isCompensated': data.headers['compensated']
+                                            };
+                                        });
+                            })(i);
+                            //console.log($scope.flightRecords);
+
                         }
                     });
-
-                    //traigo el estado del documento financiero
-                    //console.log($scope.flightRecords);
-                    /*for(var i in $scope.flightRecords) {
-                     console.log("corro: " + i);
-                     i.financeDocument = 
-                     financeDocumentService
-                     .getByReferencedDocumentId({id: i.id});
-                     }*/
-                    //console.log($scope.flightRecords);
                 }
                 ;
 

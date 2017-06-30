@@ -92,13 +92,19 @@
                                         <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
                                             <span class="fa fa-search"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="update(flightRecord)">
+                                        <button class="btn btn-xs" type="button" 
+                                                ng-show="flightRecord.status !== 'CLOSED'" 
+                                                ng-click="update(flightRecord)">
                                             <span class="fa fa-pencil"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status !== 'CLOSED'" ng-click="remove(flightRecord)">
+                                        <button class="btn btn-xs" type="button" 
+                                                ng-show="flightRecord.status !== 'CLOSED'" 
+                                                ng-click="remove(flightRecord)">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <button class="btn btn-xs" type="button" ng-show="flightRecord.status === 'CLOSED'" ng-click="payment(flightRecord)">
+                                        <button class="btn btn-xs" type="button" 
+                                                ng-show="flightRecord.financeDocument.isCompensated === 'false' && flightRecord.status === 'CLOSED'" 
+                                                ng-click="payment(flightRecord)">
                                             <span class="fa fa-money"></span>
                                         </button>
 

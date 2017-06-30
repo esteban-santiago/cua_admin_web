@@ -18,9 +18,7 @@ angular.module('app')
                         params: {id: '@id'}
                     },
                     'isReferencedDocumentIdCompensated':
-                            {
-                                method: 'GET',
-                                isArray: false,
+                            { method: 'GET', isArray: false,
                                 url: url + '/is_compensated?referenced_document_id=:id',
                                 params: {id: '@id'},
                                 transformResponse: function (data, headers) {
@@ -28,7 +26,6 @@ angular.module('app')
                                     response = {};
                                     response.data = data;
                                     response.headers = headers();
-                                    //console.log(headers());
                                     return response;
                                 }
                             }
