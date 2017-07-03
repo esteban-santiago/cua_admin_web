@@ -17,7 +17,7 @@ angular.module('app')
                         url: url + '/?referenced_document_id=:id',
                         params: {id: '@id'}
                     },
-                    'isReferencedDocumentIdCompensated':
+                    'isReferencedDocumentCompensated':
                             { method: 'GET', isArray: false,
                                 url: url + '/is_compensated?referenced_document_id=:id',
                                 params: {id: '@id'},

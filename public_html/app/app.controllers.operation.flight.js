@@ -82,13 +82,8 @@ angular.module('app').controller('flightRecordController',
                             }
                         }
                     }).result.then(function (_fr) {
-                        /*
-                         var fr = $scope.flightRecords.filter(function (fr_) {
-                         return fr_.id !== _fr.id;
-                         });
-                         fr.push(_fr);
-                         $scope.flightRecords = fr;
-                         */
+                        flightRecord.financeDocument = {};
+                        flightRecord.financeDocument['isCompensated'] = _fr.compensated;
                     });
 
                 };
@@ -107,22 +102,19 @@ angular.module('app').controller('flightRecordController',
                         for (var i = 0; i < $scope.flightRecords.length; i++) {
                             (function (record) {
                                 financeDocumentService
-                                        .isReferencedDocumentIdCompensated({
+                                        .isReferencedDocumentCompensated({
                                             id: $scope.flightRecords[record].id
                                         }).$promise.then(
                                         function (data) {
                                             $scope.flightRecords[record].financeDocument = {
-                                                'isCompensated': data.headers['compensated']
+                                                'isCompensated': (data.headers['compensated'] === 'true')
                                             };
                                         });
                             })(i);
-                            //console.log($scope.flightRecords);
-
                         }
+                        //console.log($scope.flightRecords);
                     });
-                }
-                ;
-
+                };
             }]);
 
 /*
@@ -306,19 +298,8 @@ angular.module('app').controller('flightRecordPaymentController',
             function ($scope, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
 
-                //$scope.checked = [];
-
-                /*
-                 for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                 $scope.checked.push(
-                 {
-                 "id": $scope.financeDocuments[i].id,
-                 "selected": true
-                 });
-                 }*/
-
                 $scope.show = function () {
-                    console.log($scope.financeDocuments);
+                    console.log($scope.getTotal());
                 };
 
                 $scope.payments = paymentService.query();
@@ -335,9 +316,9 @@ angular.module('app').controller('flightRecordPaymentController',
 
                 function getPaymentTemplate() {
                     return {
-                        amount: 0.00,
-                        charge: 0.00,
-                        discount: 0.00,
+                        amount: 0,
+                        charge: 0,
+                        discount: 0,
                         notes: ''
                     };
                 }
@@ -369,12 +350,19 @@ angular.module('app').controller('flightRecordPaymentController',
                     return Number(total).toFixed(2);
                 };
 
+                $scope.getTotal = function() {
+                    return parseFloat($scope.getTotalPaymentsAmount()) +
+                            parseFloat($scope.getTotalPaymentsCharge()) +
+                            parseFloat($scope.getTotalPaymentsDiscount());
+                            
+                };
+
                 $scope.getTotalItems = function () {
                     var total = 0.00;
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
                         total += parseFloat($scope.financeDocuments[i].amount);
                     }
-                    return total;
+                    return Number(total).toFixed(2);
                 };
 
                 function getPayments() {
@@ -391,29 +379,27 @@ angular.module('app').controller('flightRecordPaymentController',
                         }
                     }
                     return payments;
-                }
-                ;
+                };
 
                 function getDocumentsToPay() {
                     var documents = [];
                     for (var i = 0; i < $scope.financeDocuments.length; i++) {
-                        //if ($scope.financeDocuments[i].checked === true) {
                         documents.push({
                             'id': $scope.financeDocuments[i].id,
                             'documentType': $scope.financeDocuments[i].documentType
                         });
-                        //}
                     }
                     return documents;
                 }
 
 
                 $scope.save = function () {
-                    console.log($scope);
+                    console.log($scope.financeDocuments);
                     var receipt = {
                         documentType: 'RCI',
                         expirationDate: new moment().format('YYYY-MM-DD'),
-                        person: {id: 100},
+                        //Arreglar esto: Toma el id de usuario del primer registro
+                        person: {id: $scope.financeDocuments[0].person.id},
                         payments: getPayments(),
                         promotions: [],
                         user: null,
@@ -421,15 +407,7 @@ angular.module('app').controller('flightRecordPaymentController',
                         compensatedDocuments: getDocumentsToPay()
                     };
                     financeDocumentService.save(receipt, function (response) {
-                        console.log(response);
                         $uibModalInstance.close(response);
                     });
-                    /*financeDocumentService.compensateP(receipt, function (response) {
-                     //console.log(response);
-                     //newFR.id = response.id;
-                     $uibModalInstance.close(response);
-                     });*/
-
                 };
-
             }]);
