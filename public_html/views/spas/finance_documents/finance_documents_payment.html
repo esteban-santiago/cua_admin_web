@@ -86,8 +86,7 @@
                                                         <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
                                                             <select ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
                                                                     ng-model="paymentLine.selectedPaymentTerm"
-                                                                    
-                                                                    >
+                                                            >
                                                                     
                                                             </select>
                                                         </div>
@@ -106,7 +105,7 @@
                                                         <div ng-show="paymentLine.selectedPaymentTerm">
                                                             <input type="text" ng-model="paymentLine.amount"
                                                                    ng-change="paymentLine.charge = ((paymentLine.amount / (1 - paymentLine.selectedPaymentTerm.charge)) - paymentLine.amount)"
-                                                                   decimals="2" decimal-point=".">
+                                                                   decimals="2" decimal-point=",">
 
 
                                                             <input type="text" ng-model="paymentLine.charge" style="display: none;">
@@ -224,7 +223,8 @@
             </div>
             <br>
             <button id="cancel" type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Cancelar</button>
-            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save()" >Guardar</button>
+            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save(false)" >Guardar</button>
+            <button id="print" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save(true)" >Guardar y ver Recibo</button>
         </div>
     </div>
 </div>

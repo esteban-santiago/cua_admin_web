@@ -8,8 +8,13 @@ angular.module('app').controller('flightRecordController',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
             function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService,
                     flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
-
+                
+                $scope.items = [];
                 fulFill();
+
+                $scope.showMe = function() {
+                    console.log($scope.items);
+                };
 
                 $scope.view = function (flightRecord) {
                     $modal.open({
@@ -114,7 +119,8 @@ angular.module('app').controller('flightRecordController',
                         }
                         //console.log($scope.flightRecords);
                     });
-                };
+                }
+                ;
             }]);
 
 /*
@@ -294,8 +300,8 @@ angular.module('app').controller('flightRecordCreateController',
             }]);
 
 angular.module('app').controller('flightRecordPaymentController',
-        ['$scope', '$uibModalInstance', 'financeDocumentService', 'paymentService', 'financeDocuments',
-            function ($scope, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
+        ['$scope', '$window', '$uibModalInstance', 'financeDocumentService', 'paymentService', 'financeDocuments',
+            function ($scope, $window, $uibModalInstance, financeDocumentService, paymentService, financeDocuments) {
                 $scope.financeDocuments = financeDocuments;
 
                 $scope.show = function () {
@@ -350,11 +356,11 @@ angular.module('app').controller('flightRecordPaymentController',
                     return Number(total).toFixed(2);
                 };
 
-                $scope.getTotal = function() {
+                $scope.getTotal = function () {
                     return parseFloat($scope.getTotalPaymentsAmount()) +
                             parseFloat($scope.getTotalPaymentsCharge()) +
                             parseFloat($scope.getTotalPaymentsDiscount());
-                            
+
                 };
 
                 $scope.getTotalItems = function () {
@@ -379,7 +385,8 @@ angular.module('app').controller('flightRecordPaymentController',
                         }
                     }
                     return payments;
-                };
+                }
+                ;
 
                 function getDocumentsToPay() {
                     var documents = [];
@@ -393,8 +400,7 @@ angular.module('app').controller('flightRecordPaymentController',
                 }
 
 
-                $scope.save = function () {
-                    console.log($scope.financeDocuments);
+                $scope.save = function (redirect) {
                     var receipt = {
                         documentType: 'RCI',
                         expirationDate: new moment().format('YYYY-MM-DD'),
@@ -407,7 +413,13 @@ angular.module('app').controller('flightRecordPaymentController',
                         compensatedDocuments: getDocumentsToPay()
                     };
                     financeDocumentService.save(receipt, function (response) {
+                        receipt = response;
                         $uibModalInstance.close(response);
+                    }).$promise.then(function () {
+                        if (redirect) {
+                            $window.location.href = "#/finance/" + receipt.documentType + '/' + receipt.id + '/show';
+                        }
                     });
                 };
+
             }]);
