@@ -12,7 +12,6 @@ angular.module('app').controller('flightRecordController',
                 fulFill();
 
                 $scope.showMe = function() {
-                    
                     console.log(flightRecordService.getPage({page: 1, size: 2 }));
                 };
 
@@ -56,11 +55,14 @@ angular.module('app').controller('flightRecordController',
                             flightRecord: flightRecord
                         }
                     }).result.then(function (_fr) {
+                        /*
                         var fr = $scope.flightRecords.filter(function (fr_) {
                             return fr_.id !== _fr.id;
                         });
                         fr.push(_fr);
                         $scope.flightRecords = fr;
+                        */
+                        fulFill();
                     });
                 };
 
