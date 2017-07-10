@@ -3,10 +3,10 @@
 angular
         .module('app')
 
-        .controller('flightRecordFormController',
-                ['$scope', '$window','$document', '$routeParams', 'flightRecordService', function ($scope, $window,$document, $routeParams, flightRecordService) {
+        .controller('receiptFormController',
+                ['$scope', '$window','$document', '$routeParams', 'financeDocumentService', function ($scope, $window,$document, $routeParams, financeDocumentService) {
 
-                        $scope.document = flightRecordService.get({'id': $routeParams.id});
+                        $scope.document = financeDocumentService.get({'id': $routeParams.id});
                         $scope.print = function (div_to_show, div_to_hide, width, height) {
                             var popupWin = window.open('', '_blank', 'menubar=yes, width=' + width + ', height=' + height );
                             popupWin.document.open();

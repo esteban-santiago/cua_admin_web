@@ -4,17 +4,18 @@
  * Controlador de la ficha de vuelo
  */
 angular.module('app').controller('flightRecordController',
-        ['$scope', '$uibModal', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
+        ['$scope','$window' ,'$uibModal', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
-            function ($scope, $modal, flightRecordService, airfieldService, pilotService, instructorService,
+            function ($scope, $window, $modal, flightRecordService, airfieldService, pilotService, instructorService,
                     flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
                 
-                $scope.items = [];
                 fulFill();
 
                 $scope.showMe = function() {
-                    console.log($scope.items);
+                    
+                    console.log(flightRecordService.getPage({page: 1, size: 2 }));
                 };
+
 
                 $scope.view = function (flightRecord) {
                     $modal.open({
@@ -38,7 +39,8 @@ angular.module('app').controller('flightRecordController',
                         backdrop: false,
                         sticky: true
                     }).result.then(function (_fr) {
-                        $scope.flightRecords.push(_fr);
+                        fulFill();
+                        //$scope.flightRecords.push(_fr);
                     });
                 };
 
@@ -62,9 +64,18 @@ angular.module('app').controller('flightRecordController',
                     });
                 };
 
+                $scope.print = function(id) {
+                    $window.location.href = '#/operation/flight_record/' + id + '/show';
+                };
+
+                $scope.refresh = function() {
+                    fulFill();
+                };
+
                 $scope.remove = function (flightRecord) {
                     flightRecordService.delete({'id': flightRecord.id});
-                    $scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
+                    fulFill();
+                    //$scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
                 };
 
                 $scope.payment = function (flightRecord) {
@@ -87,13 +98,15 @@ angular.module('app').controller('flightRecordController',
                             }
                         }
                     }).result.then(function (_fr) {
-                        flightRecord.financeDocument = {};
-                        flightRecord.financeDocument['isCompensated'] = _fr.compensated;
+                        //flightRecord.financeDocument = {};
+                        //flightRecord.financeDocument['isCompensated'] = _fr.compensated;
+                        fulFill();
                     });
 
                 };
 
                 function fulFill() {
+                    $scope.items = []; //Checkboxes
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
                     $scope.flightPurposes = flightPurposeService.get();
@@ -102,8 +115,12 @@ angular.module('app').controller('flightRecordController',
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
 
-                    flightRecordService.query().$promise.then(function (flightRecords) {
-                        $scope.flightRecords = flightRecords;
+                    //flightRecordService.getPage({page: 1, size: 2 }).$promise.then(function (flightRecords) {
+                    //flightRecordService.query().$promise.then(function (flightRecords) {
+
+                    flightRecordService.getPage({page: 1, size: 10 }).$promise.then(function (flightRecords) {
+                        //$scope.flightRecords = flightRecords;
+                        $scope.flightRecords = flightRecords.content;
                         for (var i = 0; i < $scope.flightRecords.length; i++) {
                             (function (record) {
                                 financeDocumentService
@@ -117,10 +134,9 @@ angular.module('app').controller('flightRecordController',
                                         });
                             })(i);
                         }
-                        //console.log($scope.flightRecords);
                     });
-                }
-                ;
+                };
+                
             }]);
 
 /*

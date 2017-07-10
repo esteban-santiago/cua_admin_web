@@ -91,11 +91,11 @@
                                             {{crewMember.person.name}}
                                         </div>
                                     </td>
-                                    <td>{{flightRecord.startFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
-                                    <td>{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
-                                    <td class="text-center">{{flightRecord.aircraft.registration}}</td>
-                                    <td class="text-center">{{flightRecord.landings}}</td>
-                                    <td class="text-center">{{flightRecord.amountOfHours}}</td>
+                                    <td align="center">{{flightRecord.startFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
+                                    <td align="center">{{flightRecord.endFlight| date : 'dd/MM/yyyy HH:mm'}}</td>
+                                    <td align="center">{{flightRecord.aircraft.registration}}</td>
+                                    <td align="center">{{flightRecord.landings}}</td>
+                                    <td align="center">{{flightRecord.amountOfHours}}</td>
                                     <td>
                                         <button class="btn btn-xs" type="button" ng-click="view(flightRecord)">
                                             <span class="fa fa-search"></span>
@@ -109,6 +109,11 @@
                                                 ng-show="flightRecord.status !== 'CLOSED'" 
                                                 ng-click="remove(flightRecord)">
                                             <span class="fa fa-trash"></span>
+                                        </button>
+                                        <button class="btn btn-xs" type="button" 
+                                                ng-show="flightRecord.status === 'CLOSED'" 
+                                                ng-click="print(flightRecord.id)">
+                                            <span class="fa fa-print"></span>
                                         </button>
                                         <button class="btn btn-xs" type="button" 
                                                 ng-show="flightRecord.financeDocument.isCompensated !== true && 
@@ -131,7 +136,7 @@
                 </div>
 
                   <div class="btn-group">
-                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
+                <button type="button" ng-click="refresh()" class="btn btn-default btn-sm"><i class="fa fa-refresh"></i></button>
                 </div>
                   <div class="btn-group">
                   <button type="button" class="btn btn-default btn-sm"><i class="fa fa-money"></i></button>

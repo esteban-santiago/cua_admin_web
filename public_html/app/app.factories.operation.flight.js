@@ -48,7 +48,7 @@ angular.module('app')
                         }
                     },
                     'getPage': {method: 'GET', isArray: false,
-                        url: url + '/?page=:page&size=:size',
+                        url: url + '?page=:page&size=:size',
                         params: {page: '@page', size: '@size'}
                     }
                 });
