@@ -4,15 +4,15 @@
  * Controlador de la ficha de vuelo
  */
 angular.module('app').controller('flightRecordController',
-        ['$scope','$window' ,'$uibModal', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
+        ['$scope', '$window', '$uibModal', 'flightRecordService', 'airfieldService', 'pilotService', 'instructorService',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
             function ($scope, $window, $modal, flightRecordService, airfieldService, pilotService, instructorService,
                     flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
-                
+
                 fulFill();
 
-                $scope.showMe = function() {
-                    console.log(flightRecordService.getPage({page: 1, size: 2 }));
+                $scope.showMe = function () {
+                    console.log(flightRecordService.getPage({page: 1, size: 2}));
                 };
 
 
@@ -37,10 +37,13 @@ angular.module('app').controller('flightRecordController',
                         scope: $scope,
                         backdrop: false,
                         sticky: true
-                    }).result.then(function (_fr) {
+                    }).result.then(function () {
                         fulFill();
-                        //$scope.flightRecords.push(_fr);
                     });
+                    /*}).result.then(function (_fr) {
+                     fulFill();
+                     //$scope.flightRecords.push(_fr);
+                     });*/
                 };
 
                 $scope.update = function (flightRecord) {
@@ -54,29 +57,31 @@ angular.module('app').controller('flightRecordController',
                             //Paso las instancias que necesito
                             flightRecord: flightRecord
                         }
-                    }).result.then(function (_fr) {
-                        /*
-                        var fr = $scope.flightRecords.filter(function (fr_) {
-                            return fr_.id !== _fr.id;
-                        });
-                        fr.push(_fr);
-                        $scope.flightRecords = fr;
-                        */
+                    }).result.then(function () {
                         fulFill();
                     });
+                    /*
+                     }).result.then(function (_fr) {
+                     var fr = $scope.flightRecords.filter(function (fr_) {
+                     return fr_.id !== _fr.id;
+                     });
+                     fr.push(_fr);
+                     $scope.flightRecords = fr;
+                     */
                 };
 
-                $scope.print = function(id) {
+                $scope.print = function (id) {
                     $window.location.href = '#/operation/flight_record/' + id + '/show';
                 };
 
-                $scope.refresh = function() {
+                $scope.refresh = function () {
                     fulFill();
                 };
 
                 $scope.remove = function (flightRecord) {
-                    flightRecordService.delete({'id': flightRecord.id});
-                    fulFill();
+                    flightRecordService.delete({'id': flightRecord.id}).$promise.then(function () {
+                        fulFill();
+                    });
                     //$scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
                 };
 
@@ -85,7 +90,6 @@ angular.module('app').controller('flightRecordController',
                     financeDocuments = [];
                     financeDocuments.push(financeDocumentService
                             .getByReferencedDocumentId({id: flightRecord.id}));
-                    //Traer los tipos de pagos
                     $modal.open({
                         templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
                         controller: 'flightRecordPaymentController',
@@ -99,7 +103,8 @@ angular.module('app').controller('flightRecordController',
                                 return financeDocuments;
                             }
                         }
-                    }).result.then(function (_fr) {
+                    }).result.then(function () {
+                        //}).result.then(function (_fr) {
                         //flightRecord.financeDocument = {};
                         //flightRecord.financeDocument['isCompensated'] = _fr.compensated;
                         fulFill();
@@ -120,7 +125,7 @@ angular.module('app').controller('flightRecordController',
                     //flightRecordService.getPage({page: 1, size: 2 }).$promise.then(function (flightRecords) {
                     //flightRecordService.query().$promise.then(function (flightRecords) {
 
-                    flightRecordService.getPage({page: 1, size: 10 }).$promise.then(function (flightRecords) {
+                    flightRecordService.getPage({page: 1, size: 10}).$promise.then(function (flightRecords) {
                         //$scope.flightRecords = flightRecords;
                         $scope.flightRecords = flightRecords.content;
                         for (var i = 0; i < $scope.flightRecords.length; i++) {
@@ -137,8 +142,9 @@ angular.module('app').controller('flightRecordController',
                             })(i);
                         }
                     });
-                };
-                
+                }
+                ;
+
             }]);
 
 /*
@@ -189,8 +195,7 @@ angular.module('app').controller('flightRecordUpdateController',
                 };
 
                 $scope.clearCrewMember = function (item, kind) {
-                    console.log(item);
-                    console.log(kind);
+
                 };
 
                 $scope.setSelectedOrigin = function (origin) {
@@ -254,11 +259,23 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.setSelectedCrewMember = function (member, kind) {
+                    //$scope.fr.theCrew.push({person: member, crewMemberRole: kind});
+       
+                    $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
+                        return tc.crewMemberRole !== kind;
+                    });
                     $scope.fr.theCrew.push({person: member, crewMemberRole: kind});
+
                 };
 
                 $scope.clearCrewMember = function (item, kind) {
-                    console.log($scope.instructor);
+                    /*
+                    if (angular.isUndefined(item)) {
+                        _theCrew = $scope.fr.theCrew.filter(function (tc) {
+                            return tc.crewMemberRole === kind;
+                        });
+                        $scope.fr.theCrew.splice($scope.flightRecords.indexOf(_theCrew), 1);
+                    }*/
                 };
 
                 $scope.setSelectedOrigin = function (origin) {
@@ -270,6 +287,23 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.save = function () {
+                    if (angular.isUndefined($scope.pilot)) {
+                        $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
+                            return tc.crewMemberRole !== 'PIC';
+                        });
+                    }
+                    if (angular.isUndefined($scope.instructor) || angular.isUndefined($scope.instructor.name)) {
+                        console.log('entré');
+                    //console.log($scope.instructor.name);
+                        $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
+                            return tc.crewMemberRole !== 'INST';
+                        });
+                    }
+                    console.log($scope.pilot);
+                    console.log($scope.fr.theCrew);
+                };
+                
+                $scope.saves = function () {
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.save(newFR, function (response) {
                         newFR.id = response.id;
