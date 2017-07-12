@@ -8,11 +8,15 @@ angular.module('app').controller('flightRecordController',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
             function ($scope, $window, $modal, flightRecordService, airfieldService, pilotService, instructorService,
                     flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
-
+                    
+                //Seteos iniciales
+                var itemsPerPage = 10;
+                var actualPage = 1;
+                //
                 fulFill();
 
                 $scope.showMe = function () {
-                    console.log(flightRecordService.getPage({page: 1, size: 2}));
+                    console.log(flightRecordService.getPage({page: 1, size: 10}));
                 };
 
 
@@ -112,8 +116,21 @@ angular.module('app').controller('flightRecordController',
 
                 };
 
+                $scope.scrollPage = function(direction) {
+                    if(direction === '<' && !$scope.page.first) {
+                        actualPage--;
+                        fulFill();
+                    }
+                    if(direction === '>' && !$scope.page.last) {
+                        actualPage++;
+                        fulFill();
+                    }
+
+                };
+
                 function fulFill() {
                     $scope.items = []; //Checkboxes
+                    $scope.pages = {};
                     $scope.aircrafts = aircraftService.query();
                     $scope.flightNatures = flightNatureService.get();
                     $scope.flightPurposes = flightPurposeService.get();
@@ -122,10 +139,8 @@ angular.module('app').controller('flightRecordController',
                     $scope.instructors = instructorService.query();
                     $scope.airfields = airfieldService.query();
 
-                    //flightRecordService.getPage({page: 1, size: 2 }).$promise.then(function (flightRecords) {
-                    //flightRecordService.query().$promise.then(function (flightRecords) {
-
-                    flightRecordService.getPage({page: 1, size: 10}).$promise.then(function (flightRecords) {
+                    flightRecordService.getPage({page: actualPage, size: itemsPerPage}).$promise.then(function (flightRecords) {
+                        $scope.page = flightRecords;
                         //$scope.flightRecords = flightRecords;
                         $scope.flightRecords = flightRecords.content;
                         for (var i = 0; i < $scope.flightRecords.length; i++) {
@@ -142,8 +157,7 @@ angular.module('app').controller('flightRecordController',
                             })(i);
                         }
                     });
-                }
-                ;
+                };
 
             }]);
 
