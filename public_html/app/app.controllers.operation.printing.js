@@ -4,6 +4,7 @@ angular.module('app')
         .controller('flightRecordFormController',
                 ['$scope', '$window','$document', '$routeParams', 'flightRecordService', function ($scope, $window,$document, $routeParams, flightRecordService) {
                         $scope.document = flightRecordService.get({'id': $routeParams.id});
+                        console.log($scope.document);
                         $scope.print = function (div_to_show, div_to_hide, width, height) {
                             var popupWin = window.open('', '_blank', 'menubar=yes, width=' + width + ', height=' + height );
                             popupWin.document.open();

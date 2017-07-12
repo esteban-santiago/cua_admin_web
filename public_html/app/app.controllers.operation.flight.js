@@ -194,9 +194,7 @@ angular.module('app').controller('flightRecordUpdateController',
                     theCrew.push({person: member, crewMemberRole: kind});
                 };
 
-                $scope.clearCrewMember = function (item, kind) {
 
-                };
 
                 $scope.setSelectedOrigin = function (origin) {
                     aOrigin = origin;
@@ -211,6 +209,11 @@ angular.module('app').controller('flightRecordUpdateController',
                 };
 
                 $scope.save = function () {
+                    if (angular.isUndefined($scope.instructor) || $scope.instructor.person.name === null) {
+                        theCrew = theCrew.filter(function (tc) {
+                            return tc.crewMemberRole !== 'INST';
+                        });
+                    }
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.update(newFR, function (response) {
                         $modalInstance.close(response);
@@ -260,22 +263,10 @@ angular.module('app').controller('flightRecordCreateController',
 
                 $scope.setSelectedCrewMember = function (member, kind) {
                     //$scope.fr.theCrew.push({person: member, crewMemberRole: kind});
-       
                     $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
                         return tc.crewMemberRole !== kind;
                     });
                     $scope.fr.theCrew.push({person: member, crewMemberRole: kind});
-
-                };
-
-                $scope.clearCrewMember = function (item, kind) {
-                    /*
-                    if (angular.isUndefined(item)) {
-                        _theCrew = $scope.fr.theCrew.filter(function (tc) {
-                            return tc.crewMemberRole === kind;
-                        });
-                        $scope.fr.theCrew.splice($scope.flightRecords.indexOf(_theCrew), 1);
-                    }*/
                 };
 
                 $scope.setSelectedOrigin = function (origin) {
@@ -287,23 +278,11 @@ angular.module('app').controller('flightRecordCreateController',
                 };
 
                 $scope.save = function () {
-                    if (angular.isUndefined($scope.pilot)) {
-                        $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
-                            return tc.crewMemberRole !== 'PIC';
-                        });
-                    }
-                    if (angular.isUndefined($scope.instructor) || angular.isUndefined($scope.instructor.name)) {
-                        console.log('entré');
-                    //console.log($scope.instructor.name);
+                    if (angular.isUndefined($scope.instructor) || $scope.instructor.person.name === null) {
                         $scope.fr.theCrew = $scope.fr.theCrew.filter(function (tc) {
                             return tc.crewMemberRole !== 'INST';
                         });
                     }
-                    console.log($scope.pilot);
-                    console.log($scope.fr.theCrew);
-                };
-                
-                $scope.saves = function () {
                     var newFR = fillFlightRecord($scope);
                     flightRecordService.save(newFR, function (response) {
                         newFR.id = response.id;
