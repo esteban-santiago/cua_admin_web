@@ -60,7 +60,8 @@
                                         <div class="col-sm-4">
                                             <select ng-model="fr.purpose" class="form-control">
                                                 <option value="">Propósito</option>
-                                                <option value="{{flightPurpose[0]}}" ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
+                                                <option value="{{flightPurpose[0]}}" 
+                                                        ng-repeat="flightPurpose in flightPurposes">{{flightPurpose[1]}}</option>
                                             </select><br>
                                         </div>
                                     </div>
@@ -69,12 +70,14 @@
                                         <label class="col-sm-2 control-label">Carácter</label>
                                         <div class="col-sm-4">
                                             <select ng-model="fr.nature" class="form-control">
+                                                <option value="">Carácter</option>
                                                 <option value="{{flightNature[0]}}" ng-repeat="flightNature in flightNatures">{{flightNature[1]}}</option>
                                             </select><br>
                                         </div>
                                         <label class="col-sm-2 control-label">Tipo</label>
                                         <div class="col-sm-4">
                                             <select ng-model="fr.type" class="form-control">
+                                                <option value="">Tipo</option>
                                                 <option value="{{flightType[0]}}" ng-repeat="flightType in flightTypes">{{flightType[1]}}</option>
                                             </select><br>
                                         </div>
