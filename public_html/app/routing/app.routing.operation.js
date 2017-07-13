@@ -1,8 +1,8 @@
 angular.module('app').config(['$routeProvider', function ($routeProvider) {
         $routeProvider
-                .when('/finance_documents', {
-                    templateUrl: 'views/spas/finance_documents/finance_documents.html',
-                    controller: 'financeDocumentController'
+                .when('/aircraft', {
+                    templateUrl: 'views/spas/aircraft/aircraft.html',
+                    controller: 'aircraftController'
                 })
                 ;
         //               .otherwise({redirectTo: '/finance'});

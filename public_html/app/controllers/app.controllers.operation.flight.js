@@ -95,7 +95,7 @@ angular.module('app').controller('flightRecordController',
                     financeDocuments.push(financeDocumentService
                             .getByReferencedDocumentId({id: flightRecord.id}));
                     $modal.open({
-                        templateUrl: 'views/spas/finance_documents/finance_documents_payment.html',
+                        templateUrl: 'views/spas/finance_document/finance_document_payment.html',
                         controller: 'flightRecordPaymentController',
                         //scope: $scope,
                         backdrop: false,
