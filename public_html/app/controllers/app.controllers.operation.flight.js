@@ -8,7 +8,7 @@ angular.module('app').controller('flightRecordController',
             'flightNatureService', 'flightPurposeService', 'flightTypeService', 'aircraftService', 'financeDocumentService',
             function ($scope, $window, $modal, flightRecordService, airfieldService, pilotService, instructorService,
                     flightNatureService, flightPurposeService, flightTypeService, aircraftService, financeDocumentService) {
-                    
+
                 //Seteos iniciales
                 var itemsPerPage = 10;
                 var actualPage = 1;
@@ -19,10 +19,14 @@ angular.module('app').controller('flightRecordController',
                     console.log(flightRecordService.getPage({page: 1, size: 10}));
                 };
 
+                $scope.filter = function () {
+
+
+                };
 
                 $scope.view = function (flightRecord) {
                     $modal.open({
-                        templateUrl: 'views/spas/flight_record/flight_record_view.html',
+                        templateUrl: '../spas/flight_record/flight_record_view.html',
                         controller: 'flightRecordViewController',
                         scope: $scope,
                         backdrop: true,
@@ -36,7 +40,7 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.create = function () {
                     $modal.open({
-                        templateUrl: 'views/spas/flight_record/flight_record_save.html',
+                        templateUrl: '../spas/flight_record/flight_record_save.html',
                         controller: 'flightRecordCreateController',
                         scope: $scope,
                         backdrop: false,
@@ -52,7 +56,7 @@ angular.module('app').controller('flightRecordController',
 
                 $scope.update = function (flightRecord) {
                     $modal.open({
-                        templateUrl: 'views/spas/flight_record/flight_record_save.html',
+                        templateUrl: '../spas/flight_record/flight_record_save.html',
                         controller: 'flightRecordUpdateController',
                         scope: $scope,
                         backdrop: false,
@@ -83,8 +87,23 @@ angular.module('app').controller('flightRecordController',
                 };
 
                 $scope.remove = function (flightRecord) {
-                    flightRecordService.delete({'id': flightRecord.id}).$promise.then(function () {
-                        fulFill();
+                    var content = {title: 'Atención!',
+                        text: 'Desea borrar la ficha?'};
+                    $modal.open({
+                        templateUrl: '../spas/popup/danger.html',
+                        controller: 'popupController',
+                        scope: $scope,
+                        backdrop: false,
+                        sticky: true,
+                        resolve: {
+                            message: content
+                        }
+                    }).result.then(function (res) {
+                        if (res.click_on === 'OK') {
+                            flightRecordService.delete({'id': flightRecord.id}).$promise.then(function () {
+                                fulFill();
+                            });
+                        }
                     });
                     //$scope.flightRecords.splice($scope.flightRecords.indexOf(flightRecord), 1);
                 };
@@ -95,7 +114,7 @@ angular.module('app').controller('flightRecordController',
                     financeDocuments.push(financeDocumentService
                             .getByReferencedDocumentId({id: flightRecord.id}));
                     $modal.open({
-                        templateUrl: 'views/spas/finance_document/finance_document_payment.html',
+                        templateUrl: '../spas/finance_document/finance_document_payment.html',
                         controller: 'flightRecordPaymentController',
                         //scope: $scope,
                         backdrop: false,
@@ -116,12 +135,12 @@ angular.module('app').controller('flightRecordController',
 
                 };
 
-                $scope.scrollPage = function(direction) {
-                    if(direction === '<' && !$scope.page.first) {
+                $scope.scrollPage = function (direction) {
+                    if (direction === '<' && !$scope.page.first) {
                         actualPage--;
                         fulFill();
                     }
-                    if(direction === '>' && !$scope.page.last) {
+                    if (direction === '>' && !$scope.page.last) {
                         actualPage++;
                         fulFill();
                     }
@@ -157,7 +176,8 @@ angular.module('app').controller('flightRecordController',
                             })(i);
                         }
                     });
-                };
+                }
+                ;
 
             }]);
 
@@ -350,7 +370,8 @@ angular.module('app').controller('flightRecordPaymentController',
                 $scope.financeDocuments = financeDocuments;
 
                 $scope.show = function () {
-                    console.log($scope.getTotal());
+                    console.log($scope.crear_pago.$invalid);
+                    $scope.crear_pago.$invalid= !$scope.crear_pago.$invalid;
                 };
 
                 $scope.payments = paymentService.query();
@@ -363,6 +384,12 @@ angular.module('app').controller('flightRecordPaymentController',
 
                 $scope.addPaymentLine = function () {
                     $scope.paymentLines.push(getPaymentTemplate());
+                };
+
+                $scope.calculateAmount = function() {
+                    //$scope.paymentLines[0].amount = $scope.getTotalItems();
+                    //paymentLine.selectedPaymentTerm.charge
+                    //paymentLine.charge = 
                 };
 
                 function getPaymentTemplate() {

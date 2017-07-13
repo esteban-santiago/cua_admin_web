@@ -7,7 +7,7 @@
             <h4 class="modal-title" id="myModalLabel">Pago</h4>
         </div>
         <div class="modal-body">
-            <form name="crear_recibo">
+            <form name="crear_pago">
                 <div>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
@@ -78,16 +78,19 @@
                                             <tbody> 
                                                 <tr ng-repeat="paymentLine in paymentLines">
                                                     <td class="text-left">      
-                                                        <select ng-options="payment.description for payment in payments" 
+                                                        <select class="form-control" ng-options="payment.description for payment in payments" 
                                                                 ng-model="paymentLine.selectedPayment">
                                                         </select>
                                                     </td>
                                                     <td class="text-left">
-                                                        <div ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
-                                                            <select ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
+                                                        <div  ng-show="paymentLine.selectedPayment.paymentTerms.length > 0">
+                                                            <select class="form-control" 
+                                                                    ng-options="paymentTerm.description for paymentTerm in paymentLine.selectedPayment.paymentTerms" 
                                                                     ng-model="paymentLine.selectedPaymentTerm"
-                                                            >
-                                                                    
+                                                                    ng-change="paymentLine.amount = {{getTotalItems() - getTotalPaymentsAmount()}};
+                                                                        paymentLine.charge = paymentLine.amount * paymentLine.selectedPaymentTerm.charge ">
+
+
                                                             </select>
                                                         </div>
                                                     </td>
@@ -103,8 +106,12 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div ng-show="paymentLine.selectedPaymentTerm">
-                                                            <input type="text" ng-model="paymentLine.amount"
+                                                            <!--input class="form-control" align="right" type="text" ng-model="paymentLine.amount"
                                                                    ng-change="paymentLine.charge = ((paymentLine.amount / (1 - paymentLine.selectedPaymentTerm.charge)) - paymentLine.amount)"
+                                                                   decimals="2" decimal-point=","-->
+
+                                                            <input class="form-control" align="right" type="text" ng-model="paymentLine.amount"
+                                                                   ng-change="paymentLine.charge = paymentLine.amount * (paymentLine.selectedPaymentTerm.charge)"
                                                                    decimals="2" decimal-point=",">
 
 
@@ -114,7 +121,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div ng-show="paymentLine.selectedPaymentTerm">
-                                                            <input type="text" ng-model="paymentLine.notes">
+                                                            <input class="form-control" type="text" ng-model="paymentLine.notes">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -223,8 +230,8 @@
             </div>
             <br>
             <button id="cancel" type="button" class="btn btn-default" ng-click="close()" data-dismiss="modal">Cancelar</button>
-            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save(false)" >Guardar</button>
-            <button id="print" type="button" class="btn btn-primary" ng-disabled="crear_ficha.$invalid" ng-click="save(true)" >Guardar y ver Recibo</button>
+            <button id="save" type="button" class="btn btn-primary" ng-disabled="crear_pago.$invalid" ng-click="save(false)" ng-disabled="crear_pago.$invalid">Guardar</button>
+            <button id="print" type="button" class="btn btn-primary" ng-disabled="crear_pago.$invalid" ng-click="save(true)" ng-disabled="crear_ficha.$invalid">Guardar y ver Recibo</button>
         </div>
     </div>
 </div>

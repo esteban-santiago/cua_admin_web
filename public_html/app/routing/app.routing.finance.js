@@ -1,7 +1,7 @@
 angular.module('app').config(['$routeProvider', function ($routeProvider) {
         $routeProvider
                 .when('/finance_document', {
-                    templateUrl: 'views/spas/finance_document/finance_document.html',
+                    templateUrl: '../spas/finance_document/finance_document.html',
                     controller: 'financeDocumentController'
                 })
                 ;
