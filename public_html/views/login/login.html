@@ -24,16 +24,16 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="hold-transition login-page" ng-app="app">
-        <div class="login-box" ng-controller="loginController">
+    <body  ng-app="app"  ng-controller="loginController" class="hold-transition login-page">
+        <div class="login-box">
             <div class="login-logo">
-                <a href="#main"><b>[CUA]</b> Admin{{1 + 1}}</a>
+                <a href=""><b>[CUA]</b> Admin{{1 + 1}}</a>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Ingrese para iniciar su sesión</p>
 
-                <form action="#administration">
+                <form>
                     <div class="form-group has-feedback">
                         <input type="email" class="form-control" ng-model="user" placeholder="Email">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -52,7 +52,8 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" ng-click="clickMe()" class="btn btn-primary btn-block btn-flat">Ingreso</button>
+                            <!--button type="submit" ng-click="clickMe()" class="btn btn-primary btn-block btn-flat">Ingreso</button-->
+                            <a href="#login" target="_top" class="btn btn-primary btn-flat">Ingreso</a>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -76,7 +77,7 @@
         <!-- /.login-box -->
         <!-- Moment.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.15.2/moment.min.js"></script>
-        
+
         <script src="../../lib/angular/angular.min.js"></script>
         <script src="../../lib/angular/angular-route.min.js"></script>
         <script src="../../lib/angular/angular-resource.min.js"></script>
@@ -86,8 +87,28 @@
         <script src="../../lib/moment/angular-moment.min.js"></script>
         <script src="../../app/app.js"></script>
         <script src="../../app/constants/app.constants.js"></script>
+        <script src="../../app/directives/app.directives.js"></script>
+        <script src="../../app/controllers/app.controllers.core.js"></script>
+        <script src="../../app/controllers/app.controllers.accounting.js"></script>
+        <script src="../../app/controllers/app.controllers.finance.js"></script>
+        <script src="../../app/controllers/app.controllers.finance.document.printing.js"></script>
+        <script src="../../app/controllers/app.controllers.operation.flight.js"></script>
+        <script src="../../app/controllers/app.controllers.operation.aircraft.js"></script>
+        <script src="../../app/controllers/app.controllers.operation.flight.printing.js"></script>
+        <script src="../../app/controllers/app.controllers.util.popup.js"></script>
         <script src="../../app/controllers/app.controllers.it.js"></script>
+        <script src="../../app/factories/app.factories.core.js"></script>
+        <script src="../../app/factories/app.factories.accounting.js"></script>
+        <script src="../../app/factories/app.factories.finance.js"></script>
+        <script src="../../app/factories/app.factories.operation.aircraft.js"></script>
+        <script src="../../app/factories/app.factories.operation.flight.js"></script>
+        <script src="../../app/factories/app.factories.it.js"></script>
         <script src="../../app/routing/app.routing.main.js"></script>
+        <script src="../../app/routing/app.routing.administration.js"></script>
+        <script src="../../app/routing/app.routing.finance.js"></script>
+        <script src="../../app/routing/app.routing.finance.document.printing.js"></script>
+        <script src="../../app/routing/app.routing.operation.js"></script>
+        <script src="../../app/routing/app.routing.operation.flight.printing.js"></script>
         <script src="../../app/routing/app.routing.it.js"></script>
 
         <!-- jQuery 2.2.3 -->
@@ -97,13 +118,13 @@
         <!-- iCheck -->
         <script src="../../plugins/iCheck/icheck.min.js"></script>
         <script>
-                    $(function () {
-                        $('input').iCheck({
-                            checkboxClass: 'icheckbox_square-blue',
-                            radioClass: 'iradio_square-blue',
-                            increaseArea: '20%' // optional
-                        });
-                    });
+                                $(function () {
+                                    $('input').iCheck({
+                                        checkboxClass: 'icheckbox_square-blue',
+                                        radioClass: 'iradio_square-blue',
+                                        increaseArea: '20%' // optional
+                                    });
+                                });
         </script>
     </body>
 </html>

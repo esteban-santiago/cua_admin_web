@@ -3,9 +3,19 @@
 
 angular.module('app').controller('loginController', ['$scope', function ($scope) {
         $scope.user = "esteban";
+        
         $scope.clickMe = function() {
             console.log("hola");
         };
+
+        $scope.login = function() {
+            console.log("hola");
+        };
+
+        $scope.logout = function() {
+            console.log("hola");
+        };
+        
     }]);
 
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document', function ($scope, userServices, $document) {
