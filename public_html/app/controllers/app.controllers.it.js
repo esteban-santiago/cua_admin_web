@@ -1,6 +1,13 @@
 
 /* global moment */
 
+angular.module('app').controller('loginController', ['$scope', function ($scope) {
+        $scope.user = "esteban";
+        $scope.clickMe = function() {
+            console.log("hola");
+        };
+    }]);
+
 angular.module('app').controller('userController', ['$scope', 'userServices', '$document', function ($scope, userServices, $document) {
         //$scope.myId = memberRepository.a();
         $scope.aValue = 143;
@@ -15,3 +22,4 @@ angular.module('app').controller('userController', ['$scope', 'userServices', '$
             //console.log("selectd: " + id);
         };
     }]);
+

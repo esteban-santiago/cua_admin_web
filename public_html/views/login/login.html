@@ -25,17 +25,17 @@
         <![endif]-->
     </head>
     <body class="hold-transition login-page" ng-app="app">
-        <div class="login-box">
+        <div class="login-box" ng-controller="loginController">
             <div class="login-logo">
-                <a href="../../index2.html"><b>[CUA]</b> Admin{{1 + 1}}</a>
+                <a href="#main"><b>[CUA]</b> Admin{{1 + 1}}</a>
             </div>
             <!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Ingrese para iniciar su sesión</p>
 
-                <form action="../.html" method="post">
+                <form action="#administration">
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email">
+                        <input type="email" class="form-control" ng-model="user" placeholder="Email">
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
@@ -52,7 +52,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Ingreso</button>
+                            <button type="submit" ng-click="clickMe()" class="btn btn-primary btn-block btn-flat">Ingreso</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -86,7 +86,9 @@
         <script src="../../lib/moment/angular-moment.min.js"></script>
         <script src="../../app/app.js"></script>
         <script src="../../app/constants/app.constants.js"></script>
-        <script src="../../app/controllers/app.controllers.core.js"></script>
+        <script src="../../app/controllers/app.controllers.it.js"></script>
+        <script src="../../app/routing/app.routing.main.js"></script>
+        <script src="../../app/routing/app.routing.it.js"></script>
 
         <!-- jQuery 2.2.3 -->
         <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
