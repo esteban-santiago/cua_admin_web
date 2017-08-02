@@ -1,7 +1,7 @@
 
 /* global moment */
 
-angular.module('app').controller('loginController', ['$scope', function ($scope) {
+angular.module('app').controller('loginController', ['$scope', '$window', '$rootScope', function ($scope, $window, $rootScope) {
         $scope.user = "esteban";
         
         $scope.clickMe = function() {
@@ -9,7 +9,10 @@ angular.module('app').controller('loginController', ['$scope', function ($scope)
         };
 
         $scope.login = function() {
-            console.log("hola");
+            console.log("hola soy login");
+            $rootScope.value = 'vengo del login';
+            $window.ScopetoShare = $rootScope;
+            $window.open('../main/main.html#administration',"_self");
         };
 
         $scope.logout = function() {

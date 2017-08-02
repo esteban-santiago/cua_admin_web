@@ -5,19 +5,20 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                     //controller: 'loginController'
                     resolve: {
                         "check": function ($window) {
-                            if (true === true) {
-                                $window.open('../main/main.html#/administration', "_top");    //redirect user to home.
-                            } else {
-                                alert("You don't have access here");
-                                $window.open('../login/login.html', "_top");    //redirect user to home.
-                                //window.open('/login');
+                            if (true) {
+                                console.log("estoy en login");
+                                //$window.open('../main/main.html',"_self");    //redirect user to home.
+                            //} else {
+                            //    alert("You don't have access here");
+                            //    $window.open('../login/login.html', "_top");    //redirect user to home.
+                         
                             }
                         }
                     }
                 })
                 .when('/logout', {
                     resolve: {
-                        "check": function ($location, $window) {
+                        "check": function ($window) {
                             if (true === false) {
                                 //Do something
                             } else {

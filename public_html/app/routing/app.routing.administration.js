@@ -11,8 +11,12 @@ angular.module('app').config(['$routeProvider', function ($routeProvider) {
                 .when('/flight_record', {
                     templateUrl: '../spas/flight_record/flight_record.html',
                     controller: 'flightRecordController'
-                });
-                //.otherwise({redirectTo: '/administration'});
+                })
+                .when('/contract', {
+                    templateUrl: '../spas/contract/contract.html',
+                    controller: 'contractController'
+                })
+                .otherwise({redirectTo: '/administration'});
 //                .otherwise({redirectTo: $routeProvider});
 //                .otherwise({ templateUrl: 'views/launch_pad/administration.html'});    
     }]);
